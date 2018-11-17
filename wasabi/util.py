@@ -29,7 +29,7 @@ COLORS = {
 }
 
 ICONS = {
-    MESSAGES.GOOD: '\u2713',
+    MESSAGES.GOOD: '\u2714',
     MESSAGES.FAIL: '\u2718',
     MESSAGES.WARN: '\u26a0',
     MESSAGES.INFO: '\u2139'

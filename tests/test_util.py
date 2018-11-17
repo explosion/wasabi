@@ -20,6 +20,6 @@ def test_wrap():
     assert wrap(text, wrap_max=5, indent=2) == "  Hello\n  world,\n  this\n  is\n  a\n  test."
 
 
-@pytest.mark.parametrize('text', ['abc', '\u2713 abc', '👻'])
+@pytest.mark.parametrize('text', ['abc', '\u2714 abc', '👻'])
 def test_locale_escape(text):
     assert locale_escape(text)
