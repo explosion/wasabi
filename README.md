@@ -94,7 +94,7 @@ msg.info("Info")
 
 | Argument | Type | Description | Default |
 | --- | --- | --- | -- |
-| `text` | unicode | The text to print. | - |
+| `text` | unicode | The text to print. | `''` |
 | `show` | bool | Whether to print or not. Can be used to only output messages under certain condition, e.g. if `--verbose` flag is set. | `True` |
 
 #### <kbd>method</kbd> `Printer.divider`

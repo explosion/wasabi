@@ -41,23 +41,23 @@ class Printer(object):
         """
         return self._counts
 
-    def good(self, text, show=True):
+    def good(self, text='', show=True):
         """Print a success message."""
         return self._get_msg(text, style=MESSAGES.GOOD, show=show)
 
-    def fail(self, text, show=True):
+    def fail(self, text='', show=True):
         """Print an error message."""
         return self._get_msg(text, style=MESSAGES.FAIL, show=show)
 
-    def warn(self, text, show=True):
+    def warn(self, text='', show=True):
         """Print a warning message."""
         return self._get_msg(text, style=MESSAGES.WARN, show=show)
 
-    def info(self, text, show=True):
+    def info(self, text='', show=True):
         """Print an error message."""
         return self._get_msg(text, style=MESSAGES.INFO, show=show)
 
-    def text(self, text, color=None, icon=None, show=True):
+    def text(self, text='', color=None, icon=None, show=True):
         """Print a message.
 
         text (unicode): The text to print.
