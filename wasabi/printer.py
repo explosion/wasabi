@@ -69,6 +69,8 @@ class Printer(object):
         if not show:
             return
         if self.pretty and self.supports_ansi:
+            color = self.colors.get(color)
+            icon = self.icons.get(icon)
             text = locale_escape('{} {}'.format(icon, text) if icon else text)
             text = _color(text, fg=color)
         if self.no_print:
@@ -83,6 +85,9 @@ class Printer(object):
         char (unicode): Line character to repeat, e.g. =.
         show (bool): Whether to print or not.
         """
+        if len(char) != 1:
+            raise ValueError("Divider chars need to be one character long. "
+                             "Received: {}".format(char))
         if self.pretty:
             deco = char * (round((self.line_max - len(text)) / 2) - 2)
             text = ' {} '.format(text) if text else ''
@@ -96,10 +101,8 @@ class Printer(object):
     def _get_msg(self, text, style=None, show=None):
         if self.ignore_warnings and style == MESSAGES.WARN:
             show = False
-        color = self.colors.get(style)
-        icon = self.icons.get(style)
         self._counts[style] += 1
-        return self.text(text, color, icon, show)
+        return self.text(text, color=style, icon=style, show=show)
 
 
 def prints(*texts, **kwargs):
