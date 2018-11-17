@@ -128,7 +128,7 @@ def to_string(text):
     """
     is_python2 = sys.version_info[0] == 2
     if is_python2:
-        basestring_ = basestring
+        basestring_ = basestring  # noqa
     else:
         basestring_ = str
     if not isinstance(text, basestring_):
