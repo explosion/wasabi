@@ -2,6 +2,7 @@
 from __future__ import unicode_literals, print_function
 
 import pytest
+import time
 from wasabi.printer import Printer
 from wasabi.util import MESSAGES
 
@@ -57,3 +58,19 @@ def test_printer_divider():
     p.divider('This is a very long text, it is very long') == "\x1b[1m\n This is a very long text, it is very long \x1b[0m"
     with pytest.raises(ValueError):
         p.divider('test', char='~.')
+
+
+def test_printer_loading():
+    p = Printer()
+    print('\n')
+    with p.loading("Loading..."):
+        time.sleep(1)
+    p.good("Success!")
+
+    with p.loading("Something else..."):
+        time.sleep(2)
+    p.good("Yo!")
+
+    with p.loading("Loading..."):
+        time.sleep(1)
+    p.good("Success!")

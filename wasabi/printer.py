@@ -2,15 +2,21 @@
 from __future__ import unicode_literals, print_function
 
 from collections import Counter
+from contextlib import contextmanager
+from multiprocessing import Process
+import itertools
 import sys
+import time
 
-from .util import MESSAGES, COLORS, ICONS, wrap, supports_ansi, locale_escape
+from .util import wrap, supports_ansi, can_render, locale_escape
+from .util import MESSAGES, COLORS, ICONS
 from .util import color as _color
 
 
 class Printer(object):
     def __init__(self, pretty=True, no_print=False, colors=None, icons=None,
-                 line_max=80, ignore_warnings=False):
+                 line_max=80, animation='⠙⠹⠸⠼⠴⠦⠧⠇⠏', animation_ascii='|/-\\',
+                 ignore_warnings=False):
         """Initialize the command-line printer.
 
         pretty (bool): Pretty-print output (colors, icons).
@@ -18,6 +24,8 @@ class Printer(object):
         colors (dict): Add or overwrite color values, name mapped to value.
         icons (dict): Add or overwrite icons. Name mapped to unicode icon.
         line_max (int): Maximum line length (for divider).
+        animation (unicode): Steps of loading animation for loading() method.
+        animation_ascii (unicode): Alternative animation for ASCII terminals.
         ignore_warnings (bool): Do not output messages of type MESSAGE.WARN.
         RETURNS (Printer): The initialized printer.
         """
@@ -33,6 +41,7 @@ class Printer(object):
             self.colors.update(colors)
         if icons:
             self.icons.update(icons)
+        self.anim = animation if can_render(animation) else animation_ascii
 
     @property
     def counts(self):
@@ -98,6 +107,22 @@ class Printer(object):
         if self.no_print:
             return text
         print(text)
+
+    @contextmanager
+    def loading(self, text=''):
+        sys.stdout.flush()
+        t = Process(target=self._spinner, args=(text,))
+        t.start()
+        yield
+        t.terminate()
+        sys.stdout.write('\r\x1b[2K')  # erase line
+        sys.stdout.flush()
+
+    def _spinner(self, text='Loading...'):
+        for char in itertools.cycle(self.anim):
+            sys.stdout.write('\r{} {}'.format(char, text))
+            sys.stdout.flush()
+            time.sleep(0.1)
 
     def _get_msg(self, text, style=None, show=None):
         if self.ignore_warnings and style == MESSAGES.WARN:

@@ -72,6 +72,8 @@ msg = Printer()
 | `colors` | dict | Add or overwrite color values, names mapped to `0`-`256`. | `None` |
 | `icons` | dict | Add or overwrite icon. Name mapped to unicode. | `None` |
 | `line_max` | int | Maximum line length (for divider). | `80` |
+| `animation` | unicode | Steps of loading animation for `Printer.loading`. | `'⠙⠹⠸⠼⠴⠦⠧⠇⠏'` |
+| `animation_ascii` | unicode | Alternative animation for ASCII terminals. | `'|/-\\'` |
 | `ignore_warnings` | bool | Don't output messages of type `MESSAGE.WARN`. | `False` |
 | **RETURNS** | `Printer` | The initialized printer. | - |
 
@@ -119,6 +121,20 @@ msg.divider("Heading")
 | `text` | unicode | Headline text. If empty, only the line is printed. | `''` |
 | `char` | unicode | Single line character to repeat. | `'='` |
 | `show` | bool | Whether to print or not. Can be used to only output messages under certain condition, e.g. if `--verbose` flag is set. | `True` |
+
+#### <kbd>contextmanager</kbd> `Printer.loading`
+
+```python
+msg = Printer()
+with msg.loading("Loading..."):
+    # Do something here that takes longer
+    time.sleep(10)
+msg.good("Successfully loaded something!")
+```
+
+| Argument | Type | Description | Default |
+| --- | --- | --- | -- |
+| `text` | unicode | The text to display while loading. | `''` |
 
 #### <kbd>property</kbd> `Printer.counts`
 
