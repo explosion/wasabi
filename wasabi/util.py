@@ -93,6 +93,8 @@ def supports_ansi():
     """Returns True if the running system's terminal supports ANSI escape
     sequences for color, formatting etc. and False otherwise. Inspired by
     Django's solution – hacky, but an okay approximation.
+
+    RETURNS (bool): Whether the terminal supports ANSI colors.
     """
     # See: https://stackoverflow.com/q/7445658/6400719
     plat = sys.platform
