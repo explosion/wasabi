@@ -89,7 +89,7 @@ class Printer(object):
             raise ValueError("Divider chars need to be one character long. "
                              "Received: {}".format(char))
         if self.pretty:
-            deco = char * (round((self.line_max - len(text)) / 2) - 2)
+            deco = char * (int(round((self.line_max - len(text))) / 2) - 2)
             text = ' {} '.format(text) if text else ''
             text = _color('\n{deco}{text}{deco}'.format(deco=deco, text=text), bold=True)
         if len(text) < self.line_max:
