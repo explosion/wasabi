@@ -21,7 +21,11 @@ COLORS = {
     'red': 1,
     'green': 2,
     'yellow': 3,
-    'blue': 4
+    'blue': 4,
+    'pink': 5,
+    'cyan': 6,
+    'white': 7,
+    'grey': 8
 }
 
 ICONS = {
@@ -43,16 +47,16 @@ def color(text, fg=None, bg=None, bold=False):
     """
     fg = COLORS.get(fg, fg)
     bg = COLORS.get(bg, bg)
-    if not fg and not bg:
+    if not any([fg, bg, bold]):
         return text
-    styles = ''
+    styles = []
     if bold:
-        styles += '\033[1m'
+        styles.append('1')
     if fg:
-        styles += '\x1b[38;5;{}m'.format(fg)
+        styles.append('38;5;{}'.format(fg))
     if bg:
-        styles += '\x1b[48;5;{}m'.format(bg)
-    return '{}{}\x1b[0m'.format(styles, text)
+        styles.append('48;5;{}'.format(bg))
+    return '\x1b[{}m{}\x1b[0m'.format(';'.join(styles), text)
 
 
 def wrap(text, wrap_max=80, indent=4):
