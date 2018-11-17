@@ -46,6 +46,12 @@ other packages – for example, [`colored`](https://pypi.org/project/colored/),
 I was looking for a short and descriptive name, but everything was already taken.
 So I ended up naming this package after one of my rats, Wasabi. 🐀
 
+## ⌛️ Installation
+
+```bash
+pip install wasabi
+```
+
 ## 🎛 API
 
 ### <kbd>class</kbd> `Printer`
