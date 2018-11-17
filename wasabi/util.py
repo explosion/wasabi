@@ -89,6 +89,20 @@ def locale_escape(string, errors='ignore'):
     return string
 
 
+def can_render(string):
+    """Check if terminal can render unicode characters, e.g. special loading
+    icons. Can be used to display fallbacks for ASCII terminals.
+
+    string (unicode): The string to render.
+    RETURNS (bool): Whether the terminal can render the text.
+    """
+    try:
+        string.encode(sys.stdout.encoding)
+        return True
+    except UnicodeEncodeError:
+        return False
+
+
 def supports_ansi():
     """Returns True if the running system's terminal supports ANSI escape
     sequences for color, formatting etc. and False otherwise. Inspired by
