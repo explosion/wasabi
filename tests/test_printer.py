@@ -32,7 +32,7 @@ def test_printer_custom():
     icons = {"warn": "\u26a0\ufe0f", "question": "?"}
     p = Printer(no_print=True, colors=colors, icons=icons)
     text = "This is a test."
-    purple_questipn = p.text(text, color="purple", icon="question")
+    purple_question = p.text(text, color="purple", icon="question")
     assert purple_question == "\x1b[38;5;99m? This is a test.\x1b[0m"
     assert p.warn(text) == "\x1b[38;5;3m\u26a0\ufe0f This is a test.\x1b[0m"
 
