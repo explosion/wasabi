@@ -120,8 +120,8 @@ def print_message(*texts, **kwargs):
         title = title_tpl.format(title) if title else ''
         message = '\n\n'.join(texts)
     else:
-        title = title_tpl.format(_wrap(title, indent=indent)) if title else ''
-        message = '\n\n'.join([_wrap(text, indent=indent) for text in texts])
+        title = title_tpl.format(wrap(title, indent=indent)) if title else ''
+        message = '\n\n'.join([wrap(text, indent=indent) for text in texts])
     print('\n{}{}\n'.format(title, message))
     if exits is not None:
         sys.stdout.flush()
