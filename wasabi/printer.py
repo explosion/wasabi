@@ -79,7 +79,7 @@ class Printer(object):
 
     def divider(self, text='', char='=', show=True):
         """Print a divider with a headline:
-        ============================= Headline here ============================
+        ============================ Headline here ===========================
 
         text (unicode): Headline text. If empty, only the line is printed.
         char (unicode): Line character to repeat, e.g. =.
@@ -91,7 +91,8 @@ class Printer(object):
         if self.pretty:
             deco = char * (int(round((self.line_max - len(text))) / 2) - 2)
             text = ' {} '.format(text) if text else ''
-            text = _color('\n{deco}{text}{deco}'.format(deco=deco, text=text), bold=True)
+            text = _color('\n{deco}{text}{deco}'.format(deco=deco, text=text),
+                          bold=True)
         if len(text) < self.line_max:
             text = text + char * (self.line_max - len(text))
         if self.no_print:
