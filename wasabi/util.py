@@ -76,7 +76,7 @@ def wrap(text, wrap_max=80, indent=4):
                          break_on_hyphens=False)
 
 
-def locale_escape(string, errors='replace'):
+def locale_escape(string, errors='ignore'):
     """Mangle non-supported characters, for savages with ASCII terminals.
 
     string (unicode): The string to escape.
