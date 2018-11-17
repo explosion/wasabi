@@ -105,7 +105,7 @@ class Printer(object):
         return self.text(text, color=style, icon=style, show=show)
 
 
-def prints(*texts, **kwargs):
+def print_message(*texts, **kwargs):
     """Print formatted message.
 
     *texts (unicode): Texts to print. Each argument is rendered as paragraph.
