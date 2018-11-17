@@ -14,6 +14,7 @@ lightweight, has zero dependencies and works across Python 2 and 3.
 [![Travis](https://img.shields.io/travis/ines/wasabi/master.svg?style=flat-square&logo=travis)](https://travis-ci.org/ines/wasabi)
 [![PyPi](https://img.shields.io/pypi/v/wasabi.svg?style=flat-square)](https://pypi.python.org/pypi/wasabi)
 [![GitHub](https://img.shields.io/github/release/ines/wasabi/all.svg?style=flat-square)](https://github.com/ines/wasabi)
+[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg?style=flat-square)](https://github.com/ambv/black)
 
 <img width="609" src="https://user-images.githubusercontent.com/13643239/48663861-8c9ea000-ea96-11e8-8b04-d120c52276a8.png">
 

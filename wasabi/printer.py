@@ -14,9 +14,17 @@ from .util import color as _color
 
 
 class Printer(object):
-    def __init__(self, pretty=True, no_print=False, colors=None, icons=None,
-                 line_max=80, animation='⠙⠹⠸⠼⠴⠦⠧⠇⠏', animation_ascii='|/-\\',
-                 ignore_warnings=False):
+    def __init__(
+        self,
+        pretty=True,
+        no_print=False,
+        colors=None,
+        icons=None,
+        line_max=80,
+        animation="⠙⠹⠸⠼⠴⠦⠧⠇⠏",
+        animation_ascii="|/-\\",
+        ignore_warnings=False,
+    ):
         """Initialize the command-line printer.
 
         pretty (bool): Pretty-print output (colors, icons).
@@ -50,23 +58,23 @@ class Printer(object):
         """
         return self._counts
 
-    def good(self, text='', show=True):
+    def good(self, text="", show=True):
         """Print a success message."""
         return self._get_msg(text, style=MESSAGES.GOOD, show=show)
 
-    def fail(self, text='', show=True):
+    def fail(self, text="", show=True):
         """Print an error message."""
         return self._get_msg(text, style=MESSAGES.FAIL, show=show)
 
-    def warn(self, text='', show=True):
+    def warn(self, text="", show=True):
         """Print a warning message."""
         return self._get_msg(text, style=MESSAGES.WARN, show=show)
 
-    def info(self, text='', show=True):
+    def info(self, text="", show=True):
         """Print an error message."""
         return self._get_msg(text, style=MESSAGES.INFO, show=show)
 
-    def text(self, text='', color=None, icon=None, show=True):
+    def text(self, text="", color=None, icon=None, show=True):
         """Print a message.
 
         text (unicode): The text to print.
@@ -80,13 +88,13 @@ class Printer(object):
         if self.pretty and self.supports_ansi:
             color = self.colors.get(color)
             icon = self.icons.get(icon)
-            text = locale_escape('{} {}'.format(icon, text) if icon else text)
+            text = locale_escape("{} {}".format(icon, text) if icon else text)
             text = _color(text, fg=color)
         if self.no_print:
             return text
         print(text)
 
-    def divider(self, text='', char='=', show=True):
+    def divider(self, text="", char="=", show=True):
         """Print a divider with a headline:
         ============================ Headline here ===========================
 
@@ -95,13 +103,16 @@ class Printer(object):
         show (bool): Whether to print or not.
         """
         if len(char) != 1:
-            raise ValueError("Divider chars need to be one character long. "
-                             "Received: {}".format(char))
+            raise ValueError(
+                "Divider chars need to be one character long. "
+                "Received: {}".format(char)
+            )
         if self.pretty:
             deco = char * (int(round((self.line_max - len(text))) / 2) - 2)
-            text = ' {} '.format(text) if text else ''
-            text = _color('\n{deco}{text}{deco}'.format(deco=deco, text=text),
-                          bold=True)
+            text = " {} ".format(text) if text else ""
+            text = _color(
+                "\n{deco}{text}{deco}".format(deco=deco, text=text), bold=True
+            )
         if len(text) < self.line_max:
             text = text + char * (self.line_max - len(text))
         if self.no_print:
@@ -109,18 +120,18 @@ class Printer(object):
         print(text)
 
     @contextmanager
-    def loading(self, text=''):
+    def loading(self, text=""):
         sys.stdout.flush()
         t = Process(target=self._spinner, args=(text,))
         t.start()
         yield
         t.terminate()
-        sys.stdout.write('\r\x1b[2K')  # erase line
+        sys.stdout.write("\r\x1b[2K")  # erase line
         sys.stdout.flush()
 
-    def _spinner(self, text='Loading...'):
+    def _spinner(self, text="Loading..."):
         for char in itertools.cycle(self.anim):
-            sys.stdout.write('\r{} {}'.format(char, text))
+            sys.stdout.write("\r{} {}".format(char, text))
             sys.stdout.flush()
             time.sleep(0.1)
 
@@ -137,18 +148,18 @@ def print_message(*texts, **kwargs):
     *texts (unicode): Texts to print. Each argument is rendered as paragraph.
     **kwargs: 'title' becomes headline. exits=1 performs sys exit.
     """
-    exits = kwargs.get('exits')
-    indent = kwargs.get('indent', 4)
-    nowrap = kwargs.get('nowrap', False)
-    title = kwargs.get('title', None)
-    title_tpl = '{}\n'
+    exits = kwargs.get("exits")
+    indent = kwargs.get("indent", 4)
+    nowrap = kwargs.get("nowrap", False)
+    title = kwargs.get("title", None)
+    title_tpl = "{}\n"
     if nowrap:
-        title = title_tpl.format(title) if title else ''
-        message = '\n\n'.join(texts)
+        title = title_tpl.format(title) if title else ""
+        message = "\n\n".join(texts)
     else:
-        title = title_tpl.format(wrap(title, indent=indent)) if title else ''
-        message = '\n\n'.join([wrap(text, indent=indent) for text in texts])
-    print('\n{}{}\n'.format(title, message))
+        title = title_tpl.format(wrap(title, indent=indent)) if title else ""
+        message = "\n\n".join([wrap(text, indent=indent) for text in texts])
+    print("\n{}{}\n".format(title, message))
     if exits is not None:
         sys.stdout.flush()
         sys.stderr.flush()

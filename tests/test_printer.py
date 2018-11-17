@@ -28,11 +28,12 @@ def test_printer_no_pretty():
 
 
 def test_printer_custom():
-    colors = {'yellow': 220, 'purple': 99}
-    icons = {'warn': '\u26a0\ufe0f', 'question': "?"}
+    colors = {"yellow": 220, "purple": 99}
+    icons = {"warn": "\u26a0\ufe0f", "question": "?"}
     p = Printer(no_print=True, colors=colors, icons=icons)
     text = "This is a test."
-    assert p.text(text, color='purple', icon='question') == "\x1b[38;5;99m? This is a test.\x1b[0m"
+    purple_questipn = p.text(text, color="purple", icon="question")
+    assert purple_question == "\x1b[38;5;99m? This is a test.\x1b[0m"
     assert p.warn(text) == "\x1b[38;5;3m\u26a0\ufe0f This is a test.\x1b[0m"
 
 
@@ -53,16 +54,19 @@ def test_printer_counts():
 def test_printer_divider():
     p = Printer(line_max=20, no_print=True)
     p.divider() == "\x1b[1m\n================\x1b[0m"
-    p.divider('test') == "\x1b[1m\n====== test ======\x1b[0m"
-    p.divider('test', char='*') == "\x1b[1m\n****** test ******\x1b[0m"
-    p.divider('This is a very long text, it is very long') == "\x1b[1m\n This is a very long text, it is very long \x1b[0m"
+    p.divider("test") == "\x1b[1m\n====== test ======\x1b[0m"
+    p.divider("test", char="*") == "\x1b[1m\n****** test ******\x1b[0m"
+    assert (
+        p.divider("This is a very long text, it is very long")
+        == "\x1b[1m\n This is a very long text, it is very long \x1b[0m"
+    )
     with pytest.raises(ValueError):
-        p.divider('test', char='~.')
+        p.divider("test", char="~.")
 
 
 def test_printer_loading():
     p = Printer()
-    print('\n')
+    print("\n")
     with p.loading("Loading..."):
         time.sleep(1)
     p.good("Success!")

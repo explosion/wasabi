@@ -8,10 +8,10 @@ import textwrap
 
 
 class MESSAGES(object):
-    GOOD = 'good'
-    FAIL = 'fail'
-    WARN = 'warn'
-    INFO = 'info'
+    GOOD = "good"
+    FAIL = "fail"
+    WARN = "warn"
+    INFO = "info"
 
 
 COLORS = {
@@ -19,21 +19,21 @@ COLORS = {
     MESSAGES.FAIL: 1,
     MESSAGES.WARN: 3,
     MESSAGES.INFO: 4,
-    'red': 1,
-    'green': 2,
-    'yellow': 3,
-    'blue': 4,
-    'pink': 5,
-    'cyan': 6,
-    'white': 7,
-    'grey': 8
+    "red": 1,
+    "green": 2,
+    "yellow": 3,
+    "blue": 4,
+    "pink": 5,
+    "cyan": 6,
+    "white": 7,
+    "grey": 8,
 }
 
 ICONS = {
-    MESSAGES.GOOD: '\u2714',
-    MESSAGES.FAIL: '\u2718',
-    MESSAGES.WARN: '\u26a0',
-    MESSAGES.INFO: '\u2139'
+    MESSAGES.GOOD: "\u2714",
+    MESSAGES.FAIL: "\u2718",
+    MESSAGES.WARN: "\u26a0",
+    MESSAGES.INFO: "\u2139",
 }
 
 
@@ -52,12 +52,12 @@ def color(text, fg=None, bg=None, bold=False):
         return text
     styles = []
     if bold:
-        styles.append('1')
+        styles.append("1")
     if fg:
-        styles.append('38;5;{}'.format(fg))
+        styles.append("38;5;{}".format(fg))
     if bg:
-        styles.append('48;5;{}'.format(bg))
-    return '\x1b[{}m{}\x1b[0m'.format(';'.join(styles), text)
+        styles.append("48;5;{}".format(bg))
+    return "\x1b[{}m{}\x1b[0m".format(";".join(styles), text)
 
 
 def wrap(text, wrap_max=80, indent=4):
@@ -68,15 +68,20 @@ def wrap(text, wrap_max=80, indent=4):
     indent (int): Number of spaces used for indentation. Defaults to 4.
     RETURNS (unicode): The wrapped text with line breaks.
     """
-    indent = indent * ' '
+    indent = indent * " "
     wrap_width = wrap_max - len(indent)
     text = to_string(text)
-    return textwrap.fill(text, width=wrap_width, initial_indent=indent,
-                         subsequent_indent=indent, break_long_words=False,
-                         break_on_hyphens=False)
+    return textwrap.fill(
+        text,
+        width=wrap_width,
+        initial_indent=indent,
+        subsequent_indent=indent,
+        break_long_words=False,
+        break_on_hyphens=False,
+    )
 
 
-def locale_escape(string, errors='ignore'):
+def locale_escape(string, errors="ignore"):
     """Mangle non-supported characters, for savages with ASCII terminals.
 
     string (unicode): The string to escape.
@@ -85,7 +90,7 @@ def locale_escape(string, errors='ignore'):
     """
     encoding = locale.getpreferredencoding()
     string = to_string(string)
-    string = string.encode(encoding, errors).decode('utf8')
+    string = string.encode(encoding, errors).decode("utf8")
     return string
 
 
@@ -112,8 +117,9 @@ def supports_ansi():
     """
     # See: https://stackoverflow.com/q/7445658/6400719
     plat = sys.platform
-    supported_platform = plat != 'Pocket PC' and (plat != 'win32' or
-                                                  'ANSICON' in os.environ)
+    supported_platform = plat != "Pocket PC" and (
+        plat != "win32" or "ANSICON" in os.environ
+    )
     if not supported_platform:
         return False
     return True
@@ -133,7 +139,7 @@ def to_string(text):
         basestring_ = str
     if not isinstance(text, basestring_):
         if is_python2:
-            text = str(text).decode('utf8')
+            text = str(text).decode("utf8")
         else:
             text = str(text)
     return text
