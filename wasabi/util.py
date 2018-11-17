@@ -40,9 +40,9 @@ def color(text, fg=None, bg=None, bold=False):
     """Color text by applying ANSI escape sequence.
 
     text (unicode): The text to be formatted.
-    fg (unicode / int): Foreground color. String name of integer ID (see COLORS).
-    bg (unicode / int): Background color. String name of integer ID (see COLORS).
-    bold (bool): Print text in bold.
+    fg (unicode / int): Foreground color. String name or 0 - 256 (see COLORS).
+    bg (unicode / int): Background color. String name or 0 - 256 (see COLORS).
+    bold (bool): Format text in bold.
     RETURNS (unicode): The formatted text.
     """
     fg = COLORS.get(fg, fg)
@@ -64,7 +64,7 @@ def wrap(text, wrap_max=80, indent=4):
 
     text (unicode): The text to wrap.
     wrap_max (int): Maximum line width, including indentation. Defaults to 80.
-    intent (int): Number of spaces used for indentation. Defaults to 4.
+    indent (int): Number of spaces used for indentation. Defaults to 4.
     RETURNS (unicode): The wrapped text with line breaks.
     """
     indent = indent * ' '
