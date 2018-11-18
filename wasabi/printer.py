@@ -125,8 +125,7 @@ class Printer(object):
         title = kwargs.pop("title", None)
         text = table(data, **kwargs)
         if title:
-            title_text = self.text(title, color="yellow", no_print=True)
-            text = "\n{}\n{}".format(title_text, text)
+            self.divider(title)
         if self.no_print:
             return text
         print(text)
