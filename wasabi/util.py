@@ -41,8 +41,10 @@ IS_PYTHON_2 = sys.version_info[0] == 2
 
 if IS_PYTHON_2:
     basestring_ = basestring  # noqa: F821
+    input_ = raw_input  # noqa: F821
 else:
     basestring_ = str
+    input_ = input
 
 
 def color(text, fg=None, bg=None, bold=False):
@@ -87,6 +89,20 @@ def wrap(text, wrap_max=80, indent=4):
         break_long_words=False,
         break_on_hyphens=False,
     )
+
+
+def get_raw_input(description, default=False, indent=4):
+    """Get user input from the command line via raw_input / input.
+
+    description (unicode): Text to display before prompt.
+    default (unicode or False/None): Default value to display with prompt.
+    indent (int): Indentation in spaces.
+    RETURNS (unicode): User input.
+    """
+    additional = " (default: {})".format(default) if default else ""
+    prompt = wrap("{}{}: ".format(description, additional), indent=indent)
+    user_input = input_(prompt)
+    return user_input
 
 
 def locale_escape(string, errors="ignore"):
