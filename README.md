@@ -73,7 +73,6 @@ msg = Printer()
 | `colors` | dict | Add or overwrite color values, names mapped to `0`-`256`. | `None` |
 | `icons` | dict | Add or overwrite icon. Name mapped to unicode. | `None` |
 | `line_max` | int | Maximum line length (for divider). | `80` |
-| `indent` | int | Indentation, in spaces. | `2` |
 | `animation` | unicode | Steps of loading animation for `Printer.loading`. | `'⠙⠹⠸⠼⠴⠦⠧⠇⠏'` |
 | `animation_ascii` | unicode | Alternative animation for ASCII terminals. | `'|/-\\'` |
 | `ignore_warnings` | bool | Don't output messages of type `MESSAGE.WARN`. | `False` |

@@ -16,7 +16,6 @@ def table(
     max_col=30,
     spacing=3,
     aligns=None,
-    indent=0,
 ):
     """Format tabular data.
 
@@ -31,19 +30,13 @@ def table(
     spacing (int): Spacing between columns, in spaces.
     aligns (iterable): Column alignments in order. 'l' (left, default), 'r'
         (right) or 'c' (center).
-    indent (int): Indentation in spaces.
     RETURNS (unicode): The formatted table.
     """
     if isinstance(data, dict):
         data = list(data.items())
     if widths == "auto":
         widths = _get_max_widths(data, header, footer, max_col)
-    settings = {
-        "widths": widths,
-        "spacing": spacing,
-        "aligns": aligns,
-        "indent": indent,
-    }
+    settings = {"widths": widths, "spacing": spacing, "aligns": aligns}
     divider_row = row(["-" * width for width in widths], **settings)
     rows = []
     if header:
@@ -59,7 +52,7 @@ def table(
     return "\n{}\n".format("\n".join(rows))
 
 
-def row(data, widths="auto", spacing=3, aligns=None, indent=0):
+def row(data, widths="auto", spacing=3, aligns=None):
     """Format data as a table row.
 
     data (iterable): The individual columns to format.
@@ -68,7 +61,6 @@ def row(data, widths="auto", spacing=3, aligns=None, indent=0):
     spacing (int): Spacing between columns, in spaces.
     aligns (iterable): Column alignments in order. 'l' (left, default), 'r'
         (right) or 'c' (center).
-    indent (int): Indentation in spaces.
     RETURNS (unicode): The formatted row.
     """
     cols = []
@@ -77,7 +69,7 @@ def row(data, widths="auto", spacing=3, aligns=None, indent=0):
         col_width = len(col) if widths == "auto" else widths[i]
         tpl = "{:%s%d}" % (align, col_width)
         cols.append(tpl.format(to_string(col)))
-    return (indent * " ") + (" " * spacing).join(cols)
+    return (" " * spacing).join(cols)
 
 
 def _get_max_widths(data, header, footer, max_col):
