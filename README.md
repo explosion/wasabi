@@ -87,7 +87,8 @@ msg.text("Hello world!")
 
 | Argument | Type | Description | Default |
 | --- | --- | --- | -- |
-| `text` | unicode | The text to print. | - |
+| `title` | unicode | The main text to print. | `""` |
+| `text` | unicode | Optional additional text to print. | `""` |
 | `color` | unicode / int | Color name or value. | `None` |
 | `icon` | unicode | Name of icon to add. | `None` |
 | `show` | bool | Whether to print or not. Can be used to only output messages under certain condition, e.g. if `--verbose` flag is set. | `True` |
@@ -108,7 +109,8 @@ msg.info("Info")
 
 | Argument | Type | Description | Default |
 | --- | --- | --- | -- |
-| `text` | unicode | The text to print. | `''` |
+| `title` | unicode | The main text to print. | `""` |
+| `text` | unicode | Optional additional text to print. | `""` |
 | `show` | bool | Whether to print or not. Can be used to only output messages under certain condition, e.g. if `--verbose` flag is set. | `True` |
 | `exits` | int | If set, perform a system exit with the given code after printing. | `None` |
 
@@ -122,8 +124,8 @@ msg.divider("Heading")
 ```
 | Argument | Type | Description | Default |
 | --- | --- | --- | -- |
-| `text` | unicode | Headline text. If empty, only the line is printed. | `''` |
-| `char` | unicode | Single line character to repeat. | `'='` |
+| `text` | unicode | Headline text. If empty, only the line is printed. | `""` |
+| `char` | unicode | Single line character to repeat. | `"="` |
 | `show` | bool | Whether to print or not. Can be used to only output messages under certain condition, e.g. if `--verbose` flag is set. | `True` |
 
 #### <kbd>contextmanager</kbd> `Printer.loading`
@@ -138,7 +140,7 @@ msg.good("Successfully loaded something!")
 
 | Argument | Type | Description | Default |
 | --- | --- | --- | -- |
-| `text` | unicode | The text to display while loading. | `''` |
+| `text` | unicode | The text to display while loading. | `""` |
 
 #### <kbd>property</kbd> `Printer.counts`
 
@@ -166,7 +168,7 @@ print(msg.counts)
 ```python
 from wasabi import color
 
-formatted = color("This is a text", fg='white', bg='green', bold=True)
+formatted = color("This is a text", fg="white", bg="green", bold=True)
 ```
 
 | Argument | Type | Description | Default |

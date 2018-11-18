@@ -87,7 +87,8 @@ class Printer(object):
     ):
         """Print a message.
 
-        text (unicode): The text to print.
+        title (unicode): The main text to print.
+        text (unicode): Optional additional text to print.
         color (unicode / int): Foreground color.
         icon (unicode): Name of icon to add.
         show (bool): Whether to print or not. Can be used to only output
