@@ -2,23 +2,24 @@
 # coding: utf8
 from __future__ import unicode_literals
 
-from pathlib import Path
+import os
+import io
 from setuptools import setup, find_packages
 
 
 def setup_package():
     package_name = "wasabi"
-    root = Path(__file__).parent.resolve()
+    root = os.path.abspath(os.path.dirname(__file__))
 
     # Read in package meta from about.py
-    about_path = root / package_name / "about.py"
-    with about_path.open("r", encoding="utf8") as f:
+    about_path = os.path.join(root, package_name, "about.py")
+    with io.open(about_path, encoding="utf8") as f:
         about = {}
         exec(f.read(), about)
 
     # Get readme
-    readme_path = root / "README.md"
-    with readme_path.open("r", encoding="utf8") as f:
+    readme_path = os.path.join(root, "README.md")
+    with io.open(readme_path, encoding="utf8") as f:
         readme = f.read()
 
     setup(
