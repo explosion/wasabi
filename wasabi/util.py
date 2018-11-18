@@ -37,6 +37,14 @@ ICONS = {
 }
 
 
+IS_PYTHON_2 = sys.version_info[0] == 2
+
+if IS_PYTHON_2:
+    basestring_ = basestring  # noqa: F821
+else:
+    basestring_ = str
+
+
 def color(text, fg=None, bg=None, bold=False):
     """Color text by applying ANSI escape sequence.
 
@@ -132,13 +140,8 @@ def to_string(text):
     text: The text/object to be converted.
     RETURNS (unicode): The converted string.
     """
-    is_python2 = sys.version_info[0] == 2
-    if is_python2:
-        basestring_ = basestring  # noqa
-    else:
-        basestring_ = str
     if not isinstance(text, basestring_):
-        if is_python2:
+        if IS_PYTHON_2:
             text = str(text).decode("utf8")
         else:
             text = str(text)
