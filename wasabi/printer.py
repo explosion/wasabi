@@ -74,7 +74,7 @@ class Printer(object):
         """Print an error message."""
         return self._get_msg(text, style=MESSAGES.INFO, show=show)
 
-    def text(self, text="", color=None, icon=None, show=True):
+    def text(self, text="", color=None, icon=None, show=True, no_print=False):
         """Print a message.
 
         text (unicode): The text to print.
@@ -82,6 +82,7 @@ class Printer(object):
         icon (unicode): Name of icon to add.
         show (bool): Whether to print or not. Can be used to only output
             messages under certain condition, e.g. if --verbose flag is set.
+        no_print (bool): Don't actually print, just return.
         """
         if not show:
             return
@@ -90,7 +91,7 @@ class Printer(object):
             icon = self.icons.get(icon)
             text = locale_escape("{} {}".format(icon, text) if icon else text)
             text = _color(text, fg=color)
-        if self.no_print:
+        if self.no_print or no_print:
             return text
         print(text)
 
