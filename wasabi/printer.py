@@ -170,27 +170,3 @@ class Printer(object):
             show = False
         self._counts[style] += 1
         return self.text(title, text, color=style, icon=style, show=show, exits=exits)
-
-
-def print_message(*texts, **kwargs):
-    """Print formatted message.
-
-    *texts (unicode): Texts to print. Each argument is rendered as paragraph.
-    **kwargs: 'title' becomes headline. exits=1 performs sys exit.
-    """
-    exits = kwargs.get("exits")
-    indent = kwargs.get("indent", 4)
-    nowrap = kwargs.get("nowrap", False)
-    title = kwargs.get("title", None)
-    title_tpl = "{}\n"
-    if nowrap:
-        title = title_tpl.format(title) if title else ""
-        message = "\n\n".join(texts)
-    else:
-        title = title_tpl.format(wrap(title, indent=indent)) if title else ""
-        message = "\n\n".join([wrap(text, indent=indent) for text in texts])
-    print("\n{}{}\n".format(title, message))
-    if exits is not None:
-        sys.stdout.flush()
-        sys.stderr.flush()
-        sys.exit(exits)
