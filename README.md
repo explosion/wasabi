@@ -92,6 +92,7 @@ msg.text("Hello world!")
 | `icon` | unicode | Name of icon to add. | `None` |
 | `show` | bool | Whether to print or not. Can be used to only output messages under certain condition, e.g. if `--verbose` flag is set. | `True` |
 | `no_print` | bool | Don't actually print, just return. Overwrites global setting. | `False` |
+| `exits` | int | If set, perform a system exit with the given code after printing. | `None` |
 
 #### <kbd>method</kbd> `Printer.good`, `Printer.fail`, `Printer.warn`, `Printer.info`
 
@@ -109,6 +110,7 @@ msg.info("Info")
 | --- | --- | --- | -- |
 | `text` | unicode | The text to print. | `''` |
 | `show` | bool | Whether to print or not. Can be used to only output messages under certain condition, e.g. if `--verbose` flag is set. | `True` |
+| `exits` | int | If set, perform a system exit with the given code after printing. | `None` |
 
 #### <kbd>method</kbd> `Printer.divider`
 

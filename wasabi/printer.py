@@ -59,23 +59,32 @@ class Printer(object):
         """
         return self._counts
 
-    def good(self, text="", show=True):
+    def good(self, title="", text="", show=True, exits=None):
         """Print a success message."""
-        return self._get_msg(text, style=MESSAGES.GOOD, show=show)
+        return self._get_msg(title, text, style=MESSAGES.GOOD, show=show, exits=exits)
 
-    def fail(self, text="", show=True):
+    def fail(self, title="", text="", show=True, exits=None):
         """Print an error message."""
-        return self._get_msg(text, style=MESSAGES.FAIL, show=show)
+        return self._get_msg(title, text, style=MESSAGES.FAIL, show=show, exits=exits)
 
-    def warn(self, text="", show=True):
+    def warn(self, title="", text="", show=True, exits=None):
         """Print a warning message."""
-        return self._get_msg(text, style=MESSAGES.WARN, show=show)
+        return self._get_msg(title, text, style=MESSAGES.WARN, show=show, exits=exits)
 
-    def info(self, text="", show=True):
+    def info(self, title="", text="", show=True, exits=None):
         """Print an error message."""
-        return self._get_msg(text, style=MESSAGES.INFO, show=show)
+        return self._get_msg(title, text, style=MESSAGES.INFO, show=show, exits=exits)
 
-    def text(self, text="", color=None, icon=None, show=True, no_print=False):
+    def text(
+        self,
+        title="",
+        text="",
+        color=None,
+        icon=None,
+        show=True,
+        no_print=False,
+        exits=None,
+    ):
         """Print a message.
 
         text (unicode): The text to print.
@@ -84,17 +93,24 @@ class Printer(object):
         show (bool): Whether to print or not. Can be used to only output
             messages under certain condition, e.g. if --verbose flag is set.
         no_print (bool): Don't actually print, just return.
+        exits (int): Perform a system exit.
         """
         if not show:
             return
         if self.pretty and self.supports_ansi:
             color = self.colors.get(color)
             icon = self.icons.get(icon)
-            text = locale_escape("{} {}".format(icon, text) if icon else text)
-            text = _color(text, fg=color)
+            title = locale_escape("{} {}".format(icon, title) if icon else title)
+            title = _color(title, fg=color)
+        text = "\n{}".format(text) if text else ""
+        msg = wrap(title + text, indent=0)
         if self.no_print or no_print:
-            return text
-        print(text)
+            return msg
+        print(msg)
+        if exits is not None:
+            sys.stdout.flush()
+            sys.stderr.flush()
+            sys.exit(exits)
 
     def divider(self, text="", char="=", show=True):
         """Print a divider with a headline:
@@ -146,11 +162,11 @@ class Printer(object):
             sys.stdout.flush()
             time.sleep(0.1)
 
-    def _get_msg(self, text, style=None, show=None):
+    def _get_msg(self, title, text, style=None, show=None, exits=None):
         if self.ignore_warnings and style == MESSAGES.WARN:
             show = False
         self._counts[style] += 1
-        return self.text(text, color=style, icon=style, show=show)
+        return self.text(title, text, color=style, icon=style, show=show, exits=exits)
 
 
 def print_message(*texts, **kwargs):
