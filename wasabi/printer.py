@@ -104,6 +104,8 @@ class Printer(object):
             title = _color(title, fg=color)
         text = "\n{}".format(text) if text else ""
         msg = wrap(title + text, indent=0)
+        if exits is not None:
+            msg = "\n{}\n".format(msg)
         if self.no_print or no_print:
             return msg
         print(msg)
