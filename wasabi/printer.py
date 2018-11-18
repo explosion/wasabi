@@ -101,14 +101,14 @@ class Printer(object):
             color = self.colors.get(color)
             icon = self.icons.get(icon)
             title = locale_escape("{} {}".format(icon, title) if icon else title)
-            title = _color(title, fg=color)
-        text = "\n{}".format(text) if text else ""
-        msg = wrap(title + text, indent=0)
+            title = wrap(_color(title, fg=color), indent=0)
+        if text:
+            title = "{}\n{}".format(title, wrap(text, indent=0))
         if exits is not None:
-            msg = "\n{}\n".format(msg)
+            title = "\n{}\n".format(title)
         if self.no_print or no_print:
-            return msg
-        print(msg)
+            return title
+        print(title)
         if exits is not None:
             sys.stdout.flush()
             sys.stderr.flush()
