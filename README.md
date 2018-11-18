@@ -73,6 +73,7 @@ msg = Printer()
 | `colors` | dict | Add or overwrite color values, names mapped to `0`-`256`. | `None` |
 | `icons` | dict | Add or overwrite icon. Name mapped to unicode. | `None` |
 | `line_max` | int | Maximum line length (for divider). | `80` |
+| `indent` | int | Indentation, in spaces. | `2` |
 | `animation` | unicode | Steps of loading animation for `Printer.loading`. | `'⠙⠹⠸⠼⠴⠦⠧⠇⠏'` |
 | `animation_ascii` | unicode | Alternative animation for ASCII terminals. | `'|/-\\'` |
 | `ignore_warnings` | bool | Don't output messages of type `MESSAGE.WARN`. | `False` |
@@ -91,6 +92,7 @@ msg.text("Hello world!")
 | `color` | unicode / int | Color name or value. | `None` |
 | `icon` | unicode | Name of icon to add. | `None` |
 | `show` | bool | Whether to print or not. Can be used to only output messages under certain condition, e.g. if `--verbose` flag is set. | `True` |
+| `no_print` | bool | Don't actually print, just return. Overwrites global setting. | `False` |
 
 #### <kbd>method</kbd> `Printer.good`, `Printer.fail`, `Printer.warn`, `Printer.info`
 
