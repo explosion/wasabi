@@ -21,6 +21,7 @@ class Printer(object):
         colors=None,
         icons=None,
         line_max=80,
+        indent=2,
         animation="⠙⠹⠸⠼⠴⠦⠧⠇⠏",
         animation_ascii="|/-\\",
         ignore_warnings=False,
@@ -32,6 +33,7 @@ class Printer(object):
         colors (dict): Add or overwrite color values, name mapped to value.
         icons (dict): Add or overwrite icons. Name mapped to unicode icon.
         line_max (int): Maximum line length (for divider).
+        indent (int): Indentation, in spaces.
         animation (unicode): Steps of loading animation for loading() method.
         animation_ascii (unicode): Alternative animation for ASCII terminals.
         ignore_warnings (bool): Do not output messages of type MESSAGE.WARN.
@@ -43,6 +45,7 @@ class Printer(object):
         self.supports_ansi = supports_ansi()
         self.ignore_warnings = ignore_warnings
         self.line_max = line_max
+        self.indent = indent
         self.colors = dict(COLORS)
         self.icons = dict(ICONS)
         if colors:
@@ -90,7 +93,7 @@ class Printer(object):
             color = self.colors.get(color)
             icon = self.icons.get(icon)
             text = locale_escape("{} {}".format(icon, text) if icon else text)
-            text = _color(text, fg=color)
+            text = _color(self.indent * " " + text, fg=color)
         if self.no_print or no_print:
             return text
         print(text)
@@ -112,7 +115,10 @@ class Printer(object):
             deco = char * (int(round((self.line_max - len(text))) / 2) - 2)
             text = " {} ".format(text) if text else ""
             text = _color(
-                "\n{deco}{text}{deco}".format(deco=deco, text=text), bold=True
+                "\n{indent}{deco}{text}{deco}".format(
+                    indent=self.indent * " ", deco=deco, text=text
+                ),
+                bold=True,
             )
         if len(text) < self.line_max:
             text = text + char * (self.line_max - len(text))

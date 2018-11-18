@@ -8,7 +8,7 @@ from wasabi.util import MESSAGES
 
 
 def test_printer():
-    p = Printer(no_print=True)
+    p = Printer(no_print=True, indent=0)
     text = "This is a test."
     assert p.good(text) == "\x1b[38;5;2m\u2714 This is a test.\x1b[0m"
     assert p.fail(text) == "\x1b[38;5;1m\u2718 This is a test.\x1b[0m"
@@ -30,7 +30,7 @@ def test_printer_no_pretty():
 def test_printer_custom():
     colors = {"yellow": 220, "purple": 99}
     icons = {"warn": "\u26a0\ufe0f", "question": "?"}
-    p = Printer(no_print=True, colors=colors, icons=icons)
+    p = Printer(no_print=True, colors=colors, icons=icons, indent=0)
     text = "This is a test."
     purple_question = p.text(text, color="purple", icon="question")
     assert purple_question == "\x1b[38;5;99m? This is a test.\x1b[0m"
@@ -52,7 +52,7 @@ def test_printer_counts():
 
 
 def test_printer_divider():
-    p = Printer(line_max=20, no_print=True)
+    p = Printer(line_max=20, no_print=True, indent=0)
     p.divider() == "\x1b[1m\n================\x1b[0m"
     p.divider("test") == "\x1b[1m\n====== test ======\x1b[0m"
     p.divider("test", char="*") == "\x1b[1m\n****** test ******\x1b[0m"
