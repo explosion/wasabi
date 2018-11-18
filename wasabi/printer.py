@@ -8,6 +8,7 @@ import itertools
 import sys
 import time
 
+from .tables import table
 from .util import wrap, supports_ansi, can_render, locale_escape
 from .util import MESSAGES, COLORS, ICONS
 from .util import color as _color
@@ -122,6 +123,17 @@ class Printer(object):
             )
         if len(text) < self.line_max:
             text = text + char * (self.line_max - len(text))
+        if self.no_print:
+            return text
+        print(text)
+
+    def table(self, data, **kwargs):
+        kwargs["indent"] = self.indent
+        title = kwargs.pop("title", None)
+        text = table(data, **kwargs)
+        if title:
+            title_text = self.text(title, color="yellow", no_print=True)
+            text = "\n{}\n{}".format(title_text, text)
         if self.no_print:
             return text
         print(text)
