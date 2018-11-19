@@ -74,7 +74,7 @@ msg = Printer()
 | `icons` | dict | Add or overwrite icon. Name mapped to unicode. | `None` |
 | `line_max` | int | Maximum line length (for divider). | `80` |
 | `animation` | unicode | Steps of loading animation for `Printer.loading`. | `"⠙⠹⠸⠼⠴⠦⠧⠇⠏"` |
-| `animation_ascii` | unicode | Alternative animation for ASCII terminals. | `"|/-\\"` |
+| `animation_ascii` | unicode | Alternative animation for ASCII terminals. | `"\|/-\\"` |
 | `ignore_warnings` | bool | Don't output messages of type `MESSAGE.WARN`. | `False` |
 | **RETURNS** | `Printer` | The initialized printer. | - |
 
