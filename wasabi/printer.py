@@ -98,12 +98,14 @@ class Printer(object):
         """
         if not show:
             return
-        if self.pretty and self.supports_ansi:
+        if self.pretty:
             color = self.colors.get(color)
             icon = self.icons.get(icon)
             if icon:
                 title = locale_escape("{} {}".format(icon, title)).strip()
-            title = wrap(_color(title, fg=color), indent=0)
+            if self.supports_ansi:
+                title = _color(title, fg=color)
+            title = wrap(title, indent=0)
         if text:
             title = "{}\n{}".format(title, wrap(text, indent=0))
         if exits is not None:
