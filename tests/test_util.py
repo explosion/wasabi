@@ -2,7 +2,7 @@
 from __future__ import unicode_literals, print_function
 
 import pytest
-from wasabi.util import color, wrap, locale_escape
+from wasabi.util import color, wrap, locale_escape, supports_ansi
 
 
 def test_color():
@@ -27,4 +27,8 @@ def test_wrap():
 
 @pytest.mark.parametrize("text", ["abc", "\u2714 abc", "👻"])
 def test_locale_escape(text):
-    assert locale_escape(text)
+    result = locale_escape(text)
+    if supports_ansi():
+        assert result
+    else:
+        assert result == ""

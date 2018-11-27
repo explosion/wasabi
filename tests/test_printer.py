@@ -4,17 +4,24 @@ from __future__ import unicode_literals, print_function
 import pytest
 import time
 from wasabi.printer import Printer
-from wasabi.util import MESSAGES
+from wasabi.util import MESSAGES, supports_ansi
 
 
 def test_printer():
     p = Printer(no_print=True)
     text = "This is a test."
-    assert p.good(text) == "\x1b[38;5;2m\u2714 This is a test.\x1b[0m"
-    assert p.fail(text) == "\x1b[38;5;1m\u2718 This is a test.\x1b[0m"
-    assert p.warn(text) == "\x1b[38;5;3m\u26a0 This is a test.\x1b[0m"
-    assert p.info(text) == "\x1b[38;5;4m\u2139 This is a test.\x1b[0m"
-    assert p.text(text) == text
+    if supports_ansi():
+        assert p.good(text) == "\x1b[38;5;2m\u2714 This is a test.\x1b[0m"
+        assert p.fail(text) == "\x1b[38;5;1m\u2718 This is a test.\x1b[0m"
+        assert p.warn(text) == "\x1b[38;5;3m\u26a0 This is a test.\x1b[0m"
+        assert p.info(text) == "\x1b[38;5;4m\u2139 This is a test.\x1b[0m"
+        assert p.text(text) == text
+    else:
+        assert p.good(text) == text
+        assert p.fail(text) == text
+        assert p.warn(text) == text
+        assert p.info(text) == text
+        assert p.text(text) == text
 
 
 def test_printer_no_pretty():
@@ -33,8 +40,13 @@ def test_printer_custom():
     p = Printer(no_print=True, colors=colors, icons=icons)
     text = "This is a test."
     purple_question = p.text(text, color="purple", icon="question")
-    assert purple_question == "\x1b[38;5;99m? This is a test.\x1b[0m"
-    assert p.warn(text) == "\x1b[38;5;3m\u26a0\ufe0f This is a test.\x1b[0m"
+    warning = p.warn(text)
+    if supports_ansi():
+        assert purple_question == "\x1b[38;5;99m? This is a test.\x1b[0m"
+        assert warning == "\x1b[38;5;3m\u26a0\ufe0f This is a test.\x1b[0m"
+    else:
+        assert purple_question == "{} {}".format(icons["question"], text)
+        assert warning == text
 
 
 def test_printer_counts():

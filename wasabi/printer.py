@@ -101,7 +101,8 @@ class Printer(object):
         if self.pretty and self.supports_ansi:
             color = self.colors.get(color)
             icon = self.icons.get(icon)
-            title = locale_escape("{} {}".format(icon, title) if icon else title)
+            if icon:
+                title = locale_escape("{} {}".format(icon, title)).strip()
             title = wrap(_color(title, fg=color), indent=0)
         if text:
             title = "{}\n{}".format(title, wrap(text, indent=0))
