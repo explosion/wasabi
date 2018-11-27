@@ -1,0 +1,11 @@
+environment:
+  matrix:
+    - PYTHON: "C:\\Python27-x64"
+    - PYTHON: "C:\\Python35-x64"
+    - PYTHON: "C:\\Python36-x64"
+install:
+  - "%PYTHON%\\python.exe -m pip install pytest"
+test_script:
+  - "%PYTHON%\\python.exe -m pytest tests"
+after_test:
+  - "%PYTHON%\\python.exe setup.py sdist"
