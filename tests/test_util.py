@@ -26,7 +26,7 @@ def test_wrap():
 
 
 @pytest.mark.parametrize(
-    "text,non_ansi", [("abc", "abc"), ("\u2714 abc", "abc"), ("👻", "")]
+    "text,non_ansi", [("abc", "abc"), ("\u2714 abc", " abc"), ("👻", "")]
 )
 def test_locale_escape(text, non_ansi):
     result = locale_escape(text)
