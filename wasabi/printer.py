@@ -144,6 +144,12 @@ class Printer(object):
         print(text)
 
     def table(self, data, **kwargs):
+        """Print data as a table.
+
+        data (iterable / dict): The data to render. Either a list of lists
+            (one per row) or a dict for two-column tables.
+        kwargs: Table settings. See tables.table for details.
+        """
         title = kwargs.pop("title", None)
         text = table(data, **kwargs)
         if title:
