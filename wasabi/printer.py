@@ -8,7 +8,7 @@ import itertools
 import sys
 import time
 
-from .tables import table
+from .tables import table, row
 from .util import wrap, supports_ansi, can_render, locale_escape
 from .util import MESSAGES, COLORS, ICONS
 from .util import color as _color
@@ -154,6 +154,17 @@ class Printer(object):
         text = table(data, **kwargs)
         if title:
             self.divider(title)
+        if self.no_print:
+            return text
+        print(text)
+
+    def row(self, data, **kwargs):
+        """Print a table row.
+
+        data (iterable): The individual columns to format.
+        kwargs: Row settings. See tables.row for details.
+        """
+        text = row(data, **kwargs)
         if self.no_print:
             return text
         print(text)
