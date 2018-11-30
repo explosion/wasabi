@@ -157,7 +157,13 @@ class Printer(object):
         sys.stdout.flush()
         t = Process(target=self._spinner, args=(text,))
         t.start()
-        yield
+        try:
+            yield
+        except Exception as e:
+            # Handle exception inside the with block
+            t.terminate()
+            sys.stdout.write("\n")
+            raise (e)
         t.terminate()
         sys.stdout.write("\r\x1b[2K")  # erase line
         sys.stdout.flush()
