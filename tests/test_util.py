@@ -42,7 +42,7 @@ def test_format_repr():
     formatted = format_repr(obj, max_len=10, ellipsis="[...]")
     assert formatted.replace("u'", "'") in [
         "{'hel [...]  123}",
-        "{'tes ... rld'}",
+        "{'tes [...] rld'}",
         "{'te [...] rld'}",
     ]
 
