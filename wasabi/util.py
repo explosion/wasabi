@@ -91,6 +91,23 @@ def wrap(text, wrap_max=80, indent=4):
     )
 
 
+def format_repr(obj, max_len=50, ellipsis="..."):
+    """Wrapper around `repr()` to print shortened and formatted string version.
+
+    obj: The object to represent.
+    max_len (int): Maximum string length. Longer strings will be cut in the
+        middle so only the beginning and end is displayed, separated by ellipsis.
+    ellipsis (unicode): Ellipsis character(s), e.g. "...".
+    RETURNS (unicode): The formatted representation.
+    """
+    string = repr(obj)
+    if len(string) >= max_len:
+        half = int(max_len / 2)
+        return "{} {} {}".format(string[:half], ellipsis, string[-half:])
+    else:
+        return string
+
+
 def get_raw_input(description, default=False, indent=4):
     """Get user input from the command line via raw_input / input.
 

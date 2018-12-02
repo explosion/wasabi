@@ -2,7 +2,7 @@
 from __future__ import unicode_literals, print_function
 
 import pytest
-from wasabi.util import color, wrap, locale_escape, supports_ansi
+from wasabi.util import color, wrap, locale_escape, supports_ansi, format_repr
 
 
 def test_color():
@@ -23,6 +23,16 @@ def test_wrap():
         wrap(text, wrap_max=5, indent=2)
         == "  Hello\n  world,\n  this\n  is\n  a\n  test."
     )
+
+
+def test_format_repr():
+    obj = {"hello": "world", "test": 123}
+    formatted = format_repr(obj)
+    assert formatted == "{'hello': 'world', 'test': 123}"
+    formatted = format_repr(obj, max_len=10)
+    assert formatted == "{'hel ...  123}"
+    formatted = format_repr(obj, max_len=10, ellipsis="[...]")
+    assert formatted == "{'hel [...]  123}"
 
 
 @pytest.mark.parametrize(
