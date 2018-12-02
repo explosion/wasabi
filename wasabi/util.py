@@ -47,13 +47,14 @@ else:
     input_ = input
 
 
-def color(text, fg=None, bg=None, bold=False):
+def color(text, fg=None, bg=None, bold=False, underline=False):
     """Color text by applying ANSI escape sequence.
 
     text (unicode): The text to be formatted.
     fg (unicode / int): Foreground color. String name or 0 - 256 (see COLORS).
     bg (unicode / int): Background color. String name or 0 - 256 (see COLORS).
     bold (bool): Format text in bold.
+    underline (bool): Underline text.
     RETURNS (unicode): The formatted text.
     """
     fg = COLORS.get(fg, fg)
@@ -63,6 +64,8 @@ def color(text, fg=None, bg=None, bold=False):
     styles = []
     if bold:
         styles.append("1")
+    if underline:
+        styles.append("4")
     if fg:
         styles.append("38;5;{}".format(fg))
     if bg:

@@ -9,6 +9,7 @@ def test_color():
     assert color("test", fg="green") == "\x1b[38;5;2mtest\x1b[0m"
     assert color("test", fg=4) == "\x1b[38;5;4mtest\x1b[0m"
     assert color("test", bold=True) == "\x1b[1mtest\x1b[0m"
+    assert color("test", fg="red", underline=True) == "\x1b[4;38;5;1mtest\x1b[0m"
     assert (
         color("test", fg=7, bg="red", bold=True) == "\x1b[1;38;5;7;48;5;1mtest\x1b[0m"
     )
