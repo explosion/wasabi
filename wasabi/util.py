@@ -156,6 +156,8 @@ def supports_ansi():
 
     RETURNS (bool): Whether the terminal supports ANSI colors.
     """
+    if os.getenv("ANSI_COLORS_DISABLED"):
+        return False
     # See: https://stackoverflow.com/q/7445658/6400719
     plat = sys.platform
     supported_platform = plat != "Pocket PC" and (
