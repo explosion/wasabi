@@ -29,11 +29,14 @@ def test_wrap():
 def test_format_repr():
     obj = {"hello": "world", "test": 123}
     formatted = format_repr(obj)
-    assert formatted == "{'hello': 'world', 'test': 123}"
+    assert formatted.replace("u'", "'") in [
+        "{'hello': 'world', 'test': 123}",
+        "{'test': 123, 'hello': 'world'}",
+    ]
     formatted = format_repr(obj, max_len=10)
-    assert formatted == "{'hel ...  123}"
+    assert formatted.replace("u'", "'") in ["{'hel ...  123}", "{'tes ... rld'}"]
     formatted = format_repr(obj, max_len=10, ellipsis="[...]")
-    assert formatted == "{'hel [...]  123}"
+    assert formatted.replace("u'", "'") in ["{'hel [...]  123}", "{'tes [...] rld'}"]
 
 
 @pytest.mark.parametrize(
