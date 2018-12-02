@@ -48,9 +48,9 @@ class TracebackPrinter(object):
         tb = settings.get("tb", None)
         if self.supports_ansi:  # use first line as title
             title = color(title, fg=self.color_error, bold=True)
-        info = "\n".join([self.indent + text for text in texts])
+        info = "\n" + "\n".join([self.indent + text for text in texts]) if texts else ""
         tb = self._get_traceback(tb, highlight) if tb else ""
-        msg = "\n\n{}{}\n{}{}\n".format(self.indent, title, info, tb)
+        msg = "\n\n{}{}{}{}\n".format(self.indent, title, info, tb)
         return locale_escape(msg)
 
     def _get_traceback(self, tb, highlight):

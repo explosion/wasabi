@@ -31,6 +31,12 @@ def test_traceback_printer_custom_colors(tb):
     print(msg)
 
 
+def test_traceback_printer_only_title(tb):
+    tbp = TracebackPrinter(tb_base="wasabi")
+    msg = tbp("Hello world", tb=tb)
+    print(msg)
+
+
 def test_traceback_printer_no_tb():
     tbp = TracebackPrinter(tb_base="wasabi")
     msg = tbp("Hello world", "This is a test")
