@@ -34,9 +34,9 @@ def test_format_repr():
         "{'test': 123, 'hello': 'world'}",
     ]
     formatted = format_repr(obj, max_len=10)
-    assert formatted.replace("u'", "'") in ["{'hel ...  123}", "{'tes ... rld'}"]
+    assert formatted.replace("u'", "'") in ["{'hel ...  123}", "{'te ... rld'}"]
     formatted = format_repr(obj, max_len=10, ellipsis="[...]")
-    assert formatted.replace("u'", "'") in ["{'hel [...]  123}", "{'tes [...] rld'}"]
+    assert formatted.replace("u'", "'") in ["{'hel [...]  123}", "{'te [...] rld'}"]
 
 
 @pytest.mark.parametrize(
