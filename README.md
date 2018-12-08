@@ -23,14 +23,10 @@ lightweight, has zero dependencies and works across Python 2 and 3.
 
 ### Are you going to add more features?
 
-Yes, there's still a bunch of helpers and features to port over – for example,
-[Thinc](https://github.com/explosion/thinc)'s custom traceback printer. I'd also
-love to add a nice training results table utility, since this is something that
-we use a lot.
-
-However, the new features will be heavily biased by what we (think we) need. I
-always appreciate pull requests to improve the existing functionality – but I
-want to keep this library as simple, lightweight and specific as possible.
+Yes, there's still a few of helpers and features to port over. However, the new
+features will be heavily biased by what we (think we) need. I always appreciate
+pull requests to improve the existing functionality – but I want to keep this
+library as simple, lightweight and specific as possible.
 
 ### Can I use this for my projects?
 
@@ -76,6 +72,7 @@ msg = Printer()
 | `line_max` | int | Maximum line length (for divider). | `80` |
 | `animation` | unicode | Steps of loading animation for `Printer.loading`. | `"⠙⠹⠸⠼⠴⠦⠧⠇⠏"` |
 | `animation_ascii` | unicode | Alternative animation for ASCII terminals. | `"\|/-\\"` |
+| `hide_animation` | bool | Don't display animation, e.g. for logs. | `False` |
 | `ignore_warnings` | bool | Don't output messages of type `MESSAGE.WARN`. | `False` |
 | **RETURNS** | `Printer` | The initialized printer. | - |
 
@@ -143,6 +140,10 @@ msg.good("Successfully loaded something!")
 | --- | --- | --- | -- |
 | `text` | unicode | The text to display while loading. | `""` |
 
+#### <kbd>method</kbd> `Printer.table`, `Printer.row`
+
+See [Tables](#tables).
+
 #### <kbd>property</kbd> `Printer.counts`
 
 Get the counts of how often the special printers were fired, e.g.
@@ -161,6 +162,109 @@ print(msg.counts)
 | Argument | Type | Description |
 | --- | --- | --- |
 | **RETURNS** | `Counter` | The counts for the individual special message types. |
+
+### Tables
+
+#### <kbd>function</kbd> `table`
+
+Lightweight helper to format tabular data.
+
+```python
+from wasabi import table
+
+data = [("a1", "a2", "a3"), ("b1", "b2", "b3")]
+header = ("Column 1", "Column 2", "Column 3")
+widths = (8, 9, 10)
+aligns = ("r", "c", "l")
+formatted = table(data, header=header, divider=True, widths=widths, aligns=aligns)
+```
+
+```
+Column 1   Column 2    Column 3
+--------   ---------   ----------
+      a1      a2       a3
+      b1      b2       b3
+```
+
+| Argument | Type | Description | Default |
+| --- | --- | --- | --- |
+| `data` | iterable / dict | The data to render. Either a list of lists (one per row) or a dict for two-column tables. |  |
+| `header` | iterable | Optional header columns. | `None` |
+| `footer` | iterable | Optional footer columns. | `None` |
+| `divider` | bool | Show a divider line between header/footer and body. | `False` |
+| `widths` | iterable / `"auto"` | Column widths in order. If `"auto"`, widths will be calculated automatically based on the largest value. | `"auto"` |
+| `max_col` | int | Maximum column width. | `30` |
+| `spacing` | int | Number of spaces between columns. | `3` |
+| `aligns` | iterable | Columns alignments in order. `"l"` (left), `"r"` (right) or `"c"` (center). | `None` |
+| **RETURNS** | unicode | The formatted table. |  |
+
+#### <kbd>function</kbd> `row`
+
+```python
+from wasabi import row
+
+data = ("a1", "a2", "a3")
+formatted = row(data)
+```
+
+```
+a1   a2   a3
+```
+
+| Argument | Type | Description | Default |
+| --- | --- | --- | --- |
+| `data` | iterable | The individual columns to format. |  |
+| `widths` | iterable / `"auto"` | Column widths in order. If `"auto"`, widths will be calculated automatically based on the largest value. | `"auto"` |
+| `spacing` | int | Number of spaces between columns. | `3` |
+| `aligns` | iterable | Columns alignments in order. `"l"` (left), `"r"` (right) or `"c"` (center). | `None` |
+| **RETURNS** | unicode | The formatted row. |  |
+
+### <kbd>class</kbd> `TracebackPrinter`
+
+Helper to output custom formatted tracebacks and error messages. Currently
+used in [Thinc](https://github.com/explosion/thinc).
+
+#### <kbd>method</kbd> `TracebackPrinter.__init__`
+
+Initialize a traceback printer.
+
+```python
+from wasabi import TracebackPrinter
+
+tb = TracebackPrinter(tb_base="thinc", tb_exclude=("check.py",))
+```
+
+| Argument | Type | Description | Default |
+| --- | --- | --- | --- |
+| `color_error` | unicode / int | Color name or code for errors (passed to `color` helper). | `"red"` |
+| `color_tb` | unicode / int | Color name or code for traceback headline (passed to `color` helper). | `"blue"` |
+| `color_highlight` | unicode / int | Color name or code for highlighted text (passed to `color` helper). | `"yellow"` |
+| `indent` | int | Number of spaces to use for indentation. | `2` |
+| `tb_base` | unicode | Name of directory to use to show relative paths. For example, `"thinc"` will look for the last occurence of `"/thinc/"` in a path and only show path to the right of it. | `None` |
+| `tb_exclude` | tuple | List of filenames to exclude from traceback. | `tuple()` |
+| **RETURNS** | `TracebackPrinter` | The traceback printer. |  |
+
+#### <kbd>method</kbd> `TracebackPrinter.__call__`
+
+Output custom formatted tracebacks and errors.
+
+```python
+from wasabi import TracebackPrinter
+import traceback
+
+tb = TracebackPrinter(tb_base="thinc", tb_exclude=("check.py",))
+
+error = tb("Some error", "Error description", highlight="25", tb=traceback.extract_stack())
+raise ValueError(error)
+```
+
+| Argument | Type | Description | Default |
+| --- | --- | --- | --- |
+| `title` | unicode | The message title. |  |
+| `*texts` | unicode | Optional texts to print (one per line). |  |
+| `highlight` | unicode | Optional sequence to highlight in the traceback, e.g. the bad value that caused the error. | `False` |
+| `tb` | iterable | The traceback, e.g. generated by `traceback.extract_stack()`. | `None` |
+| **RETURNS** | unicode | The formatted traceback. Can be printed or raised by custom exception. |  |
 
 ### Utilities
 
@@ -194,6 +298,15 @@ wrapped = wrap("Hello world, this is a text.", indent=2)
 | `wrap_max` | int | Maximum line width, including indentation. | `80` |
 | `indent` | int | Number of spaces used for indentation. | `4` |
 | **RETURNS** | unicode | The wrapped text with line breaks.
+
+### Environment variables
+
+Wasabi also respects the following environment variables:
+
+| Name | Description |
+| --- | --- |
+| `ANSI_COLORS_DISABLED` | Disable colors. |
+| `LOG_FRIENDLY` | Make output nicer for logs (no colors, no animations). |
 
 ## 🔔 Run tests
 
