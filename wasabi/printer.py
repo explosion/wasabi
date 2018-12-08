@@ -41,7 +41,7 @@ class Printer(object):
         self._counts = Counter()
         self.pretty = pretty
         self.no_print = no_print
-        self.supports_ansi = supports_ansi()
+        self.show_color = supports_ansi()
         self.ignore_warnings = ignore_warnings
         self.line_max = line_max
         self.colors = dict(COLORS)
@@ -103,7 +103,7 @@ class Printer(object):
             icon = self.icons.get(icon)
             if icon:
                 title = locale_escape("{} {}".format(icon, title)).strip()
-            if self.supports_ansi:
+            if self.show_color:
                 title = _color(title, fg=color)
             title = wrap(title, indent=0)
         if text:
