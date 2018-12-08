@@ -17,11 +17,12 @@ class TracebackPrinter(object):
         """Initialize a traceback printer.
 
         color_error (unicode / int): Color name or code for errors.
-        color_tb (unicode / int): Color name or code for tracebacks.
+        color_tb (unicode / int): Color name or code for traceback headline.
         color_highlight (unicode / int): Color name or code for highlights.
         indent (int): Indentation in spaces.
-        tb_base (unicode): Directory name usef to strip out all user paths and
-            only show path from that directory in traceback.
+        tb_base (unicode): Name of directory to use to show relative paths. For
+            example, "thinc" will look for the last occurence of "/thinc/" in
+            a path and only show path to the right of it.
         tb_exclude (tuple): List of filenames to exclude from traceback.
         RETURNS (TracebackPrinter): The traceback printer.
         """
