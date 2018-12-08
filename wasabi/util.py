@@ -7,6 +7,11 @@ import locale
 import textwrap
 
 
+# Environment variables
+ENV_ANSI_DISABLED = "ANSI_COLORS_DISABLED"  # no colors
+ENV_LOG_FRIENDLY = "LOG_FRIENDLY"  # no colors and animations
+
+
 class MESSAGES(object):
     GOOD = "good"
     FAIL = "fail"
@@ -159,7 +164,7 @@ def supports_ansi():
 
     RETURNS (bool): Whether the terminal supports ANSI colors.
     """
-    if os.getenv("ANSI_COLORS_DISABLED"):
+    if os.getenv(ENV_ANSI_DISABLED) or os.getenv(ENV_LOG_FRIENDLY):
         return False
     # See: https://stackoverflow.com/q/7445658/6400719
     plat = sys.platform
