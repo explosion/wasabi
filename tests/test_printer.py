@@ -76,8 +76,9 @@ def test_printer_divider():
         p.divider("test", char="~.")
 
 
-def test_printer_loading():
-    p = Printer()
+@pytest.mark.parametrize("hide_animation", [False, True])
+def test_printer_loading(hide_animation):
+    p = Printer(hide_animation=hide_animation)
     print("\n")
     with p.loading("Loading..."):
         time.sleep(1)
@@ -90,3 +91,14 @@ def test_printer_loading():
     with p.loading("Loading..."):
         time.sleep(1)
     p.good("Success!")
+
+
+def test_printer_loading_raises_exception():
+    def loading_with_exception():
+        p = Printer()
+        print("\n")
+        with p.loading():
+            raise Exception("This is an error.")
+
+    with pytest.raises(Exception):
+        loading_with_exception()
