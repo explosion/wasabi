@@ -185,8 +185,7 @@ class Printer(object):
                 yield
             except Exception as e:
                 # Handle exception inside the with block
-                if not self.hide_animation:
-                    t.terminate()
+                t.terminate()
                 sys.stdout.write("\n")
                 raise (e)
             t.terminate()
