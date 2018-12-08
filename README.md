@@ -195,7 +195,7 @@ Column 1   Column 2    Column 3
 | `widths` | iterable / `"auto"` | Column widths in order. If `"auto"`, widths will be calculated automatically based on the largest value. | `"auto"` |
 | `max_col` | int | Maximum column width. | `30` |
 | `spacing` | int | Number of spaces between columns. | `3` |
-| `aligns` | iterable | Columns alignments in order. `"l"` (left), `"r"` (right) or `"c"` (center). | `None` |
+| `aligns` | iterable / unicode | Columns alignments in order. `"l"` (left, default), `"r"` (right) or `"c"` (center). If  If a string, value is used for all columns. | `None` |
 | **RETURNS** | unicode | The formatted table. |  |
 
 #### <kbd>function</kbd> `row`
@@ -254,8 +254,19 @@ import traceback
 
 tb = TracebackPrinter(tb_base="thinc", tb_exclude=("check.py",))
 
-error = tb("Some error", "Error description", highlight="25", tb=traceback.extract_stack())
+error = tb("Some error", "Error description", highlight="kwargs", tb=traceback.extract_stack())
 raise ValueError(error)
+```
+
+```
+  Some error
+  Some error description
+
+  Traceback:
+  ├─ <lambda> [61] in .env/lib/python3.6/site-packages/pluggy/manager.py
+  ├─── _multicall [187] in .env/lib/python3.6/site-packages/pluggy/callers.py
+  └───── pytest_fixture_setup [969] in .env/lib/python3.6/site-packages/_pytest/fixtures.py
+         >>> result = call_fixture_func(fixturefunc, request, kwargs)
 ```
 
 | Argument | Type | Description | Default |
