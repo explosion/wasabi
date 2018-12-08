@@ -7,10 +7,11 @@ from multiprocessing import Process
 import itertools
 import sys
 import time
+import os
 
 from .tables import table, row
 from .util import wrap, supports_ansi, can_render, locale_escape
-from .util import MESSAGES, COLORS, ICONS
+from .util import MESSAGES, COLORS, ICONS, ENV_LOG_FRIENDLY
 from .util import color as _color
 
 
@@ -24,6 +25,7 @@ class Printer(object):
         line_max=80,
         animation="⠙⠹⠸⠼⠴⠦⠧⠇⠏",
         animation_ascii="|/-\\",
+        hide_animation=False,
         ignore_warnings=False,
     ):
         """Initialize the command-line printer.
@@ -42,6 +44,7 @@ class Printer(object):
         self.pretty = pretty
         self.no_print = no_print
         self.show_color = supports_ansi()
+        self.hide_animation = hide_animation or os.getenv(ENV_LOG_FRIENDLY)
         self.ignore_warnings = ignore_warnings
         self.line_max = line_max
         self.colors = dict(COLORS)
@@ -170,20 +173,25 @@ class Printer(object):
         print(text)
 
     @contextmanager
-    def loading(self, text=""):
-        sys.stdout.flush()
-        t = Process(target=self._spinner, args=(text,))
-        t.start()
-        try:
+    def loading(self, text="Loading..."):
+        if self.hide_animation:
+            print(text)
             yield
-        except Exception as e:
-            # Handle exception inside the with block
+        else:
+            sys.stdout.flush()
+            t = Process(target=self._spinner, args=(text,))
+            t.start()
+            try:
+                yield
+            except Exception as e:
+                # Handle exception inside the with block
+                if not self.hide_animation:
+                    t.terminate()
+                sys.stdout.write("\n")
+                raise (e)
             t.terminate()
-            sys.stdout.write("\n")
-            raise (e)
-        t.terminate()
-        sys.stdout.write("\r\x1b[2K")  # erase line
-        sys.stdout.flush()
+            sys.stdout.write("\r\x1b[2K")  # erase line
+            sys.stdout.flush()
 
     def _spinner(self, text="Loading..."):
         for char in itertools.cycle(self.anim):
