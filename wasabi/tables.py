@@ -28,8 +28,9 @@ def table(
         will be calculated automatically based on the largest value.
     max_col (int): Maximum column width.
     spacing (int): Spacing between columns, in spaces.
-    aligns (iterable): Column alignments in order. 'l' (left, default), 'r'
-        (right) or 'c' (center).
+    aligns (iterable / unicode): Column alignments in order. 'l' (left,
+        default), 'r' (right) or 'c' (center). If a string, value is used
+        for all columns.
     RETURNS (unicode): The formatted table.
     """
     if isinstance(data, dict):
@@ -59,13 +60,16 @@ def row(data, widths="auto", spacing=3, aligns=None):
     widths (iterable or 'auto'): Column widths in order. If "auto", widths
         will be calculated automatically based on the largest value.
     spacing (int): Spacing between columns, in spaces.
-    aligns (iterable): Column alignments in order. 'l' (left, default), 'r'
-        (right) or 'c' (center).
+    aligns (iterable / unicode): Column alignments in order. 'l' (left,
+        default), 'r' (right) or 'c' (center). If a string, value is used
+        for all columns.
     RETURNS (unicode): The formatted row.
     """
     cols = []
+    if aligns in ALIGN_MAP:  # single align value
+        aligns = [aligns for i in data]
     for i, col in enumerate(data):
-        align = ALIGN_MAP.get(aligns[i] if aligns else "l")
+        align = ALIGN_MAP.get(aligns[i] if aligns and i < len(aligns) else "l")
         col_width = len(col) if widths == "auto" else widths[i]
         tpl = "{:%s%d}" % (align, col_width)
         cols.append(tpl.format(to_string(col)))

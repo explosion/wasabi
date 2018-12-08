@@ -52,6 +52,14 @@ def test_table_aligns(data):
     )
 
 
+def test_table_aligns_single(data):
+    result = table(data, aligns="r")
+    assert (
+        result
+        == "\n         Hello   World   12344342\nThis is a test   World       1234\n"
+    )
+
+
 def test_table_widths():
     data = [("a", "bb", "ccc"), ("d", "ee", "fff")]
     widths = (5, 2, 10)
