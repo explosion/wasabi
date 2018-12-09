@@ -66,8 +66,8 @@ def row(data, widths="auto", spacing=3, aligns=None):
     RETURNS (unicode): The formatted row.
     """
     cols = []
-    if aligns in ALIGN_MAP:  # single align value
-        aligns = [aligns for i in data]
+    if hasattr(aligns, '__hash__') and aligns in ALIGN_MAP:
+        aligns = [aligns for _ in data]
     for i, col in enumerate(data):
         align = ALIGN_MAP.get(aligns[i] if aligns and i < len(aligns) else "l")
         col_width = len(col) if widths == "auto" else widths[i]
