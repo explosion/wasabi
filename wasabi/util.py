@@ -166,9 +166,8 @@ def supports_ansi():
     if os.getenv(ENV_ANSI_DISABLED):
         return False
     # See: https://stackoverflow.com/q/7445658/6400719
-    plat = sys.platform
-    supported_platform = plat != "Pocket PC" and (
-        plat != "win32" or "ANSICON" in os.environ
+    supported_platform = sys.platform != "Pocket PC" and (
+        sys.platform != "win32" or "ANSICON" in os.environ
     )
     if not supported_platform:
         return False
