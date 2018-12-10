@@ -3,6 +3,7 @@ from __future__ import unicode_literals, print_function
 
 import pytest
 import time
+import os
 from wasabi.printer import Printer
 from wasabi.util import MESSAGES, supports_ansi
 
@@ -102,3 +103,21 @@ def test_printer_loading_raises_exception():
 
     with pytest.raises(Exception):
         loading_with_exception()
+
+
+def test_printer_log_friendly():
+    text = "This is a test."
+    ENV_LOG_FRIENDLY = "WASABI_LOG_FRIENDLY"
+    os.environ[ENV_LOG_FRIENDLY] = "True"
+    p = Printer(no_print=True)
+    assert p.good(text) == "\u2714 This is a test."
+    del os.environ[ENV_LOG_FRIENDLY]
+
+
+def test_printer_log_friendly_prefix():
+    text = "This is a test."
+    ENV_LOG_FRIENDLY = "CUSTOM_LOG_FRIENDLY"
+    os.environ[ENV_LOG_FRIENDLY] = "True"
+    p = Printer(no_print=True, env_prefix="CUSTOM")
+    assert p.good(text) == "\u2714 This is a test."
+    del os.environ[ENV_LOG_FRIENDLY]

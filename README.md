@@ -74,6 +74,7 @@ msg = Printer()
 | `animation_ascii` | unicode | Alternative animation for ASCII terminals. | `"\|/-\\"` |
 | `hide_animation` | bool | Don't display animation, e.g. for logs. | `False` |
 | `ignore_warnings` | bool | Don't output messages of type `MESSAGE.WARN`. | `False` |
+| `env_prefix` | unicode | Prefix for environment variables, e.g. `WASABI_LOG_FRIENDLY`. | `"WASABI"` |
 | **RETURNS** | `Printer` | The initialized printer. | - |
 
 #### <kbd>method</kbd> `Printer.text`
@@ -317,7 +318,7 @@ Wasabi also respects the following environment variables:
 | Name | Description |
 | --- | --- |
 | `ANSI_COLORS_DISABLED` | Disable colors. |
-| `LOG_FRIENDLY` | Make output nicer for logs (no colors, no animations). |
+| `WASABI_LOG_FRIENDLY` | Make output nicer for logs (no colors, no animations). The prefix can be customised on the `Printer` via the `env_prefix` argument. For example, setting `env_prefix="SPACY"` will expect the environment variable `SPACY_LOG_FRIENDLY`. |
 
 ## 🔔 Run tests
 

@@ -11,7 +11,7 @@ import os
 
 from .tables import table, row
 from .util import wrap, supports_ansi, can_render, locale_escape
-from .util import MESSAGES, COLORS, ICONS, ENV_LOG_FRIENDLY
+from .util import MESSAGES, COLORS, ICONS
 from .util import color as _color
 
 
@@ -27,6 +27,7 @@ class Printer(object):
         animation_ascii="|/-\\",
         hide_animation=False,
         ignore_warnings=False,
+        env_prefix="WASABI",
     ):
         """Initialize the command-line printer.
 
@@ -39,13 +40,16 @@ class Printer(object):
         animation_ascii (unicode): Alternative animation for ASCII terminals.
         hide_animation (bool): Don't display animation, e.g. for logs.
         ignore_warnings (bool): Do not output messages of type MESSAGE.WARN.
+        env_prefix (unicode): Prefix for environment variables, e.g.
+            WASABI_LOG_FRIENDLY.
         RETURNS (Printer): The initialized printer.
         """
+        log_friendly = os.getenv("{}_LOG_FRIENDLY".format(env_prefix), False)
         self._counts = Counter()
         self.pretty = pretty
         self.no_print = no_print
-        self.show_color = supports_ansi()
-        self.hide_animation = hide_animation or os.getenv(ENV_LOG_FRIENDLY)
+        self.show_color = supports_ansi() and not log_friendly
+        self.hide_animation = hide_animation or log_friendly
         self.ignore_warnings = ignore_warnings
         self.line_max = line_max
         self.colors = dict(COLORS)
