@@ -1,7 +1,7 @@
 # coding: utf8
 from __future__ import unicode_literals, print_function
 
-from .util import to_string
+from .util import to_string, basestring_
 
 
 ALIGN_MAP = {"l": "<", "r": ">", "c": "^"}
@@ -66,7 +66,7 @@ def row(data, widths="auto", spacing=3, aligns=None):
     RETURNS (unicode): The formatted row.
     """
     cols = []
-    if hasattr(aligns, '__hash__') and aligns in ALIGN_MAP:
+    if isinstance(aligns, basestring_):  # single align value
         aligns = [aligns for _ in data]
     for i, col in enumerate(data):
         align = ALIGN_MAP.get(aligns[i] if aligns and i < len(aligns) else "l")
