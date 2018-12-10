@@ -37,6 +37,7 @@ class Printer(object):
         line_max (int): Maximum line length (for divider).
         animation (unicode): Steps of loading animation for loading() method.
         animation_ascii (unicode): Alternative animation for ASCII terminals.
+        hide_animation (bool): Don't display animation, e.g. for logs.
         ignore_warnings (bool): Do not output messages of type MESSAGE.WARN.
         RETURNS (Printer): The initialized printer.
         """
