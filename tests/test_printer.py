@@ -127,3 +127,10 @@ def test_printer_log_friendly_prefix():
     else:
         assert p.good(text) == text
     del os.environ[ENV_LOG_FRIENDLY]
+
+
+def test_printer_none_encoding(monkeypatch):
+    """Test that printer works even if sys.stdout.encoding is set to None. This
+    previously caused a very confusing error."""
+    monkeypatch.setattr("sys.stdout.encoding", None)
+    p = Printer()
