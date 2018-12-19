@@ -150,7 +150,7 @@ def can_render(string):
     RETURNS (bool): Whether the terminal can render the text.
     """
     try:
-        string.encode(sys.stdout.encoding)
+        string.encode(sys.stdout.encoding or "ascii")
         return True
     except UnicodeEncodeError:
         return False
