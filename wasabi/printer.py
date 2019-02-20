@@ -118,13 +118,14 @@ class Printer(object):
             title = "{}\n{}".format(title, wrap(text, indent=0))
         if exits is not None:
             title = "\n{}\n".format(title)
-        if self.no_print or no_print:
-            return title
-        print(title)
+        if not self.no_print and not no_print:
+            print(title)
         if exits is not None:
             sys.stdout.flush()
             sys.stderr.flush()
             sys.exit(exits)
+        if self.no_print or no_print:
+            return title
 
     def divider(self, text="", char="=", show=True):
         """Print a divider with a headline:
@@ -179,6 +180,8 @@ class Printer(object):
 
     @contextmanager
     def loading(self, text="Loading..."):
+        if self.no_print:
+            yield
         if self.hide_animation:
             print(text)
             yield
