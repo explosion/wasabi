@@ -1,5 +1,5 @@
 __title__ = "wasabi"
-__version__ = "0.0.15"
+__version__ = "0.1.0"
 __summary__ = "A lightweight console printing and formatting toolkit"
 __uri__ = "https://ines.io"
 __author__ = "Ines Montani"
