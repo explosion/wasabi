@@ -7,6 +7,6 @@ build: off
 install:
   - "%PYTHON%\\python.exe -m pip install pytest"
 test_script:
-  - "%PYTHON%\\python.exe -m pytest tests"
+  - "%PYTHON%\\python.exe -m pytest wasabi"
 after_test:
   - "%PYTHON%\\python.exe setup.py sdist"

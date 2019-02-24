@@ -323,10 +323,10 @@ Wasabi also respects the following environment variables:
 ## 🔔 Run tests
 
 Fork or clone the repo, make sure you have `pytest` installed and then run it
-on the directory [`/tests`](/tests):
+on the package directory. The tests are located in [`/wasabi/tests`](/wasabi/tests).
 
 ```bash
 pip install pytest
 cd wasabi
-python -m pytest tests
+python -m pytest wasabi
 ```

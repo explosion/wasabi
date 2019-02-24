@@ -6,7 +6,7 @@ python:
 before_script:
   - pip install pytest
 script:
-  - python -m pytest tests
+  - python -m pytest wasabi
   - python setup.py sdist
 cache: pip
 notifications:
