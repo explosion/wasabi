@@ -33,7 +33,7 @@ def setup_package():
         license=about["__license__"],
         packages=find_packages(),
         install_requires=[],
-        zip_safe=False,
+        zip_safe=True,
     )
 
 
