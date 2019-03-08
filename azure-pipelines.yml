@@ -60,6 +60,11 @@ jobs:
   - script: python -m pip install --upgrade pip
     displayName: 'Install dependencies'
 
+  - script: |
+      pip install pytest
+      python -m pytest wasabi
+    displayName: 'pytest'
+
 - job: 'Publish'
   dependsOn: 'Test'
   pool:
