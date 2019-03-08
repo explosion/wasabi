@@ -11,20 +11,21 @@ jobs:
 - job: 'Test'
   strategy:
     matrix:
-      Python27:
-        python.version: '2.7'
-      Python35:
-        python.version: '3.5'
-      Python36:
-        python.version: '3.6'
-      Python37:
-        python.version: '3.7'
-      linux:
+      Python27Linux:
         imageName: 'ubuntu-16.04'
-      mac:
-        imageName: 'macos-10.13'
-      windows:
+        python.version: '2.7'
+      Python27Windows:
         imageName: 'vs2017-win2016'
+        python.version: '2.7'
+      Python35Linux:
+        imageName: 'ubuntu-16.04'
+        python.version: '3.5'
+      Python36Linux:
+        imageName: 'ubuntu-16.04'
+        python.version: '3.6'
+      Python37Linux:
+        imageName: 'ubuntu-16.04'
+        python.version: '3.7'
     maxParallel: 4
   pool:
     vmImage: $(imageName)
