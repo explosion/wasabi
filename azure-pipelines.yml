@@ -1,8 +1,3 @@
-# Python package
-# Create and test a Python package on multiple Python versions.
-# Add steps that analyze code, save the dist with the build record, publish to a PyPI-compatible index, and more:
-# https://docs.microsoft.com/azure/devops/pipelines/languages/python
-
 trigger:
 - master
 
@@ -63,18 +58,7 @@ jobs:
   - script: |
       pip install pytest
       python -m pytest wasabi
-    displayName: 'pytest'
-
-- job: 'Publish'
-  dependsOn: 'Test'
-  pool:
-    vmImage: 'Ubuntu-16.04'
-
-  steps:
-  - task: UsePythonVersion@0
-    inputs:
-      versionSpec: '3.x'
-      architecture: 'x64'
+    displayName: 'Run tests'
 
   - script: python setup.py sdist
-    displayName: 'Build sdist'
+    displayName: 'Test sdist'
