@@ -11,7 +11,7 @@ This package is still a work in progress and aims to bundle those utilities in
 a standardised way so they can be shared across our other projects. It's super
 lightweight, has zero dependencies and works across Python 2 and 3.
 
-[![Azure Pipelines](https://img.shields.io/azure-devops/build/explosion-ai/public/1.svg?logo=azure-devops&style=flat-square)](https://dev.azure.com/explosion-ai/public/_build?definitionId=1)
+[![Azure Pipelines](https://img.shields.io/azure-devops/build/explosion-ai/public/1/master.svg?logo=azure-devops&style=flat-square)](https://dev.azure.com/explosion-ai/public/_build?definitionId=1)
 [![PyPi](https://img.shields.io/pypi/v/wasabi.svg?style=flat-square)](https://pypi.python.org/pypi/wasabi)
 [![conda](https://img.shields.io/conda/vn/conda-forge/wasabi.svg?style=flat-square)](https://anaconda.org/conda-forge/wasabi)
 [![GitHub](https://img.shields.io/github/release/ines/wasabi/all.svg?style=flat-square)](https://github.com/ines/wasabi)
