@@ -2,7 +2,7 @@
 from __future__ import unicode_literals, print_function
 
 import pytest
-from wasabi.tables import table
+from wasabi.tables import table, row
 
 
 @pytest.fixture()
@@ -65,3 +65,9 @@ def test_table_widths():
     widths = (5, 2, 10)
     result = table(data, widths=widths)
     assert result == "\na       bb   ccc       \nd       ee   fff       \n"
+
+
+def test_row_single_widths():
+    data = ("a", "bb", "ccc")
+    result = row(data, widths=10)
+    assert result == "a            bb           ccc       "

@@ -57,8 +57,9 @@ def row(data, widths="auto", spacing=3, aligns=None):
     """Format data as a table row.
 
     data (iterable): The individual columns to format.
-    widths (iterable or 'auto'): Column widths in order. If "auto", widths
-        will be calculated automatically based on the largest value.
+    widths (iterable, int or 'auto'): Column widths, either one integer for all
+        columns or an iterable of values. If "auto", widths will be calculated
+        automatically based on the largest value.
     spacing (int): Spacing between columns, in spaces.
     aligns (iterable / unicode): Column alignments in order. 'l' (left,
         default), 'r' (right) or 'c' (center). If a string, value is used
@@ -68,6 +69,8 @@ def row(data, widths="auto", spacing=3, aligns=None):
     cols = []
     if isinstance(aligns, basestring_):  # single align value
         aligns = [aligns for _ in data]
+    if not hasattr(widths, "__iter__"):  # single number
+        widths = [widths for _ in range(len(data))]
     for i, col in enumerate(data):
         align = ALIGN_MAP.get(aligns[i] if aligns and i < len(aligns) else "l")
         col_width = len(col) if widths == "auto" else widths[i]
