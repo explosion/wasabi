@@ -216,7 +216,7 @@ a1   a2   a3
 | Argument    | Type                | Description                                                                                              | Default  |
 | ----------- | ------------------- | -------------------------------------------------------------------------------------------------------- | -------- |
 | `data`      | iterable            | The individual columns to format.                                                                        |          |
-| `widths`    | iterable / `"auto"` | Column widths in order. If `"auto"`, widths will be calculated automatically based on the largest value. | `"auto"` |
+| `widths`    | iterable / int / `"auto"` | Column widths, either one integer for all columns or an iterable of values. If "auto", widths will be calculated automatically based on the largest value. | `"auto"` |
 | `spacing`   | int                 | Number of spaces between columns.                                                                        | `3`      |
 | `aligns`    | iterable            | Columns alignments in order. `"l"` (left), `"r"` (right) or `"c"` (center).                              | `None`   |
 | **RETURNS** | unicode             | The formatted row.                                                                                       |          |
