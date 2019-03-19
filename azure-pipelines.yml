@@ -63,6 +63,7 @@ jobs:
     displayName: 'Install dependencies'
 
   - script: |
+      env
       pip install pytest
       python -m pytest wasabi
     displayName: 'Run tests'
