@@ -45,8 +45,9 @@ class Printer(object):
         RETURNS (Printer): The initialized printer.
         """
         env_log_friendly = os.getenv("{}_LOG_FRIENDLY".format(env_prefix), False)
+        env_no_pretty = os.getenv("{}_NO_PRETTY".format(env_prefix), False)
         self._counts = Counter()
-        self.pretty = pretty
+        self.pretty = pretty and not env_no_pretty
         self.no_print = no_print
         self.show_color = supports_ansi() and not env_log_friendly
         self.hide_animation = hide_animation or env_log_friendly
