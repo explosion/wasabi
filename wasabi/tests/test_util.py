@@ -2,6 +2,7 @@
 from __future__ import unicode_literals, print_function
 
 import pytest
+import locale
 from wasabi.util import color, wrap, locale_escape, supports_ansi, format_repr
 
 
@@ -52,7 +53,5 @@ def test_format_repr():
 )
 def test_locale_escape(text, non_ansi):
     result = locale_escape(text)
-    if supports_ansi():
-        assert result
-    else:
-        assert result == non_ansi
+    assert result in (text, non_ansi)
+    print(result)
