@@ -58,7 +58,12 @@ def test_printer_custom():
         "\x1b[38;5;99m? This is a test.\x1b[0m",
         "{} {}".format(icons["question"], text),
     )
-    assert warning in ("\x1b[38;5;3m\u26a0\ufe0f This is a test.\x1b[0m", text)
+    assert warning in (
+        "\x1b[38;5;3m\u26a0\ufe0f This is a test.\x1b[0m",
+        "\x1b[38;5;3mThis is a test.\x1b[0m",
+        "\u26a0\ufe0f This is a test.",
+        text,
+    )
 
 
 def test_printer_counts():
