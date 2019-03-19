@@ -37,6 +37,15 @@ def test_printer():
         assert p.text(text) == text
 
 
+def test_printer_print():
+    p = Printer()
+    text = "This is a test."
+    p.good(text)
+    p.fail(text)
+    p.info(text)
+    p.text(text)
+
+
 def test_printer_no_pretty():
     p = Printer(no_print=True, pretty=False)
     text = "This is a test."
