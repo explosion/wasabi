@@ -12,6 +12,10 @@ jobs:
       Python27Linux:
         imageName: 'ubuntu-16.04'
         python.version: '2.7'
+      Python27LinuxASCII:
+        imageName: 'ubuntu-16.04'
+        python.version: '2.7'
+        LC_ALL: 'en_US.ascii'
       Python27Windows:
         imageName: 'vs2017-win2016'
         python.version: '2.7'
