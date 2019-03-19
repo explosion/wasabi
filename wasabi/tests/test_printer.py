@@ -12,16 +12,16 @@ def test_printer():
     p = Printer(no_print=True)
     text = "This is a test."
     if supports_ansi():
-        assert p.good(text) == "\x1b[38;5;2m\u2714 This is a test.\x1b[0m"
-        assert p.fail(text) == "\x1b[38;5;1m\u2718 This is a test.\x1b[0m"
-        assert p.warn(text) == "\x1b[38;5;3m\u26a0 This is a test.\x1b[0m"
-        assert p.info(text) == "\x1b[38;5;4m\u2139 This is a test.\x1b[0m"
+        assert p.good(text) in ("\x1b[38;5;2m\u2714 This is a test.\x1b[0m", "\x1b[38;5;2m This is a test.\x1b[0m")
+        assert p.fail(text) in ("\x1b[38;5;1m\u2718 This is a test.\x1b[0m", "\x1b[38;5;1m This is a test.\x1b[0m")
+        assert p.warn(text) in ("\x1b[38;5;3m\u26a0 This is a test.\x1b[0m", "\x1b[38;5;3m This is a test.\x1b[0m")
+        assert p.info(text) in ("\x1b[38;5;4m\u2139 This is a test.\x1b[0m", "\x1b[38;5;4m This is a test.\x1b[0m"
         assert p.text(text) == text
     else:
-        assert p.good(text) == text
-        assert p.fail(text) == text
-        assert p.warn(text) == text
-        assert p.info(text) == text
+        assert p.good(text) in (text, "\u2714 This is a test.")
+        assert p.fail(text) in (text, "\u2718 This is a test.")
+        assert p.warn(text) in (text, "\u26a0 This is a test.")
+        assert p.info(text) in (text, "\u2139 This is a test.")
         assert p.text(text) == text
 
 
@@ -42,12 +42,11 @@ def test_printer_custom():
     text = "This is a test."
     purple_question = p.text(text, color="purple", icon="question")
     warning = p.warn(text)
-    if supports_ansi():
-        assert purple_question == "\x1b[38;5;99m? This is a test.\x1b[0m"
-        assert warning == "\x1b[38;5;3m\u26a0\ufe0f This is a test.\x1b[0m"
-    else:
-        assert purple_question == "{} {}".format(icons["question"], text)
-        assert warning == text
+    assert purple_question in (
+        "\x1b[38;5;99m? This is a test.\x1b[0m",
+        "{} {}".format(icons["question"], text),
+    )
+    assert warning in ("\x1b[38;5;3m\u26a0\ufe0f This is a test.\x1b[0m", text)
 
 
 def test_printer_counts():
@@ -110,10 +109,7 @@ def test_printer_log_friendly():
     ENV_LOG_FRIENDLY = "WASABI_LOG_FRIENDLY"
     os.environ[ENV_LOG_FRIENDLY] = "True"
     p = Printer(no_print=True)
-    if supports_ansi():
-        assert p.good(text) == "\u2714 This is a test."
-    else:
-        assert p.good(text) == text
+    assert p.good(text) in ("\u2714 This is a test.", text)
     del os.environ[ENV_LOG_FRIENDLY]
 
 
