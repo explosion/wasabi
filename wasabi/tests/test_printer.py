@@ -14,19 +14,19 @@ def test_printer():
     if supports_ansi():
         assert p.good(text) in (
             "\x1b[38;5;2m\u2714 This is a test.\x1b[0m",
-            "\x1b[38;5;2m This is a test.\x1b[0m",
+            "\x1b[38;5;2mThis is a test.\x1b[0m",
         )
         assert p.fail(text) in (
             "\x1b[38;5;1m\u2718 This is a test.\x1b[0m",
-            "\x1b[38;5;1m This is a test.\x1b[0m",
+            "\x1b[38;5;1mThis is a test.\x1b[0m",
         )
         assert p.warn(text) in (
             "\x1b[38;5;3m\u26a0 This is a test.\x1b[0m",
-            "\x1b[38;5;3m This is a test.\x1b[0m",
+            "\x1b[38;5;3mThis is a test.\x1b[0m",
         )
         assert p.info(text) in (
             "\x1b[38;5;4m\u2139 This is a test.\x1b[0m",
-            "\x1b[38;5;4m This is a test.\x1b[0m",
+            "\x1b[38;5;4mThis is a test.\x1b[0m",
         )
         assert p.text(text) == text
     else:
