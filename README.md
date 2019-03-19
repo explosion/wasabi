@@ -213,13 +213,13 @@ formatted = row(data)
 a1   a2   a3
 ```
 
-| Argument    | Type                | Description                                                                                              | Default  |
-| ----------- | ------------------- | -------------------------------------------------------------------------------------------------------- | -------- |
-| `data`      | iterable            | The individual columns to format.                                                                        |          |
+| Argument    | Type                      | Description                                                                                                                                                | Default  |
+| ----------- | ------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- |
+| `data`      | iterable                  | The individual columns to format.                                                                                                                          |          |
 | `widths`    | iterable / int / `"auto"` | Column widths, either one integer for all columns or an iterable of values. If "auto", widths will be calculated automatically based on the largest value. | `"auto"` |
-| `spacing`   | int                 | Number of spaces between columns.                                                                        | `3`      |
-| `aligns`    | iterable            | Columns alignments in order. `"l"` (left), `"r"` (right) or `"c"` (center).                              | `None`   |
-| **RETURNS** | unicode             | The formatted row.                                                                                       |          |
+| `spacing`   | int                       | Number of spaces between columns.                                                                                                                          | `3`      |
+| `aligns`    | iterable                  | Columns alignments in order. `"l"` (left), `"r"` (right) or `"c"` (center).                                                                                | `None`   |
+| **RETURNS** | unicode                   | The formatted row.                                                                                                                                         |          |
 
 ### <kbd>class</kbd> `TracebackPrinter`
 
@@ -310,16 +310,19 @@ wrapped = wrap("Hello world, this is a text.", indent=2)
 | `text`      | unicode | The text to wrap.                          | -       |
 | `wrap_max`  | int     | Maximum line width, including indentation. | `80`    |
 | `indent`    | int     | Number of spaces used for indentation.     | `4`     |
-| **RETURNS** | unicode | The wrapped text with line breaks.         |
+| **RETURNS** | unicode | The wrapped text with line breaks.         |         |
 
 ### Environment variables
 
-Wasabi also respects the following environment variables:
+Wasabi also respects the following environment variables. The prefix can be
+customised on the `Printer` via the `env_prefix` argument. For example, setting
+`env_prefix="SPACY"` will expect the environment variable `SPACY_LOG_FRIENDLY`.
 
-| Name                   | Description                                                                                                                                                                                                                              |
-| ---------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `ANSI_COLORS_DISABLED` | Disable colors.                                                                                                                                                                                                                          |
-| `WASABI_LOG_FRIENDLY`  | Make output nicer for logs (no colors, no animations). The prefix can be customised on the `Printer` via the `env_prefix` argument. For example, setting `env_prefix="SPACY"` will expect the environment variable `SPACY_LOG_FRIENDLY`. |
+| Name                   | Description                                            |
+| ---------------------- | ------------------------------------------------------ |
+| `ANSI_COLORS_DISABLED` | Disable colors.                                        |
+| `WASABI_LOG_FRIENDLY`  | Make output nicer for logs (no colors, no animations). |
+| `WASABI_NO_PRETTY`     | Disable pretty printing, e.g. colors and icons.        |
 
 ## 🔔 Run tests
 

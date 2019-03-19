@@ -44,12 +44,12 @@ class Printer(object):
             WASABI_LOG_FRIENDLY.
         RETURNS (Printer): The initialized printer.
         """
-        log_friendly = os.getenv("{}_LOG_FRIENDLY".format(env_prefix), False)
+        env_log_friendly = os.getenv("{}_LOG_FRIENDLY".format(env_prefix), False)
         self._counts = Counter()
         self.pretty = pretty
         self.no_print = no_print
-        self.show_color = supports_ansi() and not log_friendly
-        self.hide_animation = hide_animation or log_friendly
+        self.show_color = supports_ansi() and not env_log_friendly
+        self.hide_animation = hide_animation or env_log_friendly
         self.ignore_warnings = ignore_warnings
         self.line_max = line_max
         self.colors = dict(COLORS)
