@@ -1,7 +1,12 @@
 # coding: utf8
 from __future__ import unicode_literals, print_function
 
-from .util import color, to_string, supports_ansi, locale_escape
+from .util import color, to_string, supports_ansi, locale_escape, NO_UTF8
+
+
+LINE_EDGE = "└─" if not NO_UTF8 else "|_"
+LINE_FORK = "├─" if not NO_UTF8 else "|__"
+LINE_PATH = "──" if not NO_UTF8 else "__"
 
 
 class TracebackPrinter(object):
@@ -73,7 +78,7 @@ class TracebackPrinter(object):
 
     def _format_traceback(self, path, line, fn, text, i, count, highlight):
         template = "{base_indent}{indent} {fn} [{line}] in {path}{text}"
-        indent = ("└─" if i == count - 1 else "├─") + "──" * i
+        indent = (LINE_EDGE if i == count - 1 else LINE_FORK) + LINE_PATH * i
         if self.tb_base and self.tb_base in path:
             path = path.rsplit(self.tb_base, 1)[1]
         text = self._format_user_error(text, i, highlight) if i == count - 1 else ""
