@@ -3,18 +3,11 @@ from __future__ import unicode_literals, print_function
 
 import os
 import sys
-import locale
 import textwrap
 
-# Python 2 compatibility
-IS_PYTHON_2 = sys.version_info[0] == 2
 
-if IS_PYTHON_2:
-    basestring_ = basestring  # noqa: F821
-    input_ = raw_input  # noqa: F821
-else:
-    basestring_ = str
-    input_ = input
+ENCODING = sys.stdout.encoding or "ascii"
+NO_UTF8 = ENCODING.lower() not in ("utf8", "utf-8")
 
 
 # Environment variables
@@ -43,19 +36,24 @@ COLORS = {
     "grey": 8,
 }
 
-# Couldn't yet come up with a good way to test for cases where printing the
-# icons fails and the locale is set to UTF-8 (possibly on Python 2 due to older
-# unicode version). Defaulting the encoding in locale_escape to "ascii" for
-# Python 2 isn't viable, because that would just mangle whatever is printed
-# with Wasabi, including perfectly fine non-ASCII user data like paths or
-# other output. So as a workaround, Python 2 doesn't get nice icons for now.
-# Also see explosion/spaCy#3432
+
 ICONS = {
-    MESSAGES.GOOD: "\u2714" if not IS_PYTHON_2 else "[+]",
-    MESSAGES.FAIL: "\u2718" if not IS_PYTHON_2 else "[x]",
-    MESSAGES.WARN: "\u26a0" if not IS_PYTHON_2 else "[!]",
-    MESSAGES.INFO: "\u2139" if not IS_PYTHON_2 else "[i]",
+    MESSAGES.GOOD: "\u2714" if not NO_UTF8 else "[+]",
+    MESSAGES.FAIL: "\u2718" if not NO_UTF8 else "[x]",
+    MESSAGES.WARN: "\u26a0" if not NO_UTF8 else "[!]",
+    MESSAGES.INFO: "\u2139" if not NO_UTF8 else "[i]",
 }
+
+
+# Python 2 compatibility
+IS_PYTHON_2 = sys.version_info[0] == 2
+
+if IS_PYTHON_2:
+    basestring_ = basestring  # noqa: F821
+    input_ = raw_input  # noqa: F821
+else:
+    basestring_ = str
+    input_ = input
 
 
 def color(text, fg=None, bg=None, bold=False, underline=False):
@@ -136,16 +134,15 @@ def get_raw_input(description, default=False, indent=4):
     return user_input
 
 
-def locale_escape(string, errors="ignore"):
+def locale_escape(string, errors="replace"):
     """Mangle non-supported characters, for savages with ASCII terminals.
 
     string (unicode): The string to escape.
-    errors (unicode): The str.encode errors setting. Defaults to `"ignore"`.
+    errors (unicode): The str.encode errors setting. Defaults to `"replace"`.
     RETURNS (unicode): The escaped string.
     """
-    encoding = locale.getpreferredencoding()
     string = to_string(string)
-    string = string.encode(encoding, errors).decode("utf8")
+    string = string.encode(ENCODING, errors).decode("utf8")
     return string
 
 
@@ -157,7 +154,7 @@ def can_render(string):
     RETURNS (bool): Whether the terminal can render the text.
     """
     try:
-        string.encode(sys.stdout.encoding or "ascii")
+        string.encode(ENCODING)
         return True
     except UnicodeEncodeError:
         return False
