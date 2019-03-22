@@ -8,7 +8,9 @@ from wasabi.traceback import TracebackPrinter
 
 @pytest.fixture
 def tb():
-    return traceback.extract_stack()
+    extracted = traceback.extract_stack()
+    print(extracted)
+    return
 
 
 def test_traceback_printer(tb):
