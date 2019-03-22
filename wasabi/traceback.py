@@ -52,7 +52,8 @@ class TracebackPrinter(object):
         info = "\n" + "\n".join([self.indent + text for text in texts]) if texts else ""
         tb = self._get_traceback(tb, highlight) if tb else ""
         msg = "\n\n{}{}{}{}\n".format(self.indent, title, info, tb)
-        return locale_escape(msg, errors="ignore")
+        return msg
+        # return locale_escape(msg, errors="ignore")
 
     def _get_traceback(self, tb, highlight):
         # Exclude certain file names from traceback
@@ -76,7 +77,7 @@ class TracebackPrinter(object):
         if self.tb_base and self.tb_base in path:
             path = path.rsplit(self.tb_base, 1)[1]
         text = self._format_user_error(text, i, highlight) if i == count - 1 else ""
-        # line = to_string(line)
+        line = to_string(line)
         if self.supports_ansi:
             fn = color(fn, bold=True)
             path = color(path, underline=True)
