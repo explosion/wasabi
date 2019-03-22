@@ -49,7 +49,7 @@ def test_format_repr():
 
 
 @pytest.mark.parametrize(
-    "text,non_ascii", [("abc", "abc"), ("\u2714 abc", " abc"), ("👻", "")]
+    "text,non_ascii", [("abc", "abc"), ("\u2714 abc", "? abc"), ("👻", "??")]
 )
 def test_locale_escape(text, non_ascii):
     result = locale_escape(text)

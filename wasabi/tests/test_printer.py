@@ -5,7 +5,10 @@ import pytest
 import time
 import os
 from wasabi.printer import Printer
-from wasabi.util import MESSAGES, IS_PYTHON_2, supports_ansi
+from wasabi.util import MESSAGES, NO_UTF8, supports_ansi
+
+
+SUPPORTS_ANSI = supports_ansi()
 
 
 def test_printer():
@@ -15,28 +18,23 @@ def test_printer():
     fail = p.fail(text)
     warn = p.warn(text)
     info = p.info(text)
-
     assert p.text(text) == text
-
-    if supports_ansi() and not IS_PYTHON_2:
+    if SUPPORTS_ANSI and not NO_UTF8:
         assert good == "\x1b[38;5;2m\u2714 {}\x1b[0m".format(text)
         assert fail == "\x1b[38;5;1m\u2718 {}\x1b[0m".format(text)
         assert warn == "\x1b[38;5;3m\u26a0 {}\x1b[0m".format(text)
         assert info == "\x1b[38;5;4m\u2139 {}\x1b[0m".format(text)
-
-    if supports_ansi() and IS_PYTHON_2:
+    if SUPPORTS_ANSI and NO_UTF8:
         assert good == "\x1b[38;5;2m[+] {}\x1b[0m".format(text)
         assert fail == "\x1b[38;5;1m[x] {}\x1b[0m".format(text)
         assert warn == "\x1b[38;5;3m[!] {}\x1b[0m".format(text)
         assert info == "\x1b[38;5;4m[i] {}\x1b[0m".format(text)
-
-    if not supports_ansi() and not IS_PYTHON_2:
+    if not SUPPORTS_ANSI and not NO_UTF8:
         assert good == "\u2714 {}".format(text)
         assert fail == "\u2718 {}".format(text)
         assert warn == "\u26a0 {}".format(text)
         assert info == "\u2139 {}".format(text)
-
-    if not supports_ansi() and IS_PYTHON_2:
+    if not SUPPORTS_ANSI and NO_UTF8:
         assert good == "[+] {}".format(text)
         assert fail == "[-] {}".format(text)
         assert warn == "[!] {}".format(text)
@@ -69,16 +67,18 @@ def test_printer_custom():
     text = "This is a test."
     purple_question = p.text(text, color="purple", icon="question")
     warning = p.warn(text)
-    assert purple_question in (
-        "\x1b[38;5;99m? This is a test.\x1b[0m",
-        "{} {}".format(icons["question"], text),
-    )
-    assert warning in (
-        "\x1b[38;5;3m\u26a0\ufe0f This is a test.\x1b[0m",
-        "\x1b[38;5;3mThis is a test.\x1b[0m",
-        "\u26a0\ufe0f This is a test.",
-        text,
-    )
+    if SUPPORTS_ANSI and not NO_UTF8:
+        assert purple_question == "\x1b[38;5;99m? {}\x1b[0m".format(text)
+        assert warning == "\x1b[38;5;3m\u26a0\ufe0f {}\x1b[0m".format(text)
+    if SUPPORTS_ANSI and NO_UTF8:
+        assert purple_question == "\x1b[38;5;99m? {}\x1b[0m".format(text)
+        assert warning == "\x1b[38;5;3m?? {}\x1b[0m".format(text)
+    if not SUPPORTS_ANSI and not NO_UTF8:
+        assert purple_question == "? {}".format(text)
+        assert warning == "\u26a0\ufe0f {}".format(text)
+    if not SUPPORTS_ANSI and NO_UTF8:
+        assert purple_question == "? {}".format(text)
+        assert warning == "?? {}".format(text)
 
 
 def test_printer_counts():
