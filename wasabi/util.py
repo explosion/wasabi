@@ -140,7 +140,7 @@ def locale_escape(string, errors="ignore"):
     """Mangle non-supported characters, for savages with ASCII terminals.
 
     string (unicode): The string to escape.
-    errors (unicode): The str.encode errors setting. Defaults to `'replace'`.
+    errors (unicode): The str.encode errors setting. Defaults to `"ignore"`.
     RETURNS (unicode): The escaped string.
     """
     encoding = locale.getpreferredencoding()
