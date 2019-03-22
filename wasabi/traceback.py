@@ -56,6 +56,7 @@ class TracebackPrinter(object):
             title = color(title, fg=self.color_error, bold=True)
         info = "\n" + "\n".join([self.indent + text for text in texts]) if texts else ""
         tb = self._get_traceback(tb, highlight) if tb else ""
+        print(tb)
         msg = "\n\n{}{}{}{}\n".format(self.indent, title, info, tb)
         return msg
 
@@ -67,8 +68,6 @@ class TracebackPrinter(object):
             self._format_traceback(path, line, fn, text, i, len(tb_range), highlight)
             for i, (path, line, fn, text) in enumerate(tb_range)
         ]
-        # TODO: debugging only
-        print(tb_list)
         tb_data = "\n".join(tb_list).strip()
         title = "Traceback:"
         if self.supports_ansi:
