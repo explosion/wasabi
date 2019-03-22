@@ -10,7 +10,7 @@ from wasabi.traceback import TracebackPrinter
 def tb():
     extracted = traceback.extract_stack()
     print(extracted)
-    return
+    return extracted
 
 
 def test_traceback_printer(tb):
