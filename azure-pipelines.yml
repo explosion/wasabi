@@ -69,6 +69,7 @@ jobs:
 
   - script: |
       python -c "import locale; print('Preferred encoding:', locale.getpreferredencoding())"
+      python -c "import sys; print('stdout encoding:', sys.stdout.encoding)"
       env
       pip install pytest
       python -m pytest -s wasabi
