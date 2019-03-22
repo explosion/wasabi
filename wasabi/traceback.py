@@ -76,7 +76,7 @@ class TracebackPrinter(object):
         if self.tb_base and self.tb_base in path:
             path = path.rsplit(self.tb_base, 1)[1]
         text = self._format_user_error(text, i, highlight) if i == count - 1 else ""
-        line = to_string(line)
+        # line = to_string(line)
         if self.supports_ansi:
             fn = color(fn, bold=True)
             path = color(path, underline=True)
