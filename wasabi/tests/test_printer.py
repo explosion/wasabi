@@ -5,36 +5,42 @@ import pytest
 import time
 import os
 from wasabi.printer import Printer
-from wasabi.util import MESSAGES, supports_ansi
+from wasabi.util import MESSAGES, IS_PYTHON_2, supports_ansi
 
 
 def test_printer():
     p = Printer(no_print=True)
     text = "This is a test."
-    if supports_ansi():
-        assert p.good(text) in (
-            "\x1b[38;5;2m\u2714 This is a test.\x1b[0m",
-            "\x1b[38;5;2mThis is a test.\x1b[0m",
-        )
-        assert p.fail(text) in (
-            "\x1b[38;5;1m\u2718 This is a test.\x1b[0m",
-            "\x1b[38;5;1mThis is a test.\x1b[0m",
-        )
-        assert p.warn(text) in (
-            "\x1b[38;5;3m\u26a0 This is a test.\x1b[0m",
-            "\x1b[38;5;3mThis is a test.\x1b[0m",
-        )
-        assert p.info(text) in (
-            "\x1b[38;5;4m\u2139 This is a test.\x1b[0m",
-            "\x1b[38;5;4mThis is a test.\x1b[0m",
-        )
-        assert p.text(text) == text
-    else:
-        assert p.good(text) in (text, "\u2714 This is a test.")
-        assert p.fail(text) in (text, "\u2718 This is a test.")
-        assert p.warn(text) in (text, "\u26a0 This is a test.")
-        assert p.info(text) in (text, "\u2139 This is a test.")
-        assert p.text(text) == text
+    good = p.good(text)
+    fail = p.fail(text)
+    warn = p.warn(text)
+    info = p.info(text)
+
+    assert p.text(text) == text
+
+    if supports_ansi() and not IS_PYTHON_2:
+        assert good == "\x1b[38;5;2m\u2714 {}\x1b[0m".format(text)
+        assert fail == "\x1b[38;5;1m\u2718 {}\x1b[0m".format(text)
+        assert warn == "\x1b[38;5;3m\u26a0 {}\x1b[0m".format(text)
+        assert info == "\x1b[38;5;4m\u2139 {}\x1b[0m".format(text)
+
+    if supports_ansi() and IS_PYTHON_2:
+        assert good == "\x1b[38;5;2m[+] {}\x1b[0m".format(text)
+        assert fail == "\x1b[38;5;1m[x] {}\x1b[0m".format(text)
+        assert warn == "\x1b[38;5;3m[!] {}\x1b[0m".format(text)
+        assert info == "\x1b[38;5;4m[i] {}\x1b[0m".format(text)
+
+    if not supports_ansi() and not IS_PYTHON_2:
+        assert good == "\u2714 {}".format(text)
+        assert fail == "\u2718 {}".format(text)
+        assert warn == "\u26a0 {}".format(text)
+        assert info == "\u2139 {}".format(text)
+
+    if not supports_ansi() and IS_PYTHON_2:
+        assert good == "[+] {}".format(text)
+        assert fail == "[-] {}".format(text)
+        assert warn == "[!] {}".format(text)
+        assert info == "[i] {}".format(text)
 
 
 def test_printer_print():
@@ -135,7 +141,7 @@ def test_printer_log_friendly():
     ENV_LOG_FRIENDLY = "WASABI_LOG_FRIENDLY"
     os.environ[ENV_LOG_FRIENDLY] = "True"
     p = Printer(no_print=True)
-    assert p.good(text) in ("\u2714 This is a test.", text)
+    assert p.good(text) in ("\u2714 This is a test.", "[+] This is a test.")
     del os.environ[ENV_LOG_FRIENDLY]
 
 
@@ -144,7 +150,7 @@ def test_printer_log_friendly_prefix():
     ENV_LOG_FRIENDLY = "CUSTOM_LOG_FRIENDLY"
     os.environ[ENV_LOG_FRIENDLY] = "True"
     p = Printer(no_print=True, env_prefix="CUSTOM")
-    assert p.good(text) in (text, "\u2714 This is a test.")
+    assert p.good(text) in ("\u2714 This is a test.", "[+] This is a test.")
     print(p.good(text))
     del os.environ[ENV_LOG_FRIENDLY]
 
