@@ -136,7 +136,7 @@ def locale_escape(string, errors="ignore"):
     errors (unicode): The str.encode errors setting. Defaults to `'replace'`.
     RETURNS (unicode): The escaped string.
     """
-    encoding = locale.getpreferredencoding()
+    encoding = "ascii" if IS_PYTHON_2 else locale.getpreferredencoding()
     string = to_string(string)
     string = string.encode(encoding, errors).decode("utf8")
     return string
