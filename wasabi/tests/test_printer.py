@@ -160,4 +160,4 @@ def test_printer_none_encoding(monkeypatch):
     """Test that printer works even if sys.stdout.encoding is set to None. This
     previously caused a very confusing error."""
     monkeypatch.setattr("sys.stdout.encoding", None)
-    p = Printer()
+    p = Printer()  # noqa: F841

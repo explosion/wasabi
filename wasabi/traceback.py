@@ -1,7 +1,7 @@
 # coding: utf8
 from __future__ import unicode_literals, print_function
 
-from .util import color, to_string, supports_ansi, locale_escape, NO_UTF8
+from .util import color, supports_ansi, NO_UTF8
 
 
 LINE_EDGE = "└─" if not NO_UTF8 else "|_"
