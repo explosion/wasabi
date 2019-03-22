@@ -68,7 +68,6 @@ class TracebackPrinter(object):
             for i, (path, line, fn, text) in enumerate(tb_range)
         ]
         tb_data = "\n".join(tb_list).strip()
-        print(tb_data)
         title = "Traceback:"
         if self.supports_ansi:
             title = color(title, fg=self.color_tb, bold=True)
