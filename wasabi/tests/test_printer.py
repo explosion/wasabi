@@ -36,7 +36,7 @@ def test_printer():
         assert info == "\u2139 {}".format(text)
     if not SUPPORTS_ANSI and NO_UTF8:
         assert good == "[+] {}".format(text)
-        assert fail == "[-] {}".format(text)
+        assert fail == "[x] {}".format(text)
         assert warn == "[!] {}".format(text)
         assert info == "[i] {}".format(text)
 
