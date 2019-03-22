@@ -68,6 +68,7 @@ jobs:
     displayName: 'Install dependencies'
 
   - script: |
+      python -c "import locale; print('Preferred encoding:', locale.getpreferredencoding())"
       env
       pip install pytest
       python -m pytest -s wasabi
