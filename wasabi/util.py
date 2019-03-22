@@ -6,6 +6,16 @@ import sys
 import locale
 import textwrap
 
+# Python 2 compatibility
+IS_PYTHON_2 = sys.version_info[0] == 2
+
+if IS_PYTHON_2:
+    basestring_ = basestring  # noqa: F821
+    input_ = raw_input  # noqa: F821
+else:
+    basestring_ = str
+    input_ = input
+
 
 # Environment variables
 ENV_ANSI_DISABLED = "ANSI_COLORS_DISABLED"  # no colors
@@ -33,22 +43,19 @@ COLORS = {
     "grey": 8,
 }
 
+# Couldn't yet come up with a good way to test for cases where printing the
+# icons fails and the locale is set to UTF-8 (possibly on Python 2 due to older
+# unicode version). Defaulting the encoding in locale_escape to "ascii" for
+# Python 2 isn't viable, because that would just mangle whatever is printed
+# with Wasabi, including perfectly fine non-ASCII user data like paths or
+# other output. So as a workaround, Python 2 doesn't get nice icons for now.
+# Also see explosion/spaCy#3432
 ICONS = {
-    MESSAGES.GOOD: "\u2714",
-    MESSAGES.FAIL: "\u2718",
-    MESSAGES.WARN: "\u26a0",
-    MESSAGES.INFO: "\u2139",
+    MESSAGES.GOOD: "\u2714" if not IS_PYTHON_2 else "[+]",
+    MESSAGES.FAIL: "\u2718" if not IS_PYTHON_2 else "[x]",
+    MESSAGES.WARN: "\u26a0" if not IS_PYTHON_2 else "[!]",
+    MESSAGES.INFO: "\u2139" if not IS_PYTHON_2 else "[i]",
 }
-
-
-IS_PYTHON_2 = sys.version_info[0] == 2
-
-if IS_PYTHON_2:
-    basestring_ = basestring  # noqa: F821
-    input_ = raw_input  # noqa: F821
-else:
-    basestring_ = str
-    input_ = input
 
 
 def color(text, fg=None, bg=None, bold=False, underline=False):
@@ -136,7 +143,7 @@ def locale_escape(string, errors="ignore"):
     errors (unicode): The str.encode errors setting. Defaults to `'replace'`.
     RETURNS (unicode): The escaped string.
     """
-    encoding = "ascii" if IS_PYTHON_2 else locale.getpreferredencoding()
+    encoding = locale.getpreferredencoding()
     string = to_string(string)
     string = string.encode(encoding, errors).decode("utf8")
     return string
