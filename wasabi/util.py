@@ -6,7 +6,8 @@ import sys
 import textwrap
 
 
-ENCODING = sys.stdout.encoding or "ascii"
+STDOUT_ENCODING = sys.stdout.encoding if hasattr(sys.stdout, "encoding") else None
+ENCODING = STDOUT_ENCODING or "ascii"
 NO_UTF8 = ENCODING.lower() not in ("utf8", "utf-8")
 
 
