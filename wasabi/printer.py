@@ -183,7 +183,7 @@ class Printer(object):
     def loading(self, text="Loading..."):
         if self.no_print:
             yield
-        if self.hide_animation:
+        elif self.hide_animation:
             print(text)
             yield
         else:

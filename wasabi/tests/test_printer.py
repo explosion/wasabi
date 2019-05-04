@@ -136,6 +136,13 @@ def test_printer_loading_raises_exception():
         loading_with_exception()
 
 
+def test_printer_loading_no_print():
+    p = Printer(no_print=True)
+    with p.loading("Loading..."):
+        time.sleep(1)
+    p.good("Success!")
+
+
 def test_printer_log_friendly():
     text = "This is a test."
     ENV_LOG_FRIENDLY = "WASABI_LOG_FRIENDLY"
