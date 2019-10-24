@@ -147,8 +147,8 @@ class Printer(object):
             text = _color(
                 "\n{deco}{text}{deco}".format(deco=deco, text=text), bold=True
             )
-        if len(text) < self.line_max:
-            text = text + char * (self.line_max - len(text))
+            if len(text) < self.line_max:
+                text = text + char * (self.line_max - len(text))
         if self.no_print:
             return text
         print(text)
