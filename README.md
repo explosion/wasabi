@@ -7,14 +7,14 @@ formatting utilities to output messages in our libraries like
 options, I've always ended up wanting something slightly different or slightly
 custom.
 
-This package is still a work in progress and aims to bundle those utilities in
-a standardised way so they can be shared across our other projects. It's super
+This package is still a work in progress and aims to bundle those utilities in a
+standardised way so they can be shared across our other projects. It's super
 lightweight, has zero dependencies and works across Python 2 and 3.
 
-[![Azure Pipelines](https://img.shields.io/azure-devops/build/explosion-ai/public/1/master.svg?logo=azure-devops&style=flat-square)](https://dev.azure.com/explosion-ai/public/_build?definitionId=1)
-[![PyPi](https://img.shields.io/pypi/v/wasabi.svg?style=flat-square)](https://pypi.python.org/pypi/wasabi)
-[![conda](https://img.shields.io/conda/vn/conda-forge/wasabi.svg?style=flat-square)](https://anaconda.org/conda-forge/wasabi)
-[![GitHub](https://img.shields.io/github/release/ines/wasabi/all.svg?style=flat-square)](https://github.com/ines/wasabi)
+[![Azure Pipelines](https://img.shields.io/azure-devops/build/explosion-ai/public/1/master.svg?logo=azure-pipelines&style=flat-square)](https://dev.azure.com/explosion-ai/public/_build?definitionId=1)
+[![PyPi](https://img.shields.io/pypi/v/wasabi.svg?style=flat-square&logo=pypi&logoColor=white)](https://pypi.python.org/pypi/wasabi)
+[![conda](https://img.shields.io/conda/vn/conda-forge/wasabi.svg?style=flat-square&logo=conda-forge/logoColor=white)](https://anaconda.org/conda-forge/wasabi)
+[![GitHub](https://img.shields.io/github/release/ines/wasabi/all.svg?style=flat-square&logo=github)](https://github.com/ines/wasabi)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg?style=flat-square)](https://github.com/ambv/black)
 
 <img width="609" src="https://user-images.githubusercontent.com/13643239/48663861-8c9ea000-ea96-11e8-8b04-d120c52276a8.png">
@@ -42,8 +42,8 @@ other packages – for example, [`colored`](https://pypi.org/project/colored/),
 
 ### Why `wasabi`?
 
-I was looking for a short and descriptive name, but everything was already taken.
-So I ended up naming this package after one of my rats, Wasabi. 🐀
+I was looking for a short and descriptive name, but everything was already
+taken. So I ended up naming this package after one of my rats, Wasabi. 🐀
 
 ## ⌛️ Installation
 
@@ -224,8 +224,8 @@ a1   a2   a3
 
 ### <kbd>class</kbd> `TracebackPrinter`
 
-Helper to output custom formatted tracebacks and error messages. Currently
-used in [Thinc](https://github.com/explosion/thinc).
+Helper to output custom formatted tracebacks and error messages. Currently used
+in [Thinc](https://github.com/explosion/thinc).
 
 #### <kbd>method</kbd> `TracebackPrinter.__init__`
 
@@ -343,8 +343,9 @@ customised on the `Printer` via the `env_prefix` argument. For example, setting
 
 ## 🔔 Run tests
 
-Fork or clone the repo, make sure you have `pytest` installed and then run it
-on the package directory. The tests are located in [`/wasabi/tests`](/wasabi/tests).
+Fork or clone the repo, make sure you have `pytest` installed and then run it on
+the package directory. The tests are located in
+[`/wasabi/tests`](/wasabi/tests).
 
 ```bash
 pip install pytest
