@@ -4,6 +4,7 @@ from __future__ import unicode_literals, print_function
 import os
 import sys
 import textwrap
+import difflib
 
 
 STDOUT_ENCODING = sys.stdout.encoding if hasattr(sys.stdout, "encoding") else None
@@ -35,6 +36,7 @@ COLORS = {
     "cyan": 6,
     "white": 7,
     "grey": 8,
+    "black": 16,
 }
 
 
@@ -119,6 +121,29 @@ def format_repr(obj, max_len=50, ellipsis="..."):
         return "{} {} {}".format(string[:half], ellipsis, string[-half:])
     else:
         return string
+
+
+def diff_strings(a, b, fg="black", bg=("green", "red")):
+    """Compare two strings and return a colored diff with red/green background
+    for deletion and insertions.
+
+    a (unicode): The first string to diff.
+    b (unicode): The second string to diff.
+    fg (unicode / int): Foreground color. String name or 0 - 256 (see COLORS).
+    bg (tuple): Background colors as (insert, delete) tuple of string name or
+        0 - 256 (see COLORS).
+    RETURNS (unicode): The formatted diff.
+    """
+    output = []
+    matcher = difflib.SequenceMatcher(None, a, b)
+    for opcode, a0, a1, b0, b1 in matcher.get_opcodes():
+        if opcode == "equal":
+            output.append(a[a0:a1])
+        elif opcode == "insert":
+            output.append(color(b[b0:b1], fg=fg, bg=bg[0]))
+        elif opcode == "delete":
+            output.append(color(a[a0:a1], fg=fg, bg=bg[1]))
+    return "".join(output)
 
 
 def get_raw_input(description, default=False, indent=4):

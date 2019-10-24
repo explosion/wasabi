@@ -312,6 +312,22 @@ wrapped = wrap("Hello world, this is a text.", indent=2)
 | `indent`    | int     | Number of spaces used for indentation.     | `4`     |
 | **RETURNS** | unicode | The wrapped text with line breaks.         |         |
 
+#### <kbd>function</kbd> `diff_strings`
+
+```python
+from wasabi import diff_strings
+
+diff = diff_strings("hello world!", "helloo world")
+```
+
+| Argument    | Type          | Description                                                                  | Default            |
+| ----------- | ------------- | ---------------------------------------------------------------------------- | ------------------ |
+| `a`         | unicode       | The first string to diff.                                                    |
+| `b`         | unicode       | The second string to diff.                                                   |
+| `fg`        | unicode / int | Foreground color. String name or `0` - `256`.                                | `"black"`          |
+| `bg`        | tuple         | Background colors as `(insert, delete)` tuple of string name or `0` - `256`. | `("green", "red")` |
+| **RETURNS** | unicode       | The formatted diff.                                                          |                    |
+
 ### Environment variables
 
 Wasabi also respects the following environment variables. The prefix can be
