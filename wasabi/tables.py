@@ -1,7 +1,7 @@
 # coding: utf8
 from __future__ import unicode_literals, print_function
 
-from .util import to_string, basestring_
+from .util import to_string, zip_longest, basestring_
 
 
 ALIGN_MAP = {"l": "<", "r": ">", "c": "^"}
@@ -16,6 +16,7 @@ def table(
     max_col=30,
     spacing=3,
     aligns=None,
+    multiline=False,
 ):
     """Format tabular data.
 
@@ -31,10 +32,20 @@ def table(
     aligns (iterable / unicode): Column alignments in order. 'l' (left,
         default), 'r' (right) or 'c' (center). If a string, value is used
         for all columns.
+    multiline (bool): If a cell value is a list of a tuple, render it on
+        multiple lines, with one value per line.
     RETURNS (unicode): The formatted table.
     """
     if isinstance(data, dict):
         data = list(data.items())
+    if multiline:
+        zipped_data = []
+        for i, item in enumerate(data):
+            vals = [v if isinstance(v, (list, tuple)) else [v] for v in item]
+            zipped_data.extend(list(zip_longest(*vals, fillvalue="")))
+            if i < len(data) - 1:
+                zipped_data.append(["" for i in item])
+        data = zipped_data
     if widths == "auto":
         widths = _get_max_widths(data, header, footer, max_col)
     settings = {"widths": widths, "spacing": spacing, "aligns": aligns}

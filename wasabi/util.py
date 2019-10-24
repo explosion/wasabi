@@ -5,6 +5,7 @@ import os
 import sys
 import textwrap
 import difflib
+import itertools
 
 
 STDOUT_ENCODING = sys.stdout.encoding if hasattr(sys.stdout, "encoding") else None
@@ -54,9 +55,11 @@ IS_PYTHON_2 = sys.version_info[0] == 2
 if IS_PYTHON_2:
     basestring_ = basestring  # noqa: F821
     input_ = raw_input  # noqa: F821
+    zip_longest = itertools.izip_longest  # noqa: F821
 else:
     basestring_ = str
     input_ = input
+    zip_longest = itertools.zip_longest
 
 
 def color(text, fg=None, bg=None, bold=False, underline=False):

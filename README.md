@@ -198,6 +198,7 @@ Column 1   Column 2    Column 3
 | `max_col`   | int                 | Maximum column width.                                                                                                               | `30`     |
 | `spacing`   | int                 | Number of spaces between columns.                                                                                                   | `3`      |
 | `aligns`    | iterable / unicode  | Columns alignments in order. `"l"` (left, default), `"r"` (right) or `"c"` (center). If If a string, value is used for all columns. | `None`   |
+| `multiline` | bool                | If a cell value is a list of a tuple, render it on multiple lines, with one value per line.                                         | `False`  |
 | **RETURNS** | unicode             | The formatted table.                                                                                                                |          |
 
 #### <kbd>function</kbd> `row`
