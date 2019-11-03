@@ -53,6 +53,17 @@ pip install wasabi
 
 ## 🎛 API
 
+### <kbd>function</kbd> `msg`
+
+An instance of `Printer`, initialized with the default config. Useful as a quick
+shortcut if you don't need to customize initialization.
+
+```python
+from wasabi import msg
+
+msg.good("Success!")
+```
+
 ### <kbd>class</kbd> `Printer`
 
 #### <kbd>method</kbd> `Printer.__init__`
