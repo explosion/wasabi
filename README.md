@@ -139,6 +139,7 @@ msg.divider("Heading")
 | `text`   | unicode | Headline text. If empty, only the line is printed.                                                                     | `""`    |
 | `char`   | unicode | Single line character to repeat.                                                                                       | `"="`   |
 | `show`   | bool    | Whether to print or not. Can be used to only output messages under certain condition, e.g. if `--verbose` flag is set. | `True`  |
+| `icon`   | unicode | Optional icon to use with title.                                                                                       | `None`  |
 
 #### <kbd>contextmanager</kbd> `Printer.loading`
 

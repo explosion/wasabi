@@ -138,13 +138,14 @@ class Printer(object):
         if self.no_print or no_print:
             return title
 
-    def divider(self, text="", char="=", show=True):
+    def divider(self, text="", char="=", show=True, icon=None):
         """Print a divider with a headline:
         ============================ Headline here ===========================
 
         text (unicode): Headline text. If empty, only the line is printed.
         char (unicode): Line character to repeat, e.g. =.
         show (bool): Whether to print or not.
+        icon (unicode): Optional icon to display with title.
         """
         if len(char) != 1:
             raise ValueError(
@@ -152,6 +153,9 @@ class Printer(object):
                 "Received: {}".format(char)
             )
         if self.pretty:
+            icon = self.icons.get(icon)
+            if icon:
+                text = locale_escape("{} {}".format(icon, text)).strip()
             deco = char * (int(round((self.line_max - len(text))) / 2) - 2)
             text = " {} ".format(text) if text else ""
             text = _color(
