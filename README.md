@@ -102,6 +102,7 @@ msg.text("Hello world!")
 | `color`    |  unicode / int | Color name or value.                                                                                                   | `None`  |
 | `icon`     | unicode        | Name of icon to add.                                                                                                   | `None`  |
 | `show`     | bool           | Whether to print or not. Can be used to only output messages under certain condition, e.g. if `--verbose` flag is set. | `True`  |
+| `spaced`   | bool           | Whether to add newlines around the output.                                                                             | `False` |
 | `no_print` | bool           | Don't actually print, just return. Overwrites global setting.                                                          | `False` |
 | `exits`    | int            | If set, perform a system exit with the given code after printing.                                                      | `None`  |
 

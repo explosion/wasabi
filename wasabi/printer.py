@@ -68,21 +68,29 @@ class Printer(object):
         """
         return self._counts
 
-    def good(self, title="", text="", show=True, exits=None):
+    def good(self, title="", text="", show=True, spaced=False, exits=None):
         """Print a success message."""
-        return self._get_msg(title, text, style=MESSAGES.GOOD, show=show, exits=exits)
+        return self._get_msg(
+            title, text, style=MESSAGES.GOOD, show=show, spaced=spaced, exits=exits
+        )
 
-    def fail(self, title="", text="", show=True, exits=None):
+    def fail(self, title="", text="", show=True, spaced=False, exits=None):
         """Print an error message."""
-        return self._get_msg(title, text, style=MESSAGES.FAIL, show=show, exits=exits)
+        return self._get_msg(
+            title, text, style=MESSAGES.FAIL, show=show, spaced=spaced, exits=exits
+        )
 
-    def warn(self, title="", text="", show=True, exits=None):
+    def warn(self, title="", text="", show=True, spaced=False, exits=None):
         """Print a warning message."""
-        return self._get_msg(title, text, style=MESSAGES.WARN, show=show, exits=exits)
+        return self._get_msg(
+            title, text, style=MESSAGES.WARN, show=show, spaced=spaced, exits=exits
+        )
 
-    def info(self, title="", text="", show=True, exits=None):
+    def info(self, title="", text="", show=True, spaced=False, exits=None):
         """Print an error message."""
-        return self._get_msg(title, text, style=MESSAGES.INFO, show=show, exits=exits)
+        return self._get_msg(
+            title, text, style=MESSAGES.INFO, show=show, spaced=spaced, exits=exits
+        )
 
     def text(
         self,
@@ -90,6 +98,7 @@ class Printer(object):
         text="",
         color=None,
         icon=None,
+        spaced=False,
         show=True,
         no_print=False,
         exits=None,
@@ -100,6 +109,7 @@ class Printer(object):
         text (unicode): Optional additional text to print.
         color (unicode / int): Foreground color.
         icon (unicode): Name of icon to add.
+        spaced (unicode): Whether to add newlines around the output.
         show (bool): Whether to print or not. Can be used to only output
             messages under certain condition, e.g. if --verbose flag is set.
         no_print (bool): Don't actually print, just return.
@@ -117,7 +127,7 @@ class Printer(object):
             title = wrap(title, indent=0)
         if text:
             title = "{}\n{}".format(title, wrap(text, indent=0))
-        if exits is not None:
+        if exits is not None or spaced:
             title = "\n{}\n".format(title)
         if not self.no_print and not no_print:
             print(title)
@@ -207,8 +217,10 @@ class Printer(object):
             sys.stdout.flush()
             time.sleep(0.1)
 
-    def _get_msg(self, title, text, style=None, show=None, exits=None):
+    def _get_msg(self, title, text, style=None, show=None, spaced=False, exits=None):
         if self.ignore_warnings and style == MESSAGES.WARN:
             show = False
         self._counts[style] += 1
-        return self.text(title, text, color=style, icon=style, show=show, exits=exits)
+        return self.text(
+            title, text, color=style, icon=style, show=show, spaced=spaced, exits=exits
+        )

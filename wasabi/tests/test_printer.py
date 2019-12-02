@@ -95,6 +95,13 @@ def test_printer_counts():
     assert p.counts[MESSAGES.WARN] == 4
 
 
+def test_printer_spaced():
+    p = Printer(no_print=True, pretty=False)
+    text = "This is a test."
+    assert p.good(text) == text
+    assert p.good(text, spaced=True) == "\n{}\n".format(text)
+
+
 def test_printer_divider():
     p = Printer(line_max=20, no_print=True)
     p.divider() == "\x1b[1m\n================\x1b[0m"
