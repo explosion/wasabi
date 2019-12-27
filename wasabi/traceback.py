@@ -18,6 +18,8 @@ class TracebackPrinter(object):
         indent=2,
         tb_base=None,
         tb_exclude=tuple(),
+        tb_range_start=-5,
+        tb_range_end=-2,
     ):
         """Initialize a traceback printer.
 
@@ -29,6 +31,9 @@ class TracebackPrinter(object):
             example, "thinc" will look for the last occurence of "/thinc/" in
             a path and only show path to the right of it.
         tb_exclude (tuple): List of filenames to exclude from traceback.
+        tb_range_start (int): The starting index from a traceback to include.
+        tb_range_end (int): The final index from a traceback to include. If None
+            the traceback will continue until the last record.
         RETURNS (TracebackPrinter): The traceback printer.
         """
         self.color_error = color_error
@@ -37,6 +42,8 @@ class TracebackPrinter(object):
         self.indent = " " * indent
         self.tb_base = "/{}/".format(tb_base) if tb_base else None
         self.tb_exclude = tuple(tb_exclude)
+        self.tb_range_start = tb_range_start
+        self.tb_range_end = tb_range_end
         self.supports_ansi = supports_ansi()
 
     def __call__(self, title, *texts, **settings):
@@ -62,7 +69,11 @@ class TracebackPrinter(object):
     def _get_traceback(self, tb, highlight):
         # Exclude certain file names from traceback
         tb = [record for record in tb if not record[0].endswith(self.tb_exclude)]
-        tb_range = tb[-5:-2]
+        tb_range = (
+            tb[self.tb_range_start : self.tb_range_end]
+            if self.tb_range_end is not None
+            else tb[self.tb_range_start :]
+        )
         tb_list = [
             self._format_traceback(path, line, fn, text, i, len(tb_range), highlight)
             for i, (path, line, fn, text) in enumerate(tb_range)
