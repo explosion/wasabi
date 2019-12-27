@@ -1,6 +1,6 @@
 # coding: utf8
 from __future__ import unicode_literals, print_function
-
+import os
 from .util import color, supports_ansi, NO_UTF8
 
 
@@ -35,7 +35,11 @@ class TracebackPrinter(object):
         self.color_tb = color_tb
         self.color_highlight = color_highlight
         self.indent = " " * indent
-        self.tb_base = "/{}/".format(tb_base) if tb_base else None
+        if tb_base == ".":
+            tb_base = "{}{}".format(os.getcwd(), os.path.sep)
+        elif tb_base is not None:
+            tb_base = "/{}/".format(tb_base)
+        self.tb_base = tb_base
         self.tb_exclude = tuple(tb_exclude)
         self.supports_ansi = supports_ansi()
 
