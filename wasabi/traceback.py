@@ -76,7 +76,7 @@ class TracebackPrinter(object):
         )
 
     def _format_traceback(self, path, line, fn, text, i, count, highlight):
-        template = "{base_indent}{indent} {fn} [{line}] in {path}{text}"
+        template = "{base_indent}{indent} {fn} in {path}:{line}{text}"
         indent = (LINE_EDGE if i == count - 1 else LINE_FORK) + LINE_PATH * i
         if self.tb_base and self.tb_base in path:
             path = path.rsplit(self.tb_base, 1)[1]
