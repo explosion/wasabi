@@ -41,3 +41,15 @@ def test_traceback_printer_no_tb():
     tbp = TracebackPrinter(tb_base="wasabi")
     msg = tbp("Hello world", "This is a test")
     print(msg)
+
+
+def test_traceback_printer_custom_tb_range():
+    tbp = TracebackPrinter(tb_range_start=-10, tb_range_end=-3)
+    msg = tbp("Hello world", "This is a test")
+    print(msg)
+
+
+def test_traceback_printer_custom_tb_range_start():
+    tbp = TracebackPrinter(tb_range_start=-1)
+    msg = tbp("Hello world", "This is a test")
+    print(msg)
