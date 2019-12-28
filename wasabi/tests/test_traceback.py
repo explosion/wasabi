@@ -37,6 +37,18 @@ def test_traceback_printer_only_title(tb):
     print(msg)
 
 
+def test_traceback_dot_relative_path_tb_base(tb):
+    tbp = TracebackPrinter(tb_base=".")
+    msg = tbp("Hello world", tb=tb)
+    print(msg)
+
+
+def test_traceback_tb_base_none(tb):
+    tbp = TracebackPrinter()
+    msg = tbp("Hello world", tb=tb)
+    print(msg)
+
+
 def test_traceback_printer_no_tb():
     tbp = TracebackPrinter(tb_base="wasabi")
     msg = tbp("Hello world", "This is a test")
