@@ -132,7 +132,8 @@ class Printer(object):
         if text:
             title = "{}\n{}".format(title, wrap(text, indent=0))
         if self.timestamp:
-            title = "{}\t{}".format(datetime.datetime.now(), title)
+            now = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            title = "{}\t{}".format(now, title)
         if exits is not None or spaced:
             title = "\n{}\n".format(title)
         if not self.no_print and not no_print:
