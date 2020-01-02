@@ -169,7 +169,6 @@ def test_printer_log_friendly_prefix():
     del os.environ[ENV_LOG_FRIENDLY]
 
 
-@pytest.mark.skip(reason="Now seems to raise TypeError: readonly attribute?")
 def test_printer_none_encoding(monkeypatch):
     """Test that printer works even if sys.stdout.encoding is set to None. This
     previously caused a very confusing error."""
