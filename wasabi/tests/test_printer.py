@@ -55,7 +55,7 @@ def test_printer_print():
 def test_printer_print_timestamp():
     p = Printer(no_print=True, timestamp=True)
     result = p.info("Hello world")
-    matches = re.match("^[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}.*", result)
+    matches = re.match("^[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}", result)
     assert matches
 
 
