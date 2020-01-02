@@ -42,7 +42,7 @@ def test_printer():
 
 
 def test_printer_print():
-    p = Printer()
+    p = Printer(timestamp=True)
     text = "This is a test."
     p.good(text)
     p.fail(text)
