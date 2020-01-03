@@ -1,6 +1,7 @@
 # coding: utf8
 from __future__ import unicode_literals, print_function
 
+import datetime
 from collections import Counter
 from contextlib import contextmanager
 from multiprocessing import Process
@@ -28,6 +29,7 @@ class Printer(object):
         hide_animation=False,
         ignore_warnings=False,
         env_prefix="WASABI",
+        timestamp=False,
     ):
         """Initialize the command-line printer.
 
@@ -42,6 +44,7 @@ class Printer(object):
         ignore_warnings (bool): Do not output messages of type MESSAGE.WARN.
         env_prefix (unicode): Prefix for environment variables, e.g.
             WASABI_LOG_FRIENDLY.
+        timestamp (bool): Print a timestamp (default False).
         RETURNS (Printer): The initialized printer.
         """
         env_log_friendly = os.getenv("{}_LOG_FRIENDLY".format(env_prefix), False)
@@ -55,6 +58,7 @@ class Printer(object):
         self.line_max = line_max
         self.colors = dict(COLORS)
         self.icons = dict(ICONS)
+        self.timestamp = timestamp
         if colors:
             self.colors.update(colors)
         if icons:
@@ -87,7 +91,7 @@ class Printer(object):
         )
 
     def info(self, title="", text="", show=True, spaced=False, exits=None):
-        """Print an error message."""
+        """Print an informational message."""
         return self._get_msg(
             title, text, style=MESSAGES.INFO, show=show, spaced=spaced, exits=exits
         )
@@ -127,6 +131,9 @@ class Printer(object):
             title = wrap(title, indent=0)
         if text:
             title = "{}\n{}".format(title, wrap(text, indent=0))
+        if self.timestamp:
+            now = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            title = "{}\t{}".format(now, title)
         if exits is not None or spaced:
             title = "\n{}\n".format(title)
         if not self.no_print and not no_print:
