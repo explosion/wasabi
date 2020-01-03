@@ -86,6 +86,7 @@ msg = Printer()
 | `hide_animation`  | bool      | Don't display animation, e.g. for logs.                       | `False`       |
 | `ignore_warnings` | bool      | Don't output messages of type `MESSAGE.WARN`.                 | `False`       |
 | `env_prefix`      | unicode   | Prefix for environment variables, e.g. `WASABI_LOG_FRIENDLY`. | `"WASABI"`    |
+| `timestamp`       | bool      | Add timestamp before output.                                  | `False`       |
 | **RETURNS**       | `Printer` | The initialized printer.                                      | -             |
 
 #### <kbd>method</kbd> `Printer.text`
