@@ -1,6 +1,8 @@
 # coding: utf8
 from __future__ import unicode_literals, print_function
 
+import re
+
 import pytest
 import time
 import os
@@ -48,6 +50,13 @@ def test_printer_print():
     p.fail(text)
     p.info(text)
     p.text(text)
+
+
+def test_printer_print_timestamp():
+    p = Printer(no_print=True, timestamp=True)
+    result = p.info("Hello world")
+    matches = re.match("^[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}", result)
+    assert matches
 
 
 def test_printer_no_pretty():
