@@ -3,7 +3,7 @@ from __future__ import unicode_literals, print_function
 
 import pytest
 import traceback
-from wasabi.traceback import TracebackPrinter
+from wasabi.traceback_printer import TracebackPrinter
 
 
 @pytest.fixture
