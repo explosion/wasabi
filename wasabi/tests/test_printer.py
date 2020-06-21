@@ -184,3 +184,13 @@ def test_printer_none_encoding(monkeypatch):
     previously caused a very confusing error."""
     monkeypatch.setattr("sys.stdout.encoding", None)
     p = Printer()  # noqa: F841
+
+
+def test_printer_no_print_raise_on_exit():
+    """Test that the printer raises if a non-zero exit code is provided, even
+    if no_print is set to True."""
+    err = "This is an error."
+    p = Printer(no_print=True, pretty=False)
+    with pytest.raises(SystemExit) as e:
+        p.fail(err, exits=True)
+    assert str(e.value).strip()[-len(err) :] == err

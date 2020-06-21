@@ -9,6 +9,7 @@ import itertools
 import sys
 import time
 import os
+import traceback
 
 from .tables import table, row
 from .util import wrap, supports_ansi, can_render, locale_escape
@@ -141,6 +142,13 @@ class Printer(object):
         if exits is not None:
             sys.stdout.flush()
             sys.stderr.flush()
+            if self.no_print or no_print and exits != 0:
+                try:
+                    raise RuntimeError(title.strip())
+                except Exception as e:
+                    # Remove wasabi from the traceback and re-raise
+                    tb = "\n".join(traceback.format_stack()[:-3])
+                    raise SystemExit("{}\n{}".format(tb, e))
             sys.exit(exits)
         if self.no_print or no_print:
             return title
