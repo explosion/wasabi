@@ -142,9 +142,9 @@ def diff_strings(a, b, fg="black", bg=("green", "red")):
     for opcode, a0, a1, b0, b1 in matcher.get_opcodes():
         if opcode == "equal":
             output.append(a[a0:a1])
-        elif opcode == "insert":
+        if opcode == "insert" or opcode == "replace":
             output.append(color(b[b0:b1], fg=fg, bg=bg[0]))
-        elif opcode == "delete":
+        if opcode == "delete" or opcode == "replace":
             output.append(color(a[a0:a1], fg=fg, bg=bg[1]))
     return "".join(output)
 
