@@ -81,11 +81,11 @@ msg = Printer()
 | `colors`          | dict      | Add or overwrite color values, names mapped to `0`-`256`.     | `None`        |
 | `icons`           | dict      | Add or overwrite icon. Name mapped to unicode.                | `None`        |
 | `line_max`        | int       | Maximum line length (for divider).                            | `80`          |
-| `animation`       | unicode   | Steps of loading animation for `Printer.loading`.             | `"⠙⠹⠸⠼⠴⠦⠧⠇⠏"` |
-| `animation_ascii` | unicode   | Alternative animation for ASCII terminals.                    | `"\|/-\\"`    |
+| `animation`       | str       | Steps of loading animation for `Printer.loading`.             | `"⠙⠹⠸⠼⠴⠦⠧⠇⠏"` |
+| `animation_ascii` | str       | Alternative animation for ASCII terminals.                    | `"\|/-\\"`    |
 | `hide_animation`  | bool      | Don't display animation, e.g. for logs.                       | `False`       |
 | `ignore_warnings` | bool      | Don't output messages of type `MESSAGE.WARN`.                 | `False`       |
-| `env_prefix`      | unicode   | Prefix for environment variables, e.g. `WASABI_LOG_FRIENDLY`. | `"WASABI"`    |
+| `env_prefix`      | str       | Prefix for environment variables, e.g. `WASABI_LOG_FRIENDLY`. | `"WASABI"`    |
 | `timestamp`       | bool      | Add timestamp before output.                                  | `False`       |
 | **RETURNS**       | `Printer` | The initialized printer.                                      | -             |
 
@@ -98,10 +98,10 @@ msg.text("Hello world!")
 
 | Argument   | Type           | Description                                                                                                            | Default |
 | ---------- | -------------- | ---------------------------------------------------------------------------------------------------------------------- | ------- |
-| `title`    | unicode        | The main text to print.                                                                                                | `""`    |
-| `text`     | unicode        | Optional additional text to print.                                                                                     | `""`    |
+| `title`    | str            | The main text to print.                                                                                                | `""`    |
+| `text`     | str            | Optional additional text to print.                                                                                     | `""`    |
 | `color`    |  unicode / int | Color name or value.                                                                                                   | `None`  |
-| `icon`     | unicode        | Name of icon to add.                                                                                                   | `None`  |
+| `icon`     | str            | Name of icon to add.                                                                                                   | `None`  |
 | `show`     | bool           | Whether to print or not. Can be used to only output messages under certain condition, e.g. if `--verbose` flag is set. | `True`  |
 | `spaced`   | bool           | Whether to add newlines around the output.                                                                             | `False` |
 | `no_print` | bool           | Don't actually print, just return. Overwrites global setting.                                                          | `False` |
@@ -119,12 +119,12 @@ msg.warn("Warning")
 msg.info("Info")
 ```
 
-| Argument | Type    | Description                                                                                                            | Default |
-| -------- | ------- | ---------------------------------------------------------------------------------------------------------------------- | ------- |
-| `title`  | unicode | The main text to print.                                                                                                | `""`    |
-| `text`   | unicode | Optional additional text to print.                                                                                     | `""`    |
-| `show`   | bool    | Whether to print or not. Can be used to only output messages under certain condition, e.g. if `--verbose` flag is set. | `True`  |
-| `exits`  | int     | If set, perform a system exit with the given code after printing.                                                      | `None`  |
+| Argument | Type | Description                                                                                                            | Default |
+| -------- | ---- | ---------------------------------------------------------------------------------------------------------------------- | ------- |
+| `title`  | str  | The main text to print.                                                                                                | `""`    |
+| `text`   | str  | Optional additional text to print.                                                                                     | `""`    |
+| `show`   | bool | Whether to print or not. Can be used to only output messages under certain condition, e.g. if `--verbose` flag is set. | `True`  |
+| `exits`  | int  | If set, perform a system exit with the given code after printing.                                                      | `None`  |
 
 #### <kbd>method</kbd> `Printer.divider`
 
@@ -135,12 +135,12 @@ msg = Printer()
 msg.divider("Heading")
 ```
 
-| Argument | Type    | Description                                                                                                            | Default |
-| -------- | ------- | ---------------------------------------------------------------------------------------------------------------------- | ------- |
-| `text`   | unicode | Headline text. If empty, only the line is printed.                                                                     | `""`    |
-| `char`   | unicode | Single line character to repeat.                                                                                       | `"="`   |
-| `show`   | bool    | Whether to print or not. Can be used to only output messages under certain condition, e.g. if `--verbose` flag is set. | `True`  |
-| `icon`   | unicode | Optional icon to use with title.                                                                                       | `None`  |
+| Argument | Type | Description                                                                                                            | Default |
+| -------- | ---- | ---------------------------------------------------------------------------------------------------------------------- | ------- |
+| `text`   | str  | Headline text. If empty, only the line is printed.                                                                     | `""`    |
+| `char`   | str  | Single line character to repeat.                                                                                       | `"="`   |
+| `show`   | bool | Whether to print or not. Can be used to only output messages under certain condition, e.g. if `--verbose` flag is set. | `True`  |
+| `icon`   | str  | Optional icon to use with title.                                                                                       | `None`  |
 
 #### <kbd>contextmanager</kbd> `Printer.loading`
 
@@ -152,9 +152,9 @@ with msg.loading("Loading..."):
 msg.good("Successfully loaded something!")
 ```
 
-| Argument | Type    | Description                        | Default |
-| -------- | ------- | ---------------------------------- | ------- |
-| `text`   | unicode | The text to display while loading. | `""`    |
+| Argument | Type | Description                        | Default |
+| -------- | ---- | ---------------------------------- | ------- |
+| `text`   | str  | The text to display while loading. | `""`    |
 
 #### <kbd>method</kbd> `Printer.table`, `Printer.row`
 
@@ -213,7 +213,7 @@ Column 1   Column 2    Column 3
 | `spacing`   | int                 | Number of spaces between columns.                                                                                                   | `3`      |
 | `aligns`    | iterable / unicode  | Columns alignments in order. `"l"` (left, default), `"r"` (right) or `"c"` (center). If If a string, value is used for all columns. | `None`   |
 | `multiline` | bool                | If a cell value is a list of a tuple, render it on multiple lines, with one value per line.                                         | `False`  |
-| **RETURNS** | unicode             | The formatted table.                                                                                                                |          |
+| **RETURNS** | str                 | The formatted table.                                                                                                                |          |
 
 #### <kbd>function</kbd> `row`
 
@@ -234,7 +234,7 @@ a1   a2   a3
 | `widths`    | iterable / int / `"auto"` | Column widths, either one integer for all columns or an iterable of values. If "auto", widths will be calculated automatically based on the largest value. | `"auto"` |
 | `spacing`   | int                       | Number of spaces between columns.                                                                                                                          | `3`      |
 | `aligns`    | iterable                  | Columns alignments in order. `"l"` (left), `"r"` (right) or `"c"` (center).                                                                                | `None`   |
-| **RETURNS** | unicode                   | The formatted row.                                                                                                                                         |          |
+| **RETURNS** | str                       | The formatted row.                                                                                                                                         |          |
 
 ### <kbd>class</kbd> `TracebackPrinter`
 
@@ -253,11 +253,11 @@ tb = TracebackPrinter(tb_base="thinc", tb_exclude=("check.py",))
 
 | Argument          | Type               | Description                                                                                                                                                              | Default    |
 | ----------------- | ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------- |
-| `color_error`     | unicode / int      | Color name or code for errors (passed to `color` helper).                                                                                                                | `"red"`    |
-| `color_tb`        | unicode / int      | Color name or code for traceback headline (passed to `color` helper).                                                                                                    | `"blue"`   |
-| `color_highlight` | unicode / int      | Color name or code for highlighted text (passed to `color` helper).                                                                                                      | `"yellow"` |
+| `color_error`     | str / int          | Color name or code for errors (passed to `color` helper).                                                                                                                | `"red"`    |
+| `color_tb`        | str / int          | Color name or code for traceback headline (passed to `color` helper).                                                                                                    | `"blue"`   |
+| `color_highlight` | str / int          | Color name or code for highlighted text (passed to `color` helper).                                                                                                      | `"yellow"` |
 | `indent`          | int                | Number of spaces to use for indentation.                                                                                                                                 | `2`        |
-| `tb_base`         | unicode            | Name of directory to use to show relative paths. For example, `"thinc"` will look for the last occurence of `"/thinc/"` in a path and only show path to the right of it. | `None`     |
+| `tb_base`         | str                | Name of directory to use to show relative paths. For example, `"thinc"` will look for the last occurence of `"/thinc/"` in a path and only show path to the right of it. | `None`     |
 | `tb_exclude`      | tuple              | List of filenames to exclude from traceback.                                                                                                                             | `tuple()`  |
 | **RETURNS**       | `TracebackPrinter` | The traceback printer.                                                                                                                                                   |            |
 
@@ -288,11 +288,11 @@ raise ValueError(error)
 
 | Argument    | Type     | Description                                                                                | Default |
 | ----------- | -------- | ------------------------------------------------------------------------------------------ | ------- |
-| `title`     | unicode  | The message title.                                                                         |         |
-| `*texts`    | unicode  | Optional texts to print (one per line).                                                    |         |
-| `highlight` | unicode  | Optional sequence to highlight in the traceback, e.g. the bad value that caused the error. | `False` |
+| `title`     | str      | The message title.                                                                         |         |
+| `*texts`    | str      | Optional texts to print (one per line).                                                    |         |
+| `highlight` | str      | Optional sequence to highlight in the traceback, e.g. the bad value that caused the error. | `False` |
 | `tb`        | iterable | The traceback, e.g. generated by `traceback.extract_stack()`.                              | `None`  |
-| **RETURNS** | unicode  | The formatted traceback. Can be printed or raised by custom exception.                     |         |
+| **RETURNS** | str      | The formatted traceback. Can be printed or raised by custom exception.                     |         |
 
 ### Utilities
 
@@ -304,13 +304,13 @@ from wasabi import color
 formatted = color("This is a text", fg="white", bg="green", bold=True)
 ```
 
-| Argument    | Type          | Description                                   | Default |
-| ----------- | ------------- | --------------------------------------------- | ------- |
-| `text`      | unicode       | The text to be formatted.                     | -       |
-| `fg`        | unicode / int | Foreground color. String name or `0` - `256`. | `None`  |
-| `bg`        | unicode / int | Background color. String name or `0` - `256`. | `None`  |
-| `bold`      | bool          | Format the text in bold.                      | `False` |
-| **RETURNS** | unicode       | The formatted string.                         |         |
+| Argument    | Type      | Description                                   | Default |
+| ----------- | --------- | --------------------------------------------- | ------- |
+| `text`      | str       | The text to be formatted.                     | -       |
+| `fg`        | str / int | Foreground color. String name or `0` - `256`. | `None`  |
+| `bg`        | str / int | Background color. String name or `0` - `256`. | `None`  |
+| `bold`      | bool      | Format the text in bold.                      | `False` |
+| **RETURNS** | str       | The formatted string.                         |         |
 
 #### <kbd>function</kbd> `wrap`
 
@@ -320,12 +320,12 @@ from wasabi import wrap
 wrapped = wrap("Hello world, this is a text.", indent=2)
 ```
 
-| Argument    | Type    | Description                                | Default |
-| ----------- | ------- | ------------------------------------------ | ------- |
-| `text`      | unicode | The text to wrap.                          | -       |
-| `wrap_max`  | int     | Maximum line width, including indentation. | `80`    |
-| `indent`    | int     | Number of spaces used for indentation.     | `4`     |
-| **RETURNS** | unicode | The wrapped text with line breaks.         |         |
+| Argument    | Type | Description                                | Default |
+| ----------- | ---- | ------------------------------------------ | ------- |
+| `text`      | str  | The text to wrap.                          | -       |
+| `wrap_max`  | int  | Maximum line width, including indentation. | `80`    |
+| `indent`    | int  | Number of spaces used for indentation.     | `4`     |
+| **RETURNS** | str  | The wrapped text with line breaks.         |         |
 
 #### <kbd>function</kbd> `diff_strings`
 
@@ -335,13 +335,13 @@ from wasabi import diff_strings
 diff = diff_strings("hello world!", "helloo world")
 ```
 
-| Argument    | Type          | Description                                                                  | Default            |
-| ----------- | ------------- | ---------------------------------------------------------------------------- | ------------------ |
-| `a`         | unicode       | The first string to diff.                                                    |
-| `b`         | unicode       | The second string to diff.                                                   |
-| `fg`        | unicode / int | Foreground color. String name or `0` - `256`.                                | `"black"`          |
-| `bg`        | tuple         | Background colors as `(insert, delete)` tuple of string name or `0` - `256`. | `("green", "red")` |
-| **RETURNS** | unicode       | The formatted diff.                                                          |                    |
+| Argument    | Type      | Description                                                                  | Default            |
+| ----------- | --------- | ---------------------------------------------------------------------------- | ------------------ |
+| `a`         | str       | The first string to diff.                                                    |
+| `b`         | str       | The second string to diff.                                                   |
+| `fg`        | str / int | Foreground color. String name or `0` - `256`.                                | `"black"`          |
+| `bg`        | tuple     | Background colors as `(insert, delete)` tuple of string name or `0` - `256`. | `("green", "red")` |
+| **RETURNS** | str       | The formatted diff.                                                          |                    |
 
 ### Environment variables
 
