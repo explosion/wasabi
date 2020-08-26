@@ -137,16 +137,21 @@ def diff_strings(a, b, fg="black", bg=("green", "red")):
         0 - 256 (see COLORS).
     RETURNS (unicode): The formatted diff.
     """
+    a = a.split("\n")
+    b = b.split("\n")
     output = []
     matcher = difflib.SequenceMatcher(None, a, b)
     for opcode, a0, a1, b0, b1 in matcher.get_opcodes():
         if opcode == "equal":
-            output.append(a[a0:a1])
+            for item in a[a0:a1]:
+                output.append(item)
         if opcode == "insert" or opcode == "replace":
-            output.append(color(b[b0:b1], fg=fg, bg=bg[0]))
+            for item in b[b0:b1]:
+                output.append(color(item, fg=fg, bg=bg[0]))
         if opcode == "delete" or opcode == "replace":
-            output.append(color(a[a0:a1], fg=fg, bg=bg[1]))
-    return "".join(output)
+            for item in a[a0:a1]:
+                output.append(color(item, fg=fg, bg=bg[1]))
+    return "\n".join(output)
 
 
 def get_raw_input(description, default=False, indent=4):
