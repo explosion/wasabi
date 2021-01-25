@@ -162,6 +162,8 @@ class Printer(object):
         show (bool): Whether to print or not.
         icon (unicode): Optional icon to display with title.
         """
+        if not show:
+            return
         if len(char) != 1:
             raise ValueError(
                 "Divider chars need to be one character long. "
