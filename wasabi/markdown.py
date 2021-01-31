@@ -25,7 +25,7 @@ class MarkdownRenderer:
         """
         self.data.append(content)
 
-    def table(self, data, header):
+    def table(self, data, header, aligns=None):
         """Create a Markdown table.
 
         data (Iterable[Iterable[str]]): The body, one iterable per row,
@@ -33,8 +33,16 @@ class MarkdownRenderer:
         header (Iterable[str]): The column names.
         RETURNS (str): The rendered table.
         """
+        if aligns is None:
+            aligns = ["l"] * len(header)
+        if len(aligns) != len(header):
+            err = "Invalid aligns: {} (header length: {})".format(aligns, len(header))
+            raise ValueError(err)
+        get_divider = lambda a: ":---:" if a == "c" else "---:" if a == "r" else "---"
         head = "| {} |".format(" | ".join(header))
-        divider = "| {} |".format(" | ".join("---" for _ in header))
+        divider = "| {} |".format(
+            " | ".join(get_divider(aligns[i]) for i in range(len(header)))
+        )
         body = "\n".join("| {} |".format(" | ".join(row)) for row in data)
         return "{}\n{}\n{}".format(head, divider, body)
 

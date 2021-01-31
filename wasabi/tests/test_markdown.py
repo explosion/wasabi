@@ -2,6 +2,7 @@
 from __future__ import unicode_literals, print_function
 
 from wasabi.markdown import MarkdownRenderer
+import pytest
 
 
 def test_markdown():
@@ -14,3 +15,14 @@ def test_markdown():
     md.add(md.list(["first", "second"], numbered=True))
     expected = """# Title\n\nParagraph with **bold**\n\n- foo\n- bar\n\n| foo | bar |\n| --- | --- |\n| a | b |\n| c | d |\n\n```python\nimport spacy\n\nnlp = spacy.blank("en")\n```\n\n1. first\n2. second"""
     assert md.text == expected
+
+
+def test_markdown_table_aligns():
+    md = MarkdownRenderer()
+    md.add(md.table([("a", "b", "c")], ["foo", "bar", "baz"], aligns=("c", "r", "l")))
+    expected = """| foo | bar | baz |\n| :---: | ---: | --- |\n| a | b | c |"""
+    assert md.text == expected
+    with pytest.raises(ValueError):
+        md.table([("a", "b", "c")], ["foo", "bar", "baz"], aligns=("c", "r"))
+    with pytest.raises(ValueError):
+        md.table([("a", "b", "c")], ["foo", "bar", "baz"], aligns=("c", "r", "l", "l"))
