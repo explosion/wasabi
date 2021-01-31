@@ -369,11 +369,12 @@ md.add(table)
 | c | d |
 ```
 
-| Argument    | Type                    | Description                                                                | Default |
-| ----------- | ----------------------- | -------------------------------------------------------------------------- | ------- |
-| `data`      | Iterable[Iterable[str]] | The body, one iterable per row, containig an interable of column contents. |         |
-| `header`    | Iterable[str]           | The column names.                                                          |         |
-| **RETURNS** | str                     | The table.                                                                 |         |
+| Argument    | Type                    | Description                                                                          | Default |
+| ----------- | ----------------------- | ------------------------------------------------------------------------------------ | ------- |
+| `data`      | Iterable[Iterable[str]] | The body, one iterable per row, containig an interable of column contents.           |         |
+| `header`    | Iterable[str]           | The column names.                                                                    |         |
+| `aligns`    | Iterable[str]           | Columns alignments in order. `"l"` (left, default), `"r"` (right) or `"c"` (center). | `None`  |
+| **RETURNS** | str                     | The table.                                                                           |         |
 
 ### <kbd>method</kbd> `MarkdownRenderer.title`
 
@@ -462,7 +463,7 @@ import spacy
 | `lang`      | str  | Optional code language.  | `""`    |
 | **RETURNS** | str  | The rendered code block. |         |
 
-### <kbd>method</kbd> `MarkdownRenderer.code`, `MarkdownRenderer.bold`, `MarkdownRenderer.italic`, `MarkdownRenderer.code`
+### <kbd>method</kbd> `MarkdownRenderer.code`, `MarkdownRenderer.bold`, `MarkdownRenderer.italic`
 
 Create a Markdown-formatted text.
 
