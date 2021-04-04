@@ -152,9 +152,9 @@ with msg.loading("Loading..."):
 msg.good("Successfully loaded something!")
 ```
 
-| Argument | Type | Description                        | Default |
-| -------- | ---- | ---------------------------------- | ------- |
-| `text`   | str  | The text to display while loading. | `""`    |
+| Argument | Type | Description                        | Default           |
+| -------- | ---- | ---------------------------------- | ----------------- |
+| `text`   | str  | The text to display while loading. | `"Loading..."`    |
 
 #### <kbd>method</kbd> `Printer.table`, `Printer.row`
 
@@ -498,6 +498,7 @@ formatted = color("This is a text", fg="white", bg="green", bold=True)
 | `fg`        | str / int | Foreground color. String name or `0` - `256`. | `None`  |
 | `bg`        | str / int | Background color. String name or `0` - `256`. | `None`  |
 | `bold`      | bool      | Format the text in bold.                      | `False` |
+| `underline` | bool      | Format the text by underlining.               | `False` |
 | **RETURNS** | str       | The formatted string.                         |         |
 
 #### <kbd>function</kbd> `wrap`
