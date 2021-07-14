@@ -2,7 +2,7 @@
 
 Over the years, I've written countless implementations of coloring and
 formatting utilities to output messages in our libraries like
-[spaCy](https://spacy.io), [Thinc](https://github.com/explosion/thinc) and
+[spaCy](https://spacy.io), [Thinc](https://github.com/explosion/thinc), [UBIAI](https://ubiai.tools) and
 [Prodigy](https://prodi.gy). While there are many other great open-source
 options, I've always ended up wanting something slightly different or slightly
 custom.
