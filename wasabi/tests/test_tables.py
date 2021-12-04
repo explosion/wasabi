@@ -141,7 +141,10 @@ def test_colors_whole_table_only_fg_colors(data, header, footer, fg_colors):
         divider=True,
         fg_colors=fg_colors,
     )
-    assert result
+    assert (
+        result
+        == "\nCOL A            \x1b[38;5;3mCOL B\x1b[0m   \x1b[38;5;87mCOL 3     \x1b[0m\n--------------   \x1b[38;5;3m-----\x1b[0m   \x1b[38;5;87m----------\x1b[0m\nHello            \x1b[38;5;3mWorld\x1b[0m   \x1b[38;5;87m12344342  \x1b[0m\nThis is a test   \x1b[38;5;3mWorld\x1b[0m   \x1b[38;5;87m1234      \x1b[0m\n--------------   \x1b[38;5;3m-----\x1b[0m   \x1b[38;5;87m----------\x1b[0m\n                 \x1b[38;5;3m     \x1b[0m   \x1b[38;5;87m2030203.00\x1b[0m\n"
+    )
 
 
 def test_colors_whole_table_only_bg_colors(data, header, footer, bg_colors):
@@ -152,7 +155,10 @@ def test_colors_whole_table_only_bg_colors(data, header, footer, bg_colors):
         divider=True,
         bg_colors=bg_colors,
     )
-    assert result
+    assert (
+        result
+        == "\n\x1b[48;5;2mCOL A         \x1b[0m   \x1b[48;5;23mCOL B\x1b[0m   COL 3     \n\x1b[48;5;2m--------------\x1b[0m   \x1b[48;5;23m-----\x1b[0m   ----------\n\x1b[48;5;2mHello         \x1b[0m   \x1b[48;5;23mWorld\x1b[0m   12344342  \n\x1b[48;5;2mThis is a test\x1b[0m   \x1b[48;5;23mWorld\x1b[0m   1234      \n\x1b[48;5;2m--------------\x1b[0m   \x1b[48;5;23m-----\x1b[0m   ----------\n\x1b[48;5;2m              \x1b[0m   \x1b[48;5;23m     \x1b[0m   2030203.00\n"
+    )
 
 
 def test_colors_whole_table_with_supplied_spacing(
@@ -167,7 +173,10 @@ def test_colors_whole_table_with_supplied_spacing(
         bg_colors=bg_colors,
         spacing=5,
     )
-    assert result
+    assert (
+        result
+        == "\n\x1b[48;5;2mCOL A         \x1b[0m     \x1b[38;5;3;48;5;23mCOL B\x1b[0m     \x1b[38;5;87mCOL 3     \x1b[0m\n\x1b[48;5;2m--------------\x1b[0m     \x1b[38;5;3;48;5;23m-----\x1b[0m     \x1b[38;5;87m----------\x1b[0m\n\x1b[48;5;2mHello         \x1b[0m     \x1b[38;5;3;48;5;23mWorld\x1b[0m     \x1b[38;5;87m12344342  \x1b[0m\n\x1b[48;5;2mThis is a test\x1b[0m     \x1b[38;5;3;48;5;23mWorld\x1b[0m     \x1b[38;5;87m1234      \x1b[0m\n\x1b[48;5;2m--------------\x1b[0m     \x1b[38;5;3;48;5;23m-----\x1b[0m     \x1b[38;5;87m----------\x1b[0m\n\x1b[48;5;2m              \x1b[0m     \x1b[38;5;3;48;5;23m     \x1b[0m     \x1b[38;5;87m2030203.00\x1b[0m\n"
+    )
 
 
 def test_colors_whole_table_with_supplied_widths(
@@ -182,7 +191,10 @@ def test_colors_whole_table_with_supplied_widths(
         bg_colors=bg_colors,
         widths=(5, 2, 10),
     )
-    assert result
+    assert (
+        result
+        == "\n\x1b[48;5;2mCOL A\x1b[0m   \x1b[38;5;3;48;5;23mCOL B\x1b[0m   \x1b[38;5;87mCOL 3     \x1b[0m\n\x1b[48;5;2m-----\x1b[0m   \x1b[38;5;3;48;5;23m--\x1b[0m   \x1b[38;5;87m----------\x1b[0m\n\x1b[48;5;2mHello\x1b[0m   \x1b[38;5;3;48;5;23mWorld\x1b[0m   \x1b[38;5;87m12344342  \x1b[0m\n\x1b[48;5;2mThis is a test\x1b[0m   \x1b[38;5;3;48;5;23mWorld\x1b[0m   \x1b[38;5;87m1234      \x1b[0m\n\x1b[48;5;2m-----\x1b[0m   \x1b[38;5;3;48;5;23m--\x1b[0m   \x1b[38;5;87m----------\x1b[0m\n\x1b[48;5;2m     \x1b[0m   \x1b[38;5;3;48;5;23m  \x1b[0m   \x1b[38;5;87m2030203.00\x1b[0m\n"
+    )
 
 
 def test_colors_whole_table_with_single_alignment(
@@ -197,7 +209,10 @@ def test_colors_whole_table_with_single_alignment(
         bg_colors=bg_colors,
         aligns="r",
     )
-    assert result
+    assert (
+        result
+        == "\n\x1b[48;5;2m         COL A\x1b[0m   \x1b[38;5;3;48;5;23mCOL B\x1b[0m   \x1b[38;5;87m     COL 3\x1b[0m\n\x1b[48;5;2m--------------\x1b[0m   \x1b[38;5;3;48;5;23m-----\x1b[0m   \x1b[38;5;87m----------\x1b[0m\n\x1b[48;5;2m         Hello\x1b[0m   \x1b[38;5;3;48;5;23mWorld\x1b[0m   \x1b[38;5;87m  12344342\x1b[0m\n\x1b[48;5;2mThis is a test\x1b[0m   \x1b[38;5;3;48;5;23mWorld\x1b[0m   \x1b[38;5;87m      1234\x1b[0m\n\x1b[48;5;2m--------------\x1b[0m   \x1b[38;5;3;48;5;23m-----\x1b[0m   \x1b[38;5;87m----------\x1b[0m\n\x1b[48;5;2m              \x1b[0m   \x1b[38;5;3;48;5;23m     \x1b[0m   \x1b[38;5;87m2030203.00\x1b[0m\n"
+    )
 
 
 def test_colors_whole_table_with_multiple_alignment(
@@ -212,7 +227,10 @@ def test_colors_whole_table_with_multiple_alignment(
         bg_colors=bg_colors,
         aligns=("c", "r", "l"),
     )
-    assert result
+    assert (
+        result
+        == "\n\x1b[48;5;2m    COL A     \x1b[0m   \x1b[38;5;3;48;5;23mCOL B\x1b[0m   \x1b[38;5;87mCOL 3     \x1b[0m\n\x1b[48;5;2m--------------\x1b[0m   \x1b[38;5;3;48;5;23m-----\x1b[0m   \x1b[38;5;87m----------\x1b[0m\n\x1b[48;5;2m    Hello     \x1b[0m   \x1b[38;5;3;48;5;23mWorld\x1b[0m   \x1b[38;5;87m12344342  \x1b[0m\n\x1b[48;5;2mThis is a test\x1b[0m   \x1b[38;5;3;48;5;23mWorld\x1b[0m   \x1b[38;5;87m1234      \x1b[0m\n\x1b[48;5;2m--------------\x1b[0m   \x1b[38;5;3;48;5;23m-----\x1b[0m   \x1b[38;5;87m----------\x1b[0m\n\x1b[48;5;2m              \x1b[0m   \x1b[38;5;3;48;5;23m     \x1b[0m   \x1b[38;5;87m2030203.00\x1b[0m\n"
+    )
 
 
 def test_colors_whole_table_with_multiline(data, header, footer, fg_colors, bg_colors):
@@ -222,7 +240,10 @@ def test_colors_whole_table_with_multiline(data, header, footer, fg_colors, bg_c
         bg_colors=bg_colors,
         multiline=True,
     )
-    assert result
+    assert (
+        result
+        == "\n\x1b[48;5;2mCharles\x1b[0m   \x1b[38;5;3;48;5;23mmy\x1b[0m   \x1b[38;5;87mbrother\x1b[0m\n\x1b[48;5;2mQuinton\x1b[0m   \x1b[38;5;3;48;5;23m  \x1b[0m   \x1b[38;5;87m       \x1b[0m\n\x1b[48;5;2mMurphy \x1b[0m   \x1b[38;5;3;48;5;23m  \x1b[0m   \x1b[38;5;87m       \x1b[0m\n\x1b[48;5;2m       \x1b[0m   \x1b[38;5;3;48;5;23m  \x1b[0m   \x1b[38;5;87m       \x1b[0m\n\x1b[48;5;2m1      \x1b[0m   \x1b[38;5;3;48;5;23m2 \x1b[0m   \x1b[38;5;87m3      \x1b[0m\n"
+    )
 
 
 def test_colors_whole_table_log_friendly(data, header, footer, fg_colors, bg_colors):
@@ -293,4 +314,7 @@ def test_colors_whole_table_color_values(data, header, footer, fg_colors, bg_col
         bg_colors=bg_colors,
         color_values={"yellow": 11},
     )
-    assert result
+    assert (
+        result
+        == "\n\x1b[48;5;2mCOL A         \x1b[0m   \x1b[38;5;11;48;5;23mCOL B\x1b[0m   \x1b[38;5;87mCOL 3     \x1b[0m\n\x1b[48;5;2m--------------\x1b[0m   \x1b[38;5;11;48;5;23m-----\x1b[0m   \x1b[38;5;87m----------\x1b[0m\n\x1b[48;5;2mHello         \x1b[0m   \x1b[38;5;11;48;5;23mWorld\x1b[0m   \x1b[38;5;87m12344342  \x1b[0m\n\x1b[48;5;2mThis is a test\x1b[0m   \x1b[38;5;11;48;5;23mWorld\x1b[0m   \x1b[38;5;87m1234      \x1b[0m\n\x1b[48;5;2m--------------\x1b[0m   \x1b[38;5;11;48;5;23m-----\x1b[0m   \x1b[38;5;87m----------\x1b[0m\n\x1b[48;5;2m              \x1b[0m   \x1b[38;5;11;48;5;23m     \x1b[0m   \x1b[38;5;87m2030203.00\x1b[0m\n"
+    )
