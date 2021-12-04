@@ -44,8 +44,10 @@ def table(
     env_prefix (unicode): Prefix for environment variables, e.g.
         WASABI_LOG_FRIENDLY.
     color_values (dict): Add or overwrite color values, name mapped to value.
-    fg_colors (iterable): Foreground colors, one per column.
-    bg_colors (iterable): Background colors, one per column.
+    fg_colors (iterable): Foreground colors, one per column. None can be specified 
+        for individual columns to retain the default foreground color.
+    bg_colors (iterable): Background colors, one per column. None can be specified 
+        for individual columns to retain the default background color.
     RETURNS (unicode): The formatted table.
     """
     env_log_friendly = os.getenv("{}_LOG_FRIENDLY".format(env_prefix), False)
