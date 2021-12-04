@@ -31,11 +31,6 @@ def bg_colors():
     return ["green", "23", ""]
 
 
-@pytest.fixture()
-def color_values():
-    return {"red": 76}
-
-
 def test_table_default(data):
     result = table(data)
     assert (
