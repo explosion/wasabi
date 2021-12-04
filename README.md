@@ -213,11 +213,10 @@ Column 1   Column 2    Column 3
 | `spacing`   | int                 | Number of spaces between columns.                                                                                                   | `3`      |
 | `aligns`    | iterable / unicode  | Columns alignments in order. `"l"` (left, default), `"r"` (right) or `"c"` (center). If If a string, value is used for all columns. | `None`   |
 | `multiline` | bool                | If a cell value is a list of a tuple, render it on multiple lines, with one value per line.                                         | `False`  |
-| `env_prefix` | unicode                | Prefix for environment variables, e.g.
-        WASABI_LOG_FRIENDLY.                                         |`"WASABI"`   |
-| `color_values` | dict                | Add or overwrite color values, name mapped to value.                                         |`None`   |
-| `fg_colors` | iterable                | Foreground colors, one per column.                                         |`None`   |
-| `bg_colors` | iterable                | Background colors, one per column.                                         |`None`   |
+| `env_prefix` | unicode                | Prefix for environment variables, e.g. WASABI_LOG_FRIENDLY.                                         | `"WASABI"` |
+| `color_values` | dict                | Add or overwrite color values, name mapped to value.                                         | `None`   |
+| `fg_colors` | iterable                | Foreground colors, one per column.                                         | `None`   |
+| `bg_colors` | iterable                | Background colors, one per column.                                         | `None`   |
 | **RETURNS** | str                 | The formatted table.                                                                                                                |          |
 
 ```python
@@ -237,10 +236,9 @@ a1   a2   a3
 | `widths`    | list / int / `"auto"` | Column widths, either one integer for all columns or an iterable of values. If "auto", widths will be calculated automatically based on the largest value. | `"auto"` |
 | `spacing`   | int                       | Number of spaces between columns.                                                                                                                          | `3`      |
 | `aligns`    | list                  | Columns alignments in order. `"l"` (left), `"r"` (right) or `"c"` (center).                                                                                | `None`   |
-| `fg_colors`    | list                  | Foreground colors for the columns, in order, or None
-        to retain the default foreground color.                                                                                | `None`   |
-| `bg_colors`    | list                  | Foreground colors for the columns, in order, or None
-        to retain the default foregrond color.                                                                                | `None`   || **RETURNS** | str                       | The formatted row.                                                                                                                                         |          |
+| `fg_colors`    | list                  | Foreground colors for the columns, in order, or None to retain the default foreground color.                                                                                | `None`   |
+| `bg_colors`    | list                  | Foreground colors for the columns, in order, or None to retain the default foreground color.                                                                                | `None`   |
+| **RETURNS** | str                       | The formatted row.                                                                                                                                         |          |
 ### <kbd>class</kbd> `TracebackPrinter`
 
 Helper to output custom formatted tracebacks and error messages. Currently used
