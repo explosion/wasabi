@@ -115,10 +115,10 @@ def row(data, widths="auto", spacing=3, aligns=None, fg_colors=None, bg_colors=N
     aligns (list / unicode): Column alignments in order. 'l' (left,
         default), 'r' (right) or 'c' (center). If a string, value is used
         for all columns.
-    fg_colors (list): Foreground colors for the columns, in order, or None
-        to retain the default foreground color.
-    bg_colors (list): Background colors for the columns, in order, or None
-        to return the default background color.
+    fg_colors (list): Foreground colors for the columns, in order. None can be
+        specified for individual columns to retain the default foreground color.
+    bg_colors (list): Background colors for the columns, in order. None can be
+        specified for individual columns to retain the default background color.
     RETURNS (unicode): The formatted row.
     """
     cols = []
