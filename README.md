@@ -241,6 +241,7 @@ a1   a2   a3
 | `fg_colors`    | list                  | Foreground colors for the columns, in order. None can be specified for individual columns to retain the default foreground color. | `None`   |
 | `bg_colors`    | list                  | Background colors for the columns, in order. None can be specified for individual columns to retain the default background color. | `None`   |
 | **RETURNS** | str                       | The formatted row.                                                                                                                                         |          |
+
 ### <kbd>class</kbd> `TracebackPrinter`
 
 Helper to output custom formatted tracebacks and error messages. Currently used
