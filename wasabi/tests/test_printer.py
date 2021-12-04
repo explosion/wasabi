@@ -94,7 +94,10 @@ def test_color_as_int():
     p = Printer(no_print=True)
     text = "This is a text."
     result = p.text(text, color=220)
-    assert result == "\x1b[38;5;220mThis is a text.\x1b[0m"
+    if SUPPORTS_ANSI:
+        assert result == "\x1b[38;5;220mThis is a text.\x1b[0m"
+    else:
+        assert result == "This is a text."
 
 
 def test_printer_counts():
