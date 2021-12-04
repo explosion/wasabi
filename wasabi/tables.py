@@ -43,18 +43,30 @@ def table(
         multiple lines, with one value per line.
     env_prefix (unicode): Prefix for environment variables, e.g.
         WASABI_LOG_FRIENDLY.
-      color_values (dict): Add or overwrite color values, name mapped to value.
+    color_values (dict): Add or overwrite color values, name mapped to value.
     fg_colors (iterable): Foreground colors, one per column.
     bg_colors (iterable): Background colors, one per column.
     RETURNS (unicode): The formatted table.
     """
     env_log_friendly = os.getenv("{}_LOG_FRIENDLY".format(env_prefix), False)
-    if supports_ansi() and not env_log_friendly and (fg_colors is not None or bg_colors is not None):
+    if (
+        supports_ansi()
+        and not env_log_friendly
+        and (fg_colors is not None or bg_colors is not None)
+    ):
         colors = dict(COLORS)
         if color_values is not None:
             colors.update(color_values)
-        fg_colors = [colors.get(fg_color) for fg_color in fg_colors]
-        bg_colors = [colors.get(bg_color) for bg_color in bg_colors]
+        if fg_colors is not None:
+            fg_colors = [
+                colors.get(fg_color) if fg_color in colors else fg_color
+                for fg_color in fg_colors
+            ]
+        if bg_colors is not None:
+            bg_colors = [
+                colors.get(bg_color) if bg_color in colors else bg_color
+                for bg_color in bg_colors
+            ]
     else:
         fg_colors = None
         bg_colors = None
@@ -70,8 +82,13 @@ def table(
         data = zipped_data
     if widths == "auto":
         widths = _get_max_widths(data, header, footer, max_col)
-    settings = {"widths": widths, "spacing": spacing, "aligns": aligns,
-        "fg_colors": fg_colors, "bg_colors": bg_colors}
+    settings = {
+        "widths": widths,
+        "spacing": spacing,
+        "aligns": aligns,
+        "fg_colors": fg_colors,
+        "bg_colors": bg_colors,
+    }
     divider_row = row(["-" * width for width in widths], **settings)
     rows = []
     if header:
@@ -91,15 +108,15 @@ def row(data, widths="auto", spacing=3, aligns=None, fg_colors=None, bg_colors=N
     """Format data as a table row.
 
     data (iterable): The individual columns to format.
-    widths (iterable, int or 'auto'): Column widths, either one integer for all
+    widths (list, int or 'auto'): Column widths, either one integer for all
         columns or an iterable of values. If "auto", widths will be calculated
         automatically based on the largest value.
     spacing (int): Spacing between columns, in spaces.
-    aligns (iterable / unicode): Column alignments in order. 'l' (left,
+    aligns (list / unicode): Column alignments in order. 'l' (left,
         default), 'r' (right) or 'c' (center). If a string, value is used
         for all columns.
     fg_colors (list): Foreground colors for the columns, in order, or None
-        to retain the default foreground color.  
+        to retain the default foreground color.
     bg_colors (list): Background colors for the columns, in order, or None
         to return the default background color.
     RETURNS (unicode): The formatted row.
@@ -115,7 +132,7 @@ def row(data, widths="auto", spacing=3, aligns=None, fg_colors=None, bg_colors=N
         tpl = "{:%s%d}" % (align, col_width)
         col = tpl.format(to_string(col))
         if fg_colors is not None or bg_colors is not None:
-            fg = fg_colors[i] if fg_colors is not None else None 
+            fg = fg_colors[i] if fg_colors is not None else None
             bg = bg_colors[i] if bg_colors is not None else None
             col = _color(col, fg=fg, bg=bg)
         cols.append(col)

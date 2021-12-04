@@ -123,7 +123,7 @@ class Printer(object):
         if not show:
             return
         if self.pretty:
-            color = self.colors.get(color)
+            color = self.colors.get(color) if color in self.colors else color
             icon = self.icons.get(icon)
             if icon:
                 title = locale_escape("{} {}".format(icon, title)).strip()

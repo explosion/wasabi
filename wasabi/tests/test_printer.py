@@ -90,6 +90,13 @@ def test_printer_custom():
         assert warning == "?? {}".format(text)
 
 
+def test_color_as_int():
+    p = Printer(no_print=True)
+    text = "This is a text."
+    result = p.text(text, color=220)
+    assert result == "\x1b[38;5;220mThis is a text.\x1b[0m"
+
+
 def test_printer_counts():
     p = Printer()
     text = "This is a test."
