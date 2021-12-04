@@ -219,6 +219,8 @@ Column 1   Column 2    Column 3
 | `bg_colors` | iterable                | Background colors, one per column. None can be specified for individual columns to retain the default background color. | `None`   |
 | **RETURNS** | str                 | The formatted table.                                                                                                                |          |
 
+#### <kbd>function</kbd> `row`
+
 ```python
 from wasabi import row
 
