@@ -10,15 +10,15 @@ jobs:
   strategy:
     matrix:
       Python27Linux:
-        imageName: 'ubuntu-16.04'
+        imageName: 'ubuntu-20.04'
         python.version: '2.7'
       Python27LinuxASCII:
-        imageName: 'ubuntu-16.04'
+        imageName: 'ubuntu-20.04'
         python.version: '2.7'
         LANG: 'en_US.ascii'
         LC_ALL: 'en_US.ascii'
       Python27LinuxASCIIPython:
-        imageName: 'ubuntu-16.04'
+        imageName: 'ubuntu-20.04'
         python.version: '2.7'
         PYTHONIOENCODING: 'ascii'
       Python27Windows:
@@ -28,7 +28,7 @@ jobs:
         imageName: 'macos-10.14'
         python.version: '2.7'
       Python35Linux:
-        imageName: 'ubuntu-16.04'
+        imageName: 'ubuntu-20.04'
         python.version: '3.5'
       Python35Windows:
         imageName: 'vs2017-win2016'
@@ -37,7 +37,7 @@ jobs:
         imageName: 'macos-10.14'
         python.version: '3.5'
       Python36Linux:
-        imageName: 'ubuntu-16.04'
+        imageName: 'ubuntu-20.04'
         python.version: '3.6'
       Python36Windows:
         imageName: 'vs2017-win2016'
@@ -46,7 +46,7 @@ jobs:
         imageName: 'macos-10.14'
         python.version: '3.6'
       Python37Linux:
-        imageName: 'ubuntu-16.04'
+        imageName: 'ubuntu-20.04'
         python.version: '3.7'
       Python37Windows:
         imageName: 'vs2017-win2016'
@@ -55,7 +55,7 @@ jobs:
         imageName: 'macos-10.14'
         python.version: '3.7'
       Python38Linux:
-        imageName: 'ubuntu-16.04'
+        imageName: 'ubuntu-20.04'
         python.version: '3.8'
       Python38Windows:
         imageName: 'vs2017-win2016'
