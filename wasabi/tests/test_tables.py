@@ -1,6 +1,7 @@
 # coding: utf8
 from __future__ import unicode_literals, print_function
 
+import os
 import pytest
 from wasabi.tables import table, row
 
@@ -18,6 +19,21 @@ def header():
 @pytest.fixture()
 def footer():
     return ["", "", "2030203.00"]
+
+
+@pytest.fixture()
+def fg_colors():
+    return ["", "yellow", "87"]
+
+
+@pytest.fixture()
+def bg_colors():
+    return ["green", "23", ""]
+
+
+@pytest.fixture()
+def color_values():
+    return {"red": 76}
 
 
 def test_table_default(data):
@@ -82,4 +98,179 @@ def test_table_multiline(header):
     assert (
         result
         == "\nCOL A   COL B   COL 3  \n-----   -----   -------\nhello   foo     world  \n        bar            \n        baz            \n                       \nhello   world   world 1\n                world 2\n"
+    )
+
+
+def test_row_fg_colors(fg_colors):
+    result = row(("Hello", "World", "12344342"), fg_colors=fg_colors)
+    assert result == "Hello   \x1b[38;5;3mWorld\x1b[0m   \x1b[38;5;87m12344342\x1b[0m"
+
+
+def test_row_bg_colors(bg_colors):
+    result = row(("Hello", "World", "12344342"), bg_colors=bg_colors)
+    assert result == "\x1b[48;5;2mHello\x1b[0m   \x1b[48;5;23mWorld\x1b[0m   12344342"
+
+
+def test_row_fg_colors_and_bg_colors(fg_colors, bg_colors):
+    result = row(
+        ("Hello", "World", "12344342"), fg_colors=fg_colors, bg_colors=bg_colors
+    )
+    assert (
+        result
+        == "\x1b[48;5;2mHello\x1b[0m   \x1b[38;5;3;48;5;23mWorld\x1b[0m   \x1b[38;5;87m12344342\x1b[0m"
+    )
+
+
+def test_colors_whole_table_with_automatic_widths(data, header, footer, fg_colors, bg_colors):
+    result = table(
+        data,
+        header=header,
+        footer=footer,
+        divider=True,
+        fg_colors=fg_colors,
+        bg_colors=bg_colors,
+    )
+    assert (
+        result
+        == "\n\x1b[48;5;2mCOL A         \x1b[0m   \x1b[38;5;3mCOL B\x1b[0m   COL 3     \n\x1b[48;5;2m--------------\x1b[0m   \x1b[38;5;3m-----\x1b[0m   ----------\n\x1b[48;5;2mHello         \x1b[0m   \x1b[38;5;3mWorld\x1b[0m   12344342  \n\x1b[48;5;2mThis is a test\x1b[0m   \x1b[38;5;3mWorld\x1b[0m   1234      \n\x1b[48;5;2m--------------\x1b[0m   \x1b[38;5;3m-----\x1b[0m   ----------\n\x1b[48;5;2m              \x1b[0m   \x1b[38;5;3m     \x1b[0m   2030203.00\n"
+    )
+
+
+def test_colors_whole_table_with_supplied_spacing(data, header, footer, fg_colors, bg_colors):
+    result = table(
+        data,
+        header=header,
+        footer=footer,
+        divider=True,
+        fg_colors=fg_colors,
+        bg_colors=bg_colors,
+        spacing=5   
+    )
+    assert (
+        result
+        == "\n\x1b[48;5;2mCOL A         \x1b[0m     \x1b[38;5;3mCOL B\x1b[0m     COL 3     \n\x1b[48;5;2m--------------\x1b[0m     \x1b[38;5;3m-----\x1b[0m     ----------\n\x1b[48;5;2mHello         \x1b[0m     \x1b[38;5;3mWorld\x1b[0m     12344342  \n\x1b[48;5;2mThis is a test\x1b[0m     \x1b[38;5;3mWorld\x1b[0m     1234      \n\x1b[48;5;2m--------------\x1b[0m     \x1b[38;5;3m-----\x1b[0m     ----------\n\x1b[48;5;2m              \x1b[0m     \x1b[38;5;3m     \x1b[0m     2030203.00\n"
+    )
+
+def test_colors_whole_table_with_supplied_widths(data, header, footer, fg_colors, bg_colors):
+    result = table(
+        data,
+        header=header,
+        footer=footer,
+        divider=True,
+        fg_colors=fg_colors,
+        bg_colors=bg_colors,
+        widths=(5,2,10)
+    )
+    assert (
+        result
+        == "\n\x1b[48;5;2mCOL A\x1b[0m   \x1b[38;5;3mCOL B\x1b[0m   COL 3     \n\x1b[48;5;2m-----\x1b[0m   \x1b[38;5;3m--\x1b[0m   ----------\n\x1b[48;5;2mHello\x1b[0m   \x1b[38;5;3mWorld\x1b[0m   12344342  \n\x1b[48;5;2mThis is a test\x1b[0m   \x1b[38;5;3mWorld\x1b[0m   1234      \n\x1b[48;5;2m-----\x1b[0m   \x1b[38;5;3m--\x1b[0m   ----------\n\x1b[48;5;2m     \x1b[0m   \x1b[38;5;3m  \x1b[0m   2030203.00\n"
+    )
+
+def test_colors_whole_table_with_single_alignment(data, header, footer, fg_colors, bg_colors):
+    result = table(
+        data,
+        header=header,
+        footer=footer,
+        divider=True,
+        fg_colors=fg_colors,
+        bg_colors=bg_colors,
+        aligns='r'
+    )
+    assert (
+        result
+        == "\n\x1b[48;5;2m         COL A\x1b[0m   \x1b[38;5;3mCOL B\x1b[0m        COL 3\n\x1b[48;5;2m--------------\x1b[0m   \x1b[38;5;3m-----\x1b[0m   ----------\n\x1b[48;5;2m         Hello\x1b[0m   \x1b[38;5;3mWorld\x1b[0m     12344342\n\x1b[48;5;2mThis is a test\x1b[0m   \x1b[38;5;3mWorld\x1b[0m         1234\n\x1b[48;5;2m--------------\x1b[0m   \x1b[38;5;3m-----\x1b[0m   ----------\n\x1b[48;5;2m              \x1b[0m   \x1b[38;5;3m     \x1b[0m   2030203.00\n"
+    )
+
+def test_colors_whole_table_with_multiple_alignment(data, header, footer, fg_colors, bg_colors):
+    result = table(
+        data,
+        header=header,
+        footer=footer,
+        divider=True,
+        fg_colors=fg_colors,
+        bg_colors=bg_colors,
+        aligns=('c', 'r', 'l')
+    )
+    assert (
+        result
+        == "\n\x1b[48;5;2m    COL A     \x1b[0m   \x1b[38;5;3mCOL B\x1b[0m   COL 3     \n\x1b[48;5;2m--------------\x1b[0m   \x1b[38;5;3m-----\x1b[0m   ----------\n\x1b[48;5;2m    Hello     \x1b[0m   \x1b[38;5;3mWorld\x1b[0m   12344342  \n\x1b[48;5;2mThis is a test\x1b[0m   \x1b[38;5;3mWorld\x1b[0m   1234      \n\x1b[48;5;2m--------------\x1b[0m   \x1b[38;5;3m-----\x1b[0m   ----------\n\x1b[48;5;2m              \x1b[0m   \x1b[38;5;3m     \x1b[0m   2030203.00\n"
+    )
+
+def test_colors_whole_table_with_multiline(data, header, footer, fg_colors, bg_colors):
+    result = table(
+        data = ((['Charles', 'Quinton', 'Murphy'], 'my', 'brother'), ('1', '2', '3')),
+        fg_colors=fg_colors,
+        bg_colors=bg_colors,
+        multiline=True
+    )
+    assert (
+        result
+        == "\n\x1b[48;5;2mCharles\x1b[0m   \x1b[38;5;3mmy\x1b[0m   brother\n\x1b[48;5;2mQuinton\x1b[0m   \x1b[38;5;3m  \x1b[0m          \n\x1b[48;5;2mMurphy \x1b[0m   \x1b[38;5;3m  \x1b[0m          \n\x1b[48;5;2m       \x1b[0m   \x1b[38;5;3m  \x1b[0m          \n\x1b[48;5;2m1      \x1b[0m   \x1b[38;5;3m2 \x1b[0m   3      \n"
+    )
+
+def test_colors_whole_table_log_friendly(data, header, footer, fg_colors, bg_colors):
+    ENV_LOG_FRIENDLY = "WASABI_LOG_FRIENDLY"
+    os.environ[ENV_LOG_FRIENDLY] = "True"
+    result = table(
+        data,
+        header=header,
+        footer=footer,
+        divider=True,
+        fg_colors=fg_colors,
+        bg_colors=bg_colors,
+    )
+    assert (
+        result
+        == "\nCOL A            COL B   COL 3     \n--------------   -----   ----------\nHello            World   12344342  \nThis is a test   World   1234      \n--------------   -----   ----------\n                         2030203.00\n"
+    )
+    del os.environ[ENV_LOG_FRIENDLY]
+
+
+def test_colors_whole_table_log_friendly_prefix(data, header, footer, fg_colors, bg_colors):
+    ENV_LOG_FRIENDLY = "CUSTOM_LOG_FRIENDLY"
+    os.environ[ENV_LOG_FRIENDLY] = "True"
+    result = table(
+        data,
+        header=header,
+        footer=footer,
+        divider=True,
+        fg_colors=fg_colors,
+        bg_colors=bg_colors,
+        env_prefix='CUSTOM'
+    )
+    assert (
+        result
+        == "\nCOL A            COL B   COL 3     \n--------------   -----   ----------\nHello            World   12344342  \nThis is a test   World   1234      \n--------------   -----   ----------\n                         2030203.00\n"
+    )
+    del os.environ[ENV_LOG_FRIENDLY]
+
+def test_colors_whole_table_supports_ansi_false(data, header, footer, fg_colors, bg_colors):
+    os.environ['ANSI_COLORS_DISABLED'] = "True"
+    result = table(
+        data,
+        header=header,
+        footer=footer,
+        divider=True,
+        fg_colors=fg_colors,
+        bg_colors=bg_colors,
+    )
+    assert (
+        result
+        == "\nCOL A            COL B   COL 3     \n--------------   -----   ----------\nHello            World   12344342  \nThis is a test   World   1234      \n--------------   -----   ----------\n                         2030203.00\n"
+    )
+    del os.environ['ANSI_COLORS_DISABLED']
+
+def test_colors_whole_table_color_values(data, header, footer, fg_colors, bg_colors):
+    result = table(
+        data,
+        header=header,
+        footer=footer,
+        divider=True,
+        fg_colors=fg_colors,
+        bg_colors=bg_colors,
+        color_values= {'yellow': 11}
+    )
+    assert (
+        result
+        == "\n\x1b[48;5;2mCOL A         \x1b[0m   \x1b[38;5;11mCOL B\x1b[0m   COL 3     \n\x1b[48;5;2m--------------\x1b[0m   \x1b[38;5;11m-----\x1b[0m   ----------\n\x1b[48;5;2mHello         \x1b[0m   \x1b[38;5;11mWorld\x1b[0m   12344342  \n\x1b[48;5;2mThis is a test\x1b[0m   \x1b[38;5;11mWorld\x1b[0m   1234      \n\x1b[48;5;2m--------------\x1b[0m   \x1b[38;5;11m-----\x1b[0m   ----------\n\x1b[48;5;2m              \x1b[0m   \x1b[38;5;11m     \x1b[0m   2030203.00\n"
     )
