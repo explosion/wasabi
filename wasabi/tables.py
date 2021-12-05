@@ -135,7 +135,7 @@ def row(
     cols = []
     if isinstance(aligns, basestring_):  # single align value
         aligns = [aligns for _ in data]
-    if not hasattr(widths, "__iter__"):  # single number
+    if not hasattr(widths, "__iter__") and widths != "auto":  # single number
         widths = [widths for _ in range(len(data))]
     for i, col in enumerate(data):
         align = ALIGN_MAP.get(aligns[i] if aligns and i < len(aligns) else "l")
