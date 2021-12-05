@@ -238,6 +238,7 @@ a1   a2   a3
 | `widths`    | list / int / `"auto"` | Column widths, either one integer for all columns or an iterable of values. If "auto", widths will be calculated automatically based on the largest value. | `"auto"` |
 | `spacing`   | int                       | Number of spaces between columns.                                                                                                                          | `3`      |
 | `aligns`    | list                  | Columns alignments in order. `"l"` (left), `"r"` (right) or `"c"` (center).                                                                                | `None`   |
+| `env_prefix` | unicode                | Prefix for environment variables, e.g. WASABI_LOG_FRIENDLY.                                         | `"WASABI"` |
 | `fg_colors`    | list                  | Foreground colors for the columns, in order. None can be specified for individual columns to retain the default foreground color. | `None`   |
 | `bg_colors`    | list                  | Background colors for the columns, in order. None can be specified for individual columns to retain the default background color. | `None`   |
 | **RETURNS** | str                       | The formatted row.                                                                                                                                         |          |

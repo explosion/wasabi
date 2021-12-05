@@ -44,18 +44,13 @@ def table(
     env_prefix (unicode): Prefix for environment variables, e.g.
         WASABI_LOG_FRIENDLY.
     color_values (dict): Add or overwrite color values, name mapped to value.
-    fg_colors (iterable): Foreground colors, one per column. None can be specified 
+    fg_colors (iterable): Foreground colors, one per column. None can be specified
         for individual columns to retain the default foreground color.
-    bg_colors (iterable): Background colors, one per column. None can be specified 
+    bg_colors (iterable): Background colors, one per column. None can be specified
         for individual columns to retain the default background color.
     RETURNS (unicode): The formatted table.
     """
-    env_log_friendly = os.getenv("{}_LOG_FRIENDLY".format(env_prefix), False)
-    if (
-        supports_ansi()
-        and not env_log_friendly
-        and (fg_colors is not None or bg_colors is not None)
-    ):
+    if fg_colors is not None or bg_colors is not None:
         colors = dict(COLORS)
         if color_values is not None:
             colors.update(color_values)
@@ -69,9 +64,6 @@ def table(
                 colors.get(bg_color) if bg_color in colors else bg_color
                 for bg_color in bg_colors
             ]
-    else:
-        fg_colors = None
-        bg_colors = None
     if isinstance(data, dict):
         data = list(data.items())
     if multiline:
@@ -88,6 +80,7 @@ def table(
         "widths": widths,
         "spacing": spacing,
         "aligns": aligns,
+        "env_prefix": env_prefix,
         "fg_colors": fg_colors,
         "bg_colors": bg_colors,
     }
@@ -106,7 +99,15 @@ def table(
     return "\n{}\n".format("\n".join(rows))
 
 
-def row(data, widths="auto", spacing=3, aligns=None, fg_colors=None, bg_colors=None):
+def row(
+    data,
+    widths="auto",
+    spacing=3,
+    aligns=None,
+    env_prefix="WASABI",
+    fg_colors=None,
+    bg_colors=None,
+):
     """Format data as a table row.
 
     data (iterable): The individual columns to format.
@@ -117,12 +118,20 @@ def row(data, widths="auto", spacing=3, aligns=None, fg_colors=None, bg_colors=N
     aligns (list / unicode): Column alignments in order. 'l' (left,
         default), 'r' (right) or 'c' (center). If a string, value is used
         for all columns.
+    env_prefix (unicode): Prefix for environment variables, e.g.
+        WASABI_LOG_FRIENDLY.
     fg_colors (list): Foreground colors for the columns, in order. None can be
         specified for individual columns to retain the default foreground color.
     bg_colors (list): Background colors for the columns, in order. None can be
         specified for individual columns to retain the default background color.
     RETURNS (unicode): The formatted row.
     """
+    env_log_friendly = os.getenv("{}_LOG_FRIENDLY".format(env_prefix), False)
+    show_colors = (
+        supports_ansi()
+        and not env_log_friendly
+        and (fg_colors is not None or bg_colors is not None)
+    )
     cols = []
     if isinstance(aligns, basestring_):  # single align value
         aligns = [aligns for _ in data]
@@ -133,7 +142,7 @@ def row(data, widths="auto", spacing=3, aligns=None, fg_colors=None, bg_colors=N
         col_width = len(col) if widths == "auto" else widths[i]
         tpl = "{:%s%d}" % (align, col_width)
         col = tpl.format(to_string(col))
-        if fg_colors is not None or bg_colors is not None:
+        if show_colors:
             fg = fg_colors[i] if fg_colors is not None else None
             bg = bg_colors[i] if bg_colors is not None else None
             col = _color(col, fg=fg, bg=bg)

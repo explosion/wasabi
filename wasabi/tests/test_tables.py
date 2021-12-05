@@ -132,6 +132,38 @@ def test_row_fg_colors_and_bg_colors(fg_colors, bg_colors):
         assert result == "Hello   World   12344342"
 
 
+def test_row_fg_colors_and_bg_colors_log_friendly(fg_colors, bg_colors):
+    ENV_LOG_FRIENDLY = "WASABI_LOG_FRIENDLY"
+    os.environ[ENV_LOG_FRIENDLY] = "True"
+    result = row(
+        ("Hello", "World", "12344342"), fg_colors=fg_colors, bg_colors=bg_colors
+    )
+    assert result == "Hello   World   12344342"
+    del os.environ[ENV_LOG_FRIENDLY]
+
+
+def test_row_fg_colors_and_bg_colors_log_friendly_prefix(fg_colors, bg_colors):
+    ENV_LOG_FRIENDLY = "CUSTOM_LOG_FRIENDLY"
+    os.environ[ENV_LOG_FRIENDLY] = "True"
+    result = row(
+        ("Hello", "World", "12344342"),
+        fg_colors=fg_colors,
+        bg_colors=bg_colors,
+        env_prefix="CUSTOM",
+    )
+    assert result == "Hello   World   12344342"
+    del os.environ[ENV_LOG_FRIENDLY]
+
+
+def test_row_fg_colors_and_bg_colors_supports_ansi_false(fg_colors, bg_colors):
+    os.environ["ANSI_COLORS_DISABLED"] = "True"
+    result = row(
+        ("Hello", "World", "12344342"), fg_colors=fg_colors, bg_colors=bg_colors
+    )
+    assert result == "Hello   World   12344342"
+    del os.environ["ANSI_COLORS_DISABLED"]
+
+
 def test_colors_whole_table_with_automatic_widths(
     data, header, footer, fg_colors, bg_colors
 ):
