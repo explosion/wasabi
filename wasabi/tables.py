@@ -55,15 +55,9 @@ def table(
         if color_values is not None:
             colors.update(color_values)
         if fg_colors is not None:
-            fg_colors = [
-                colors.get(fg_color) if fg_color in colors else fg_color
-                for fg_color in fg_colors
-            ]
+            fg_colors = [colors.get(fg_color, fg_color) for fg_color in fg_colors]
         if bg_colors is not None:
-            bg_colors = [
-                colors.get(bg_color) if bg_color in colors else bg_color
-                for bg_color in bg_colors
-            ]
+            bg_colors = [colors.get(bg_color, bg_color) for bg_color in bg_colors]
     if isinstance(data, dict):
         data = list(data.items())
     if multiline:
