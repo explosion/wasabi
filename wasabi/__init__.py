@@ -7,5 +7,6 @@ from .traceback_printer import TracebackPrinter  # noqa
 from .markdown import MarkdownRenderer  # noqa
 from .util import color, wrap, get_raw_input, format_repr, diff_strings  # noqa
 from .util import MESSAGES  # noqa
+from .about import __version__  # noqa
 
 msg = Printer()
