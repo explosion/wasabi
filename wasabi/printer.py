@@ -102,6 +102,7 @@ class Printer(object):
         title="",
         text="",
         color=None,
+        bg_color=None,
         icon=None,
         spaced=False,
         show=True,
@@ -113,6 +114,7 @@ class Printer(object):
         title (unicode): The main text to print.
         text (unicode): Optional additional text to print.
         color (unicode / int): Foreground color.
+        bg_color (unicode / int): Background color.
         icon (unicode): Name of icon to add.
         spaced (unicode): Whether to add newlines around the output.
         show (bool): Whether to print or not. Can be used to only output
@@ -123,12 +125,13 @@ class Printer(object):
         if not show:
             return
         if self.pretty:
-            color = self.colors.get(color)
+            color = self.colors.get(color, color)
+            bg_color = self.colors.get(bg_color, bg_color)
             icon = self.icons.get(icon)
             if icon:
                 title = locale_escape("{} {}".format(icon, title)).strip()
             if self.show_color:
-                title = _color(title, fg=color)
+                title = _color(title, fg=color, bg=bg_color)
             title = wrap(title, indent=0)
         if text:
             title = "{}\n{}".format(title, wrap(text, indent=0))

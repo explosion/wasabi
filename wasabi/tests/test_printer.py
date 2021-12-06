@@ -90,6 +90,49 @@ def test_printer_custom():
         assert warning == "?? {}".format(text)
 
 
+def test_color_as_int():
+    p = Printer(no_print=True)
+    text = "This is a text."
+    result = p.text(text, color=220)
+    if SUPPORTS_ANSI:
+        assert result == "\x1b[38;5;220mThis is a text.\x1b[0m"
+    else:
+        assert result == "This is a text."
+
+
+def test_bg_color():
+    p = Printer(no_print=True)
+    text = "This is a text."
+    result = p.text(text, bg_color="red")
+    print(result)
+    if SUPPORTS_ANSI:
+        assert result == "\x1b[48;5;1mThis is a text.\x1b[0m"
+    else:
+        assert result == "This is a text."
+
+
+def test_bg_color_as_int():
+    p = Printer(no_print=True)
+    text = "This is a text."
+    result = p.text(text, bg_color=220)
+    print(result)
+    if SUPPORTS_ANSI:
+        assert result == "\x1b[48;5;220mThis is a text.\x1b[0m"
+    else:
+        assert result == "This is a text."
+
+
+def test_color_and_bc_color():
+    p = Printer(no_print=True)
+    text = "This is a text."
+    result = p.text(text, color="green", bg_color="yellow")
+    print(result)
+    if SUPPORTS_ANSI:
+        assert result == "\x1b[38;5;2;48;5;3mThis is a text.\x1b[0m"
+    else:
+        assert result == "This is a text."
+
+
 def test_printer_counts():
     p = Printer()
     text = "This is a test."
