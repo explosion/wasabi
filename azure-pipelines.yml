@@ -25,17 +25,8 @@ jobs:
         imageName: 'vs2017-win2016'
         python.version: '2.7'
       Python27Mac:
-        imageName: 'macos-10.14'
+        imageName: 'macOS-10.15'
         python.version: '2.7'
-      Python35Linux:
-        imageName: 'ubuntu-20.04'
-        python.version: '3.5'
-      Python35Windows:
-        imageName: 'vs2017-win2016'
-        python.version: '3.5'
-      Python35Mac:
-        imageName: 'macos-10.14'
-        python.version: '3.5'
       Python36Linux:
         imageName: 'ubuntu-20.04'
         python.version: '3.6'
@@ -43,7 +34,7 @@ jobs:
         imageName: 'vs2017-win2016'
         python.version: '3.6'
       Python36Mac:
-        imageName: 'macos-10.14'
+        imageName: 'macOS-10.15'
         python.version: '3.6'
       Python37Linux:
         imageName: 'ubuntu-20.04'
@@ -52,7 +43,7 @@ jobs:
         imageName: 'vs2017-win2016'
         python.version: '3.7'
       Python37Mac:
-        imageName: 'macos-10.14'
+        imageName: 'macOS-10.15'
         python.version: '3.7'
       Python38Linux:
         imageName: 'ubuntu-20.04'
@@ -61,7 +52,7 @@ jobs:
         imageName: 'vs2017-win2016'
         python.version: '3.8'
       Python38Mac:
-        imageName: 'macos-10.14'
+        imageName: 'macOS-10.15'
         python.version: '3.8'
       Python39Linux:
         imageName: 'ubuntu-20.04'
@@ -70,7 +61,7 @@ jobs:
         imageName: 'vs2017-win2016'
         python.version: '3.9'
       Python39Mac:
-        imageName: 'macos-10.14'
+        imageName: 'macOS-10.15'
         python.version: '3.9'
       Python310Linux:
         imageName: 'ubuntu-20.04'
