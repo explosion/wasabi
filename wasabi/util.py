@@ -152,11 +152,11 @@ def diff_strings(a, b, fg="black", bg=("green", "red"), add_symbols=False):
                 output.append(item)
         if opcode == "insert" or opcode == "replace":
             for item in b[b0:b1]:
-                item = f"{INSERT_SYMBOL} {item}" if add_symbols else item
+                item = "{} {}".format(INSERT_SYMBOL, item) if add_symbols else item
                 output.append(color(item, fg=fg, bg=bg[0]))
         if opcode == "delete" or opcode == "replace":
             for item in a[a0:a1]:
-                item = f"{DELETE_SYMBOL} {item}" if add_symbols else item
+                item = "{} {}".format(DELETE_SYMBOL, item) if add_symbols else item
                 output.append(color(item, fg=fg, bg=bg[1]))
     return "\n".join(output)
 
