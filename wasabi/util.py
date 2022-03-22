@@ -48,6 +48,9 @@ ICONS = {
     MESSAGES.INFO: "\u2139" if not NO_UTF8 else "[i]",
 }
 
+INSERT_SYMBOL = "+"
+DELETE_SYMBOL = "-"
+
 
 # Python 2 compatibility
 IS_PYTHON_2 = sys.version_info[0] == 2
@@ -126,7 +129,7 @@ def format_repr(obj, max_len=50, ellipsis="..."):
         return string
 
 
-def diff_strings(a, b, fg="black", bg=("green", "red")):
+def diff_strings(a, b, fg="black", bg=("green", "red"), add_symbols=False):
     """Compare two strings and return a colored diff with red/green background
     for deletion and insertions.
 
@@ -135,6 +138,8 @@ def diff_strings(a, b, fg="black", bg=("green", "red")):
     fg (unicode / int): Foreground color. String name or 0 - 256 (see COLORS).
     bg (tuple): Background colors as (insert, delete) tuple of string name or
         0 - 256 (see COLORS).
+    add_symbols (bool): Whether to add symbols before the diff lines. Uses '+'
+        for inserts and '-' for deletions. Default is False.
     RETURNS (unicode): The formatted diff.
     """
     a = a.split("\n")
@@ -147,9 +152,11 @@ def diff_strings(a, b, fg="black", bg=("green", "red")):
                 output.append(item)
         if opcode == "insert" or opcode == "replace":
             for item in b[b0:b1]:
+                item = f"{INSERT_SYMBOL} {item}" if add_symbols else item
                 output.append(color(item, fg=fg, bg=bg[0]))
         if opcode == "delete" or opcode == "replace":
             for item in a[a0:a1]:
+                item = f"{DELETE_SYMBOL} {item}" if add_symbols else item
                 output.append(color(item, fg=fg, bg=bg[1]))
     return "\n".join(output)
 
