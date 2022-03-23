@@ -9,24 +9,6 @@ jobs:
 - job: 'Test'
   strategy:
     matrix:
-      Python27Linux:
-        imageName: 'ubuntu-20.04'
-        python.version: '2.7'
-      Python27LinuxASCII:
-        imageName: 'ubuntu-20.04'
-        python.version: '2.7'
-        LANG: 'en_US.ascii'
-        LC_ALL: 'en_US.ascii'
-      Python27LinuxASCIIPython:
-        imageName: 'ubuntu-20.04'
-        python.version: '2.7'
-        PYTHONIOENCODING: 'ascii'
-      Python27Windows:
-        imageName: 'windows-2019'
-        python.version: '2.7'
-      Python27Mac:
-        imageName: 'macOS-10.15'
-        python.version: '2.7'
       Python36Linux:
         imageName: 'ubuntu-20.04'
         python.version: '3.6'
