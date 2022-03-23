@@ -1,11 +1,10 @@
-# coding: utf8
-from __future__ import unicode_literals, print_function
+from typing import Union, Any, Tuple, Optional
 
 import os
 import sys
 import textwrap
 import difflib
-import itertools
+from itertools import zip_longest
 
 
 STDOUT_ENCODING = sys.stdout.encoding if hasattr(sys.stdout, "encoding") else None
@@ -52,31 +51,24 @@ INSERT_SYMBOL = "+"
 DELETE_SYMBOL = "-"
 
 
-# Python 2 compatibility
-IS_PYTHON_2 = sys.version_info[0] == 2
-
-if IS_PYTHON_2:
-    basestring_ = basestring  # noqa: F821
-    input_ = raw_input  # noqa: F821
-    zip_longest = itertools.izip_longest  # noqa: F821
-else:
-    basestring_ = str
-    input_ = input
-    zip_longest = itertools.zip_longest
-
-
-def color(text, fg=None, bg=None, bold=False, underline=False):
+def color(
+    text: str,
+    fg: Optional[Union[str, int]] = None,
+    bg: Optional[Union[str, int]] = None,
+    bold: bool = False,
+    underline: bool = False,
+) -> str:
     """Color text by applying ANSI escape sequence.
 
-    text (unicode): The text to be formatted.
-    fg (unicode / int): Foreground color. String name or 0 - 256 (see COLORS).
-    bg (unicode / int): Background color. String name or 0 - 256 (see COLORS).
+    text (str): The text to be formatted.
+    fg (str / int): Foreground color. String name or 0 - 256 (see COLORS).
+    bg (str / int): Background color. String name or 0 - 256 (see COLORS).
     bold (bool): Format text in bold.
     underline (bool): Underline text.
-    RETURNS (unicode): The formatted text.
+    RETURNS (str): The formatted text.
     """
-    fg = COLORS.get(fg, fg)
-    bg = COLORS.get(bg, bg)
+    fg = COLORS.get(fg, fg)  # type: ignore
+    bg = COLORS.get(bg, bg)  # type: ignore
     if not any([fg, bg, bold]):
         return text
     styles = []
@@ -91,35 +83,34 @@ def color(text, fg=None, bg=None, bold=False, underline=False):
     return "\x1b[{}m{}\x1b[0m".format(";".join(styles), text)
 
 
-def wrap(text, wrap_max=80, indent=4):
+def wrap(text: str, wrap_max: int = 80, indent: int = 4):
     """Wrap text at given width using textwrap module.
 
-    text (unicode): The text to wrap.
+    text (str): The text to wrap.
     wrap_max (int): Maximum line width, including indentation. Defaults to 80.
     indent (int): Number of spaces used for indentation. Defaults to 4.
-    RETURNS (unicode): The wrapped text with line breaks.
+    RETURNS (str): The wrapped text with line breaks.
     """
-    indent = indent * " "
-    wrap_width = wrap_max - len(indent)
-    text = to_string(text)
+    indent_str = indent * " "
+    wrap_width = wrap_max - len(indent_str)
     return textwrap.fill(
         text,
         width=wrap_width,
-        initial_indent=indent,
-        subsequent_indent=indent,
+        initial_indent=indent_str,
+        subsequent_indent=indent_str,
         break_long_words=False,
         break_on_hyphens=False,
     )
 
 
-def format_repr(obj, max_len=50, ellipsis="..."):
+def format_repr(obj: Any, max_len: int = 50, ellipsis: str = "...") -> str:
     """Wrapper around `repr()` to print shortened and formatted string version.
 
     obj: The object to represent.
     max_len (int): Maximum string length. Longer strings will be cut in the
         middle so only the beginning and end is displayed, separated by ellipsis.
-    ellipsis (unicode): Ellipsis character(s), e.g. "...".
-    RETURNS (unicode): The formatted representation.
+    ellipsis (str): Ellipsis character(s), e.g. "...".
+    RETURNS (str): The formatted representation.
     """
     string = repr(obj)
     if len(string) >= max_len:
@@ -129,18 +120,24 @@ def format_repr(obj, max_len=50, ellipsis="..."):
         return string
 
 
-def diff_strings(a, b, fg="black", bg=("green", "red"), add_symbols=False):
+def diff_strings(
+    a: str,
+    b: str,
+    fg: Union[str, int] = "black",
+    bg: Union[Tuple[str], Tuple[int]] = ("green", "red"),
+    add_symbols: bool = False,
+) -> str:
     """Compare two strings and return a colored diff with red/green background
     for deletion and insertions.
 
-    a (unicode): The first string to diff.
-    b (unicode): The second string to diff.
-    fg (unicode / int): Foreground color. String name or 0 - 256 (see COLORS).
+    a (str): The first string to diff.
+    b (str): The second string to diff.
+    fg (str/ int): Foreground color. String name or 0 - 256 (see COLORS).
     bg (tuple): Background colors as (insert, delete) tuple of string name or
         0 - 256 (see COLORS).
     add_symbols (bool): Whether to add symbols before the diff lines. Uses '+'
         for inserts and '-' for deletions. Default is False.
-    RETURNS (unicode): The formatted diff.
+    RETURNS (str): The formatted diff.
     """
     a = a.split("\n")
     b = b.split("\n")
@@ -161,37 +158,36 @@ def diff_strings(a, b, fg="black", bg=("green", "red"), add_symbols=False):
     return "\n".join(output)
 
 
-def get_raw_input(description, default=False, indent=4):
+def get_raw_input(description: str, default: bool = False, indent: int = 4) -> str:
     """Get user input from the command line via raw_input / input.
 
-    description (unicode): Text to display before prompt.
-    default (unicode or False/None): Default value to display with prompt.
+    description (str): Text to display before prompt.
+    default (str or False/None): Default value to display with prompt.
     indent (int): Indentation in spaces.
-    RETURNS (unicode): User input.
+    RETURNS (str): User input.
     """
     additional = " (default: {})".format(default) if default else ""
     prompt = wrap("{}{}: ".format(description, additional), indent=indent)
-    user_input = input_(prompt)
+    user_input = input(prompt)
     return user_input
 
 
-def locale_escape(string, errors="replace"):
+def locale_escape(string: str, errors: str = "replace") -> str:
     """Mangle non-supported characters, for savages with ASCII terminals.
 
-    string (unicode): The string to escape.
-    errors (unicode): The str.encode errors setting. Defaults to `"replace"`.
-    RETURNS (unicode): The escaped string.
+    string (str): The string to escape.
+    errors (str): The str.encode errors setting. Defaults to `"replace"`.
+    RETURNS (str): The escaped string.
     """
-    string = to_string(string)
     string = string.encode(ENCODING, errors).decode("utf8")
     return string
 
 
-def can_render(string):
+def can_render(string: str) -> bool:
     """Check if terminal can render unicode characters, e.g. special loading
     icons. Can be used to display fallbacks for ASCII terminals.
 
-    string (unicode): The string to render.
+    string (str): The string to render.
     RETURNS (bool): Whether the terminal can render the text.
     """
     try:
@@ -201,7 +197,7 @@ def can_render(string):
         return False
 
 
-def supports_ansi():
+def supports_ansi() -> bool:
     """Returns True if the running system's terminal supports ANSI escape
     sequences for color, formatting etc. and False otherwise. Inspired by
     Django's solution – hacky, but an okay approximation.
@@ -217,18 +213,3 @@ def supports_ansi():
     if not supported_platform:
         return False
     return True
-
-
-def to_string(text):
-    """Minimal compat helper to make sure text is unicode. Mostly used to
-    convert Paths and other Python objects.
-
-    text: The text/object to be converted.
-    RETURNS (unicode): The converted string.
-    """
-    if not isinstance(text, basestring_):
-        if IS_PYTHON_2:
-            text = str(text).decode("utf8")
-        else:
-            text = str(text)
-    return text

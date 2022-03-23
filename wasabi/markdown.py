@@ -1,36 +1,42 @@
-# coding: utf8
-from __future__ import unicode_literals, print_function
+from typing import Literal, List
 
 
 class MarkdownRenderer:
     """Simple helper for generating raw Markdown."""
 
-    def __init__(self, no_emoji=False):
+    def __init__(self, no_emoji: bool = False):
         """Initialize the renderer.
 
         no_emoji (bool): Don't show emoji in titles etc.
         """
-        self.data = []
+        self.data: List = []
         self.no_emoji = no_emoji
 
     @property
-    def text(self):
+    def text(self) -> str:
         """RETURNS (str): The Markdown document."""
         return "\n\n".join(self.data)
 
-    def add(self, content):
+    def add(self, content: str):
         """Add a string to the Markdown document.
 
         content (str): Add content to the document.
         """
         self.data.append(content)
 
-    def table(self, data, header, aligns=None):
+    def table(
+        self,
+        data: List[List[str]],
+        header: List[str],
+        aligns: List[Literal["r", "c", "l"]] = None,
+    ) -> str:
         """Create a Markdown table.
 
-        data (Iterable[Iterable[str]]): The body, one iterable per row,
+        data (List[List[str]]): The body, one iterable per row,
             containig an interable of column contents.
-        header (Iterable[str]): The column names.
+        header (List[str]): The column names.
+        aligns (List[str]): Alignment-mode for each column. Values should
+            either be 'l' (left), 'r' (right), or 'c' (center)
         RETURNS (str): The rendered table.
         """
         if aligns is None:
@@ -46,7 +52,7 @@ class MarkdownRenderer:
         body = "\n".join("| {} |".format(" | ".join(row)) for row in data)
         return "{}\n{}\n{}".format(head, divider, body)
 
-    def title(self, level, text, emoji=None):
+    def title(self, level: int, text: str, emoji: str = None) -> str:
         """Create a Markdown heading.
 
         level (int): The heading level, e.g. 3 for ###
@@ -57,10 +63,10 @@ class MarkdownRenderer:
         prefix = "{} ".format(emoji) if emoji and not self.no_emoji else ""
         return "{} {}{}".format("#" * level, prefix, text)
 
-    def list(self, items, numbered=False):
+    def list(self, items: List[str], numbered: bool = False) -> str:
         """Create a non-nested list.
 
-        items (Iterable[str]): The list items.
+        items (List[str]): The list items.
         numbered (bool): Whether to use a numbered list.
         RETURNS (str): The rendered list.
         """
@@ -72,7 +78,7 @@ class MarkdownRenderer:
                 content.append("- {}".format(item))
         return "\n".join(content)
 
-    def link(self, text, url):
+    def link(self, text: str, url: str) -> str:
         """Create a Markdown link.
 
         text (str): The link text.
@@ -81,7 +87,7 @@ class MarkdownRenderer:
         """
         return "[{}]({})".format(text, url)
 
-    def code_block(self, text, lang=""):
+    def code_block(self, text: str, lang: str = "") -> str:
         """Create a Markdown code block.
 
         text (str): The code text.
@@ -90,11 +96,11 @@ class MarkdownRenderer:
         """
         return "```{}\n{}\n```".format(lang, text)
 
-    def code(self, text):
+    def code(self, text: str) -> str:
         """Create Markdown inline code."""
         return self._wrap(text, "`")
 
-    def bold(self, text):
+    def bold(self, text: str) -> str:
         """Create bold text."""
         return self._wrap(text, "**")
 
