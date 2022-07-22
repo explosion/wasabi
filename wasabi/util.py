@@ -249,11 +249,11 @@ def _windows_console_supports_ansi():
         return False
 
 def supports_ansi():
-    """Returns True if the running system's terminal supports ANSI escape
-    sequences for color, formatting etc. and False otherwise. Inspired by
-    Django's solution – hacky, but an okay approximation.
+    """Returns True if the running system's terminal supports ANSI escape sequences for
+    color, formatting etc. and False otherwise. Approximate, but good enough.
 
     RETURNS (bool): Whether the terminal supports ANSI colors.
+
     """
     if os.getenv(ENV_ANSI_DISABLED):
         return False
