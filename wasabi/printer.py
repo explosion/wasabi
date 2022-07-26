@@ -1,4 +1,4 @@
-from typing import Dict, Optional, List, Union, Iterable, overload
+from typing import Dict, Optional, List, Union, cast
 
 import datetime
 from collections import Counter
@@ -152,9 +152,9 @@ class Printer(object):
         if not show:
             return
         if self.pretty:
-            color = self.colors.get(color, color)
-            bg_color = self.colors.get(bg_color, bg_color)
-            icon = self.icons.get(icon)
+            color = self.colors.get(cast(str, color), color)
+            bg_color = self.colors.get(cast(str, bg_color), bg_color)
+            icon = self.icons.get(cast(str, icon))
             if icon:
                 title = locale_escape("{} {}".format(icon, title)).strip()
             if self.show_color:
@@ -202,7 +202,7 @@ class Printer(object):
                 "Received: {}".format(char)
             )
         if self.pretty:
-            icon = self.icons.get(icon)
+            icon = self.icons.get(cast(str, icon))
             if icon:
                 text = locale_escape("{} {}".format(icon, text)).strip()
             deco = char * (int(round((self.line_max - len(text))) / 2) - 2)
