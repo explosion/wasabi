@@ -1,4 +1,4 @@
-from typing import Iterable, Dict, Union, Literal, List, Optional
+from typing import Iterable, Dict, Union, Literal, List, Optional, overload
 import os
 
 from .util import COLORS
@@ -80,15 +80,15 @@ def table(
     divider_row = row(["-" * width for width in widths], **settings)  # type: ignore
     rows = []
     if header:
-        rows.append(row(header, **settings))
+        rows.append(row(header, **settings))  # type: ignore
         if divider:
             rows.append(divider_row)
     for i, item in enumerate(data):
-        rows.append(row(item, **settings))
+        rows.append(row(item, **settings))  # type: ignore
     if footer:
         if divider:
             rows.append(divider_row)
-        rows.append(row(footer, **settings))
+        rows.append(row(footer, **settings))  # type: ignore
     return "\n{}\n".format("\n".join(rows))
 
 
