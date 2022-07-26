@@ -70,6 +70,7 @@ jobs:
       python -c "import locale; print('Preferred encoding:', locale.getpreferredencoding())"
       python -c "import sys; print('stdout encoding:', sys.stdout.encoding)"
       env
+      python -m mypy wasabi
       python -m pytest -s wasabi
     displayName: 'Run tests'
 
