@@ -61,14 +61,15 @@ jobs:
       versionSpec: '$(python.version)'
       architecture: 'x64'
 
-  - script: python -m pip install --upgrade pip
+  - script: |
+      python -m pip install --upgrade pip
+      python -m pip install -r requirements.txt
     displayName: 'Install dependencies'
 
   - script: |
       python -c "import locale; print('Preferred encoding:', locale.getpreferredencoding())"
       python -c "import sys; print('stdout encoding:', sys.stdout.encoding)"
       env
-      pip install pytest
       python -m pytest -s wasabi
     displayName: 'Run tests'
 
