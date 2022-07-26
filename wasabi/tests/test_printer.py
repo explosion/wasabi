@@ -1,14 +1,14 @@
 # coding: utf8
-from __future__ import unicode_literals, print_function
+from __future__ import print_function, unicode_literals
 
+import os
 import re
+import time
 
 import pytest
-import time
-import os
+
 from wasabi.printer import Printer
 from wasabi.util import MESSAGES, NO_UTF8, supports_ansi
-
 
 SUPPORTS_ANSI = supports_ansi()
 

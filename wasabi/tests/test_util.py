@@ -1,8 +1,9 @@
 # coding: utf8
-from __future__ import unicode_literals, print_function
+from __future__ import print_function, unicode_literals
 
 import pytest
-from wasabi.util import color, wrap, locale_escape, format_repr, diff_strings
+
+from wasabi.util import color, diff_strings, format_repr, locale_escape, wrap
 
 
 def test_color():

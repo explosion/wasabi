@@ -1,10 +1,11 @@
-from typing import Iterable, Dict, Union, Literal, List, Optional, Any, cast
 import os
+from typing import Any, Dict, Iterable, List, Optional, Union, cast
+
+from typing_extensions import Literal
 
 from .util import COLORS
 from .util import color as _color
 from .util import supports_ansi, zip_longest
-
 
 ALIGN_MAP = {"l": "<", "r": ">", "c": "^"}
 

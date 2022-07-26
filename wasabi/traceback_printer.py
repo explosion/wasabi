@@ -1,8 +1,7 @@
-from typing import Union, Optional, Tuple
-
 import os
-from .util import color, supports_ansi, NO_UTF8
+from typing import Optional, Tuple, Union
 
+from .util import NO_UTF8, color, supports_ansi
 
 LINE_EDGE = "└─" if not NO_UTF8 else "|_"
 LINE_FORK = "├─" if not NO_UTF8 else "|__"

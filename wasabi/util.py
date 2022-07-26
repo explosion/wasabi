@@ -1,11 +1,9 @@
-from typing import Union, Any, Tuple, Optional, overload
-
+import difflib
 import os
 import sys
 import textwrap
-import difflib
 from itertools import zip_longest
-
+from typing import Any, Optional, Tuple, Union, overload
 
 STDOUT_ENCODING = sys.stdout.encoding if hasattr(sys.stdout, "encoding") else None
 ENCODING = STDOUT_ENCODING or "ascii"

@@ -1,19 +1,18 @@
-from typing import Dict, Optional, List, Union, cast
-
 import datetime
+import itertools
+import os
+import sys
+import time
+import traceback
 from collections import Counter
 from contextlib import contextmanager
 from multiprocessing import Process
-import itertools
-import sys
-import time
-import os
-import traceback
+from typing import Dict, List, Optional, Union, cast
 
-from .tables import table, row
-from .util import wrap, supports_ansi, can_render, locale_escape
-from .util import MESSAGES, COLORS, ICONS
+from .tables import row, table
+from .util import COLORS, ICONS, MESSAGES, can_render
 from .util import color as _color
+from .util import locale_escape, supports_ansi, wrap
 
 
 class Printer(object):
