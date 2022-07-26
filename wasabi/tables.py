@@ -1,4 +1,4 @@
-from typing import Iterable, Dict, Union, Literal, List, Optional, overload
+from typing import Iterable, Dict, Union, Literal, List, Optional, Any, cast
 import os
 
 from .util import COLORS
@@ -10,7 +10,7 @@ ALIGN_MAP = {"l": "<", "r": ">", "c": "^"}
 
 
 def table(
-    data: Union[List, Dict],
+    data: Union[List[Any], Dict[Any, Any]],
     header: List = None,
     footer: List = None,
     divider: bool = False,
@@ -94,7 +94,7 @@ def table(
 
 def row(
     data: List,
-    widths: Union[Iterable[int], int, Literal["auto"]] = "auto",
+    widths: Union[List[int], int, Literal["auto"]] = "auto",
     spacing: int = 3,
     aligns: Optional[List[Literal["r", "c", "l"]]] = None,
     env_prefix: str = "WASABI",
@@ -125,14 +125,14 @@ def row(
         and not env_log_friendly
         and (fg_colors is not None or bg_colors is not None)
     )
-    cols = []
+    cols: List[str] = []
     if isinstance(aligns, str):  # single align value
         aligns = [aligns for _ in data]
     if not hasattr(widths, "__iter__") and widths != "auto":  # single number
-        widths = [widths for _ in range(len(data))]
+        widths = cast(List[int], [widths for _ in range(len(data))])
     for i, col in enumerate(data):
         align = ALIGN_MAP.get(aligns[i] if aligns and i < len(aligns) else "l")
-        col_width = len(col) if widths == "auto" else widths[i]
+        col_width = len(col) if widths == "auto" else cast(List[int], widths)[i]
         tpl = "{:%s%d}" % (align, col_width)
         col = tpl.format(str(col))
         if show_colors:

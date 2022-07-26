@@ -1,4 +1,4 @@
-from typing import Dict, Optional, Union, Iterable
+from typing import Dict, Optional, List, Union, Iterable, overload
 
 import datetime
 from collections import Counter
@@ -128,13 +128,13 @@ class Printer(object):
         self,
         title: str = "",
         text: str = "",
-        color: Union[str, int] = None,
-        bg_color: Union[str, int] = None,
-        icon: str = None,
+        color: Optional[Union[str, int]] = None,
+        bg_color: Optional[Union[str, int]] = None,
+        icon: Optional[str] = None,
         spaced: bool = False,
         show: bool = True,
         no_print: bool = False,
-        exits: int = None,
+        exits: Optional[int] = None,
     ):
         """Print a message.
 
@@ -216,7 +216,7 @@ class Printer(object):
             return text
         print(text)
 
-    def table(self, data: Union[Iterable, Dict], **kwargs):
+    def table(self, data: Union[List, Dict], **kwargs):
         """Print data as a table.
 
         data (Iterable / Dict): The data to render. Either a list of lists
@@ -231,7 +231,7 @@ class Printer(object):
             return text
         print(text)
 
-    def row(self, data: Iterable, **kwargs):
+    def row(self, data: List, **kwargs):
         """Print a table row.
 
         data (Iterable): The individual columns to format.
