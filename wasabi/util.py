@@ -1,4 +1,4 @@
-from typing import Union, Any, Tuple, Optional
+from typing import Union, Any, Tuple, Optional, overload
 
 import os
 import sys
@@ -124,7 +124,7 @@ def diff_strings(
     a: str,
     b: str,
     fg: Union[str, int] = "black",
-    bg: Union[Tuple[str], Tuple[int]] = ("green", "red"),
+    bg: Union[Tuple[str, str], Tuple[int, int]] = ("green", "red"),
     add_symbols: bool = False,
 ) -> str:
     """Compare two strings and return a colored diff with red/green background
@@ -139,20 +139,20 @@ def diff_strings(
         for inserts and '-' for deletions. Default is False.
     RETURNS (str): The formatted diff.
     """
-    a = a.split("\n")
-    b = b.split("\n")
+    a_list = a.split("\n")
+    b_list = b.split("\n")
     output = []
-    matcher = difflib.SequenceMatcher(None, a, b)
+    matcher = difflib.SequenceMatcher(None, a_list, b_list)
     for opcode, a0, a1, b0, b1 in matcher.get_opcodes():
         if opcode == "equal":
-            for item in a[a0:a1]:
+            for item in a_list[a0:a1]:
                 output.append(item)
         if opcode == "insert" or opcode == "replace":
-            for item in b[b0:b1]:
+            for item in b_list[b0:b1]:
                 item = "{} {}".format(INSERT_SYMBOL, item) if add_symbols else item
                 output.append(color(item, fg=fg, bg=bg[0]))
         if opcode == "delete" or opcode == "replace":
-            for item in a[a0:a1]:
+            for item in a_list[a0:a1]:
                 item = "{} {}".format(DELETE_SYMBOL, item) if add_symbols else item
                 output.append(color(item, fg=fg, bg=bg[1]))
     return "\n".join(output)
