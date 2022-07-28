@@ -201,68 +201,21 @@ def can_render(string):
         return False
 
 
-def _windows_console_supports_ansi():
-    """Returns True if sys.stdout is pointing to a Windows console, and that console
-    supports ANSI escapes.
-
-    Attempts to enable ANSI support if it's not already enabled.
-    """
-    # Do these imports lazily, because they'll be slow/broken on non-Windows platforms
-    import msvcrt
-    import ctypes
-
-    ENABLE_VIRTUAL_TERMINAL_PROCESSING = 0x0004
-
-    kernel32 = ctypes.WinDLL("kernel32", use_last_error=True)
-
-    kernel32.GetConsoleMode.argtypes = [ctypes.c_void_p, ctypes.POINTER(ctypes.c_uint)]
-    kernel32.GetConsoleMode.restype = ctypes.c_int
-
-    kernel32.SetConsoleMode.argtypes = [ctypes.c_void_p, ctypes.c_uint]
-    kernel32.SetConsoleMode.restype = ctypes.c_int
-
-    def GetConsoleMode(handle):
-        flags = ctypes.c_uint(0)
-        ok = kernel32.GetConsoleMode(handle, ctypes.byref(flags))
-        if not ok:
-            raise ctypes.WinError()
-        return flags.value
-
-    def SetConsoleMode(handle, flags):
-        ok = kernel32.SetConsoleMode(handle, flags)
-        if not ok:
-            raise ctypes.WinError()
-
-    console = msvcrt.get_osfhandle(sys.stdout.fileno())
-    try:
-        # Try to enable ANSI output support
-        flags = GetConsoleMode(console)
-        SetConsoleMode(console, flags | ENABLE_VIRTUAL_TERMINAL_PROCESSING)
-
-        # Check whether it worked
-        flags = GetConsoleMode(console)
-        if flags & ENABLE_VIRTUAL_TERMINAL_PROCESSING:
-            return True
-        else:
-            return False
-    except OSError:
-        return False
-
 def supports_ansi():
-    """Returns True if the running system's terminal supports ANSI escape sequences for
-    color, formatting etc. and False otherwise. Approximate, but good enough.
+    """Returns True if the running system's terminal supports ANSI escape
+    sequences for color, formatting etc. and False otherwise. Inspired by
+    Django's solution – hacky, but an okay approximation.
 
     RETURNS (bool): Whether the terminal supports ANSI colors.
-
     """
     if os.getenv(ENV_ANSI_DISABLED):
         return False
-
-    if sys.platform == "win32":
-        if "ANSICON" in os.environ:
-            return True
-        return _windows_console_supports_ansi()
-
+    # See: https://stackoverflow.com/q/7445658/6400719
+    supported_platform = sys.platform != "Pocket PC" and (
+        sys.platform != "win32" or "ANSICON" in os.environ
+    )
+    if not supported_platform:
+        return False
     return True
 
 
