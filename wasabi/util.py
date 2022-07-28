@@ -233,7 +233,10 @@ def _windows_console_supports_ansi():
         if not ok:
             raise ctypes.WinError()
 
-    console = msvcrt.get_osfhandle(sys.stdout.fileno())
+    try:
+        console = msvcrt.get_osfhandle(sys.stdout.fileno())
+    except Exception:
+        return False
     try:
         # Try to enable ANSI output support
         flags = GetConsoleMode(console)
@@ -247,6 +250,7 @@ def _windows_console_supports_ansi():
             return False
     except OSError:
         return False
+
 
 def supports_ansi():
     """Returns True if the running system's terminal supports ANSI escape sequences for
