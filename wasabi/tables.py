@@ -66,7 +66,7 @@ def table(
             vals = [v if isinstance(v, (list, tuple)) else [v] for v in item]
             zipped_data.extend(list(zip_longest(*vals, fillvalue="")))
             if i < len(data) - 1:
-                zipped_data.append(["" for i in item])
+                zipped_data.append(tuple(["" for i in item]))
         data = zipped_data
     if widths == "auto":
         widths = _get_max_widths(data, header, footer, max_col)
