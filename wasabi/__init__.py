@@ -1,6 +1,3 @@
-# coding: utf8
-from __future__ import unicode_literals
-
 from .about import __version__  # noqa
 from .markdown import MarkdownRenderer  # noqa
 from .printer import Printer  # noqa
