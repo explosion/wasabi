@@ -86,7 +86,7 @@ class Printer(object):
         show (bool): Whether to print or not. Can be used to only output
             messages under certain condition, e.g. if --verbose flag is set.
         spaced (bool): Whether to add newlines around the output.
-        exits (Optional[int]): Perform a system exit.
+        exits (int): Perform a system exit. Optional.
         """
         return self._get_msg(
             title, text, style=MESSAGES.GOOD, show=show, spaced=spaced, exits=exits
@@ -107,8 +107,7 @@ class Printer(object):
         show (bool): Whether to print or not. Can be used to only output
             messages under certain condition, e.g. if --verbose flag is set.
         spaced (bool): Whether to add newlines around the output.
-        exits (Optional[int]): Perform a system exit.
-
+        exits (int): Perform a system exit. Optional.
         """
         return self._get_msg(
             title, text, style=MESSAGES.FAIL, show=show, spaced=spaced, exits=exits
@@ -129,7 +128,7 @@ class Printer(object):
         show (bool): Whether to print or not. Can be used to only output
             messages under certain condition, e.g. if --verbose flag is set.
         spaced (bool): Whether to add newlines around the output.
-        exits (Optional[int]): Perform a system exit.
+        exits (int): Perform a system exit. Optional.
         """
         return self._get_msg(
             title, text, style=MESSAGES.WARN, show=show, spaced=spaced, exits=exits
@@ -150,7 +149,7 @@ class Printer(object):
         show (bool): Whether to print or not. Can be used to only output
             messages under certain condition, e.g. if --verbose flag is set.
         spaced (bool): Whether to add newlines around the output.
-        exits (Optional[int]): Perform a system exit.
+        exits (int): Perform a system exit. Optional.
         """
         return self._get_msg(
             title, text, style=MESSAGES.INFO, show=show, spaced=spaced, exits=exits
@@ -172,14 +171,14 @@ class Printer(object):
 
         title (str): The main text to print.
         text (str): Optional additional text to print.
-        color (Optional[Union[str, int]]): Foreground color.
-        bg_color (Optional[Union[str, int]]): Background color.
-        icon (Optional[str]): Name of icon to add.
+        color (str / int): Foreground color. Optional.
+        bg_color (str / int): Background color. Optional.
+        icon (str): Name of icon to add. Optional.
         spaced (bool): Whether to add newlines around the output.
         show (bool): Whether to print or not. Can be used to only output
             messages under certain condition, e.g. if --verbose flag is set.
         no_print (bool): Don't actually print, just return.
-        exits (Optional[int]): Perform a system exit.
+        exits (int): Perform a system exit. Optional.
         """
         if not show:
             return
@@ -251,7 +250,7 @@ class Printer(object):
     def table(self, data: Union[Collection, Dict], **kwargs):
         """Print data as a table.
 
-        data (Union[Collection, Dict]): The data to render. Either a list of lists
+        data (Collection / Dict): The data to render. Either a list of lists
             (one per row) or a dict for two-column tables.
         kwargs: Table settings. See tables.table for details.
         """

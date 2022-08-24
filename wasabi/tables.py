@@ -12,8 +12,8 @@ ALIGN_MAP = {"l": "<", "r": ">", "c": "^"}
 
 def table(
     data: Union[Collection[Any], Dict[Any, Any]],
-    header: List = None,
-    footer: List = None,
+    header: Iterable = None,
+    footer: Iterable = None,
     divider: bool = False,
     widths: Union[Iterable[int], Literal["auto"]] = "auto",
     max_col: int = 30,
@@ -27,7 +27,7 @@ def table(
 ) -> str:
     """Format tabular data.
 
-    data (Iterable / Dict): The data to render. Either a list of lists (one per
+    data (Collection / Dict): The data to render. Either a list of lists (one per
         row) or a dict for two-column tables.
     header (Iterable): The header columns.
     footer (Iterable): The footer columns.
