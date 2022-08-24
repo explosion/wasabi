@@ -54,7 +54,7 @@ class MarkdownRenderer:
         body = "\n".join("| {} |".format(" | ".join(row)) for row in data)
         return "{}\n{}\n{}".format(head, divider, body)
 
-    def title(self, level: int, text: str, emoji: str = None) -> str:
+    def title(self, level: int, text: str, emoji: Optional[str] = None) -> str:
         """Create a Markdown heading.
 
         level (int): The heading level, e.g. 3 for ###
