@@ -86,7 +86,7 @@ class Printer(object):
         show (bool): Whether to print or not. Can be used to only output
             messages under certain condition, e.g. if --verbose flag is set.
         spaced (bool): Whether to add newlines around the output.
-        exits (int): Perform a system exit. Optional.
+        exits (int): Optional toggle to perform a system exit.
         """
         return self._get_msg(
             title, text, style=MESSAGES.GOOD, show=show, spaced=spaced, exits=exits
@@ -107,7 +107,7 @@ class Printer(object):
         show (bool): Whether to print or not. Can be used to only output
             messages under certain condition, e.g. if --verbose flag is set.
         spaced (bool): Whether to add newlines around the output.
-        exits (int): Perform a system exit. Optional.
+        exits (int): Optional toggle to perform a system exit.
         """
         return self._get_msg(
             title, text, style=MESSAGES.FAIL, show=show, spaced=spaced, exits=exits
@@ -128,7 +128,7 @@ class Printer(object):
         show (bool): Whether to print or not. Can be used to only output
             messages under certain condition, e.g. if --verbose flag is set.
         spaced (bool): Whether to add newlines around the output.
-        exits (int): Perform a system exit. Optional.
+        exits (int): Optional toggle to perform a system exit.
         """
         return self._get_msg(
             title, text, style=MESSAGES.WARN, show=show, spaced=spaced, exits=exits
@@ -149,7 +149,7 @@ class Printer(object):
         show (bool): Whether to print or not. Can be used to only output
             messages under certain condition, e.g. if --verbose flag is set.
         spaced (bool): Whether to add newlines around the output.
-        exits (int): Perform a system exit. Optional.
+        exits (int): Optional toggle to perform a system exit.
         """
         return self._get_msg(
             title, text, style=MESSAGES.INFO, show=show, spaced=spaced, exits=exits
@@ -171,9 +171,9 @@ class Printer(object):
 
         title (str): The main text to print.
         text (str): Optional additional text to print.
-        color (str / int): Foreground color. Optional.
-        bg_color (str / int): Background color. Optional.
-        icon (str): Name of icon to add. Optional.
+        color (str / int): Optional foreground color.
+        bg_color (str / int): Optional background color.
+        icon (str): Optional name of icon to add.
         spaced (bool): Whether to add newlines around the output.
         show (bool): Whether to print or not. Can be used to only output
             messages under certain condition, e.g. if --verbose flag is set.
