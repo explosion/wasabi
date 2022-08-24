@@ -26,7 +26,7 @@ class TracebackPrinter(object):
         color_tb (str / int): Color name or code for traceback headline.
         color_highlight (str / int): Color name or code for highlights.
         indent (int): Indentation in spaces.
-        tb_base (str): Name of directory to use to show relative paths. For
+        tb_base (str): Optional name of directory to use to show relative paths. For
             example, "thinc" will look for the last occurence of "/thinc/" in
             a path and only show path to the right of it.
         tb_exclude (tuple): List of filenames to exclude from traceback.
