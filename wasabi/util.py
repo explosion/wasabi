@@ -59,8 +59,8 @@ def color(
     """Color text by applying ANSI escape sequence.
 
     text (str): The text to be formatted.
-    fg (str / int): Optional foreground color. String name or 0 - 256 (see COLORS).
-    bg (str / int): Optional background color. String name or 0 - 256 (see COLORS).
+    fg (Optional[Union[str, int]]): Optional foreground color. String name or 0 - 256 (see COLORS).
+    bg (Optional[Union[str, int]]): Optional background color. String name or 0 - 256 (see COLORS).
     bold (bool): Format text in bold.
     underline (bool): Underline text.
     RETURNS (str): The formatted text.
@@ -130,9 +130,9 @@ def diff_strings(
 
     a (str): The first string to diff.
     b (str): The second string to diff.
-    fg (str/ int): Foreground color. String name or 0 - 256 (see COLORS).
-    bg (tuple): Background colors as (insert, delete) tuple of string name or
-        0 - 256 (see COLORS).
+    fg (Union[str, int]): Foreground color. String name or 0 - 256 (see COLORS).
+    bg (Union[Tuple[str, str], Tuple[int, int]]): Background colors as
+        (insert, delete) tuple of string name or 0 - 256 (see COLORS).
     add_symbols (bool): Whether to add symbols before the diff lines. Uses '+'
         for inserts and '-' for deletions. Default is False.
     RETURNS (str): The formatted diff.
@@ -162,7 +162,7 @@ def get_raw_input(
     """Get user input from the command line via raw_input / input.
 
     description (str): Text to display before prompt.
-    default (str or False/None): Optional default value to display with prompt.
+    default (Optional[Union[str, bool]]): Optional default value to display with prompt.
     indent (int): Indentation in spaces.
     RETURNS (str): User input.
     """

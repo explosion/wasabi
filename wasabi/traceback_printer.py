@@ -22,11 +22,11 @@ class TracebackPrinter(object):
     ):
         """Initialize a traceback printer.
 
-        color_error (str/ int): Color name or code for errors.
-        color_tb (str / int): Color name or code for traceback headline.
-        color_highlight (str / int): Color name or code for highlights.
+        color_error (Union[str, int]): Color name or code for errors.
+        color_tb (Union[str, int]): Color name or code for traceback headline.
+        color_highlight (Union[str, int]): Color name or code for highlights.
         indent (int): Indentation in spaces.
-        tb_base (str): Optional name of directory to use to show relative paths. For
+        tb_base (Optional[str]): Optional name of directory to use to show relative paths. For
             example, "thinc" will look for the last occurence of "/thinc/" in
             a path and only show path to the right of it.
         tb_exclude (tuple): List of filenames to exclude from traceback.

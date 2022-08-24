@@ -12,7 +12,7 @@ ALIGN_MAP = {"l": "<", "r": ">", "c": "^"}
 
 
 def table(
-    data: Union[Collection[Any], Dict[Any, Any]],
+    data: Union[Collection, Dict],
     header: Iterable = None,
     footer: Iterable = None,
     divider: bool = False,
@@ -28,21 +28,21 @@ def table(
 ) -> str:
     """Format tabular data.
 
-    data (Collection / Dict): The data to render. Either a list of lists (one per
+    data (Union[Collection, Dict]): The data to render. Either a list of lists (one per
         row) or a dict for two-column tables.
     header (Iterable): The header columns.
     footer (Iterable): The footer columns.
     divider (bool): Show a divider line between header/footer and body.
-    widths (Iterable or 'auto'): Column widths in order. If "auto", widths
+    widths (Union[Iterable[int], Literal['auto']]): Column widths in order. If "auto", widths
         will be calculated automatically based on the largest value.
     max_col (int): Maximum column width.
     spacing (int): Spacing between columns, in spaces.
-    aligns (Iterable / str): Column alignments in order. 'l' (left,
-        default), 'r' (right) or 'c' (center). If a string, value is used
-        for all columns.
+    aligns (Optional[Union[Iterable[Literal['r', 'c', 'l']], str]]): Optional column alignments
+        in order. 'l' (left, default), 'r' (right) or 'c' (center). If a string,
+        value is used for all columns.
     multiline (bool): If a cell value is a list of a tuple, render it on
         multiple lines, with one value per line.
-    env_prefix (unicode): Prefix for environment variables, e.g.
+    env_prefix (str): Prefix for environment variables, e.g.
         WASABI_LOG_FRIENDLY.
     color_values (Dict): Add or overwrite color values, name mapped to value.
     fg_colors (Iterable): Foreground colors, one per column. None can be specified
@@ -106,13 +106,13 @@ def row(
     """Format data as a table row.
 
     data (Collection): The individual columns to format.
-    widths (list of int, int or 'auto'): Column widths, either one integer for all
+    widths (Union[Sequence[int], int, Literal['auto']]): Column widths, either one integer for all
         columns or an iterable of values. If "auto", widths will be calculated
         automatically based on the largest value.
     spacing (int): Spacing between columns, in spaces.
-    aligns (Sequence / str): Optional column alignments in order. 'l' (left,
-        default), 'r' (right) or 'c' (center). If a string, value is used
-        for all columns.
+    aligns (Optional[Union[Sequence[Literal['r', 'c', 'l']], str]]): Optional column
+        alignments in order. 'l' (left, default), 'r' (right) or 'c' (center).
+        If a string, value is used for all columns.
     env_prefix (str): Prefix for environment variables, e.g.
         WASABI_LOG_FRIENDLY.
     fg_colors (Optional[Sequence]): Optional foreground colors for the columns, in order. None can be

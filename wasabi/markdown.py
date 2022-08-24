@@ -59,7 +59,7 @@ class MarkdownRenderer:
 
         level (int): The heading level, e.g. 3 for ###
         text (str): The heading text.
-        emoji (str): Optional emoji to show before heading text, if enabled.
+        emoji (Optional[str]): Optional emoji to show before heading text, if enabled.
         RETURNS (str): The rendered title.
         """
         prefix = "{} ".format(emoji) if emoji and not self.no_emoji else ""
