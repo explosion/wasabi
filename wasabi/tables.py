@@ -1,5 +1,5 @@
 import os
-from typing import Any, Dict, Iterable, List, Optional, Union, cast
+from typing import Any, Collection, Dict, Iterable, List, Optional, Union, cast
 
 from typing_extensions import Literal
 
@@ -11,7 +11,7 @@ ALIGN_MAP = {"l": "<", "r": ">", "c": "^"}
 
 
 def table(
-    data: Union[List[Any], Dict[Any, Any]],
+    data: Union[Collection[Any], Dict[Any, Any]],
     header: List = None,
     footer: List = None,
     divider: bool = False,
@@ -94,7 +94,7 @@ def table(
 
 
 def row(
-    data: List,
+    data: Collection,
     widths: Union[List[int], int, Literal["auto"]] = "auto",
     spacing: int = 3,
     aligns: Optional[List[Literal["r", "c", "l"]]] = None,
