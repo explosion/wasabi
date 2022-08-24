@@ -105,9 +105,9 @@ def table(
 
 def row(
     data: Collection,
-    widths: Union[List[int], int, Literal["auto"]] = "auto",
+    widths: Union[Sequence[int], int, Literal["auto"]] = "auto",
     spacing: int = 3,
-    aligns: Optional[List[Literal["r", "c", "l"]]] = None,
+    aligns: Optional[Union[Sequence[Literal["r", "c", "l"]], str]] = None,
     env_prefix: str = "WASABI",
     fg_colors: Optional[Sequence] = None,
     bg_colors: Optional[Sequence] = None,
@@ -119,7 +119,7 @@ def row(
         columns or an iterable of values. If "auto", widths will be calculated
         automatically based on the largest value.
     spacing (int): Spacing between columns, in spaces.
-    aligns (list / str): Optional column alignments in order. 'l' (left,
+    aligns (Sequence / str): Optional column alignments in order. 'l' (left,
         default), 'r' (right) or 'c' (center). If a string, value is used
         for all columns.
     env_prefix (str): Prefix for environment variables, e.g.
@@ -137,12 +137,13 @@ def row(
         and (fg_colors is not None or bg_colors is not None)
     )
     cols: List[str] = []
-    if isinstance(aligns, str):  # single align value
-        aligns = [aligns for _ in data]
+    _aligns = (
+        [aligns for _ in data] if isinstance(aligns, str) else cast(List[str], aligns)
+    )
     if not hasattr(widths, "__iter__") and widths != "auto":  # single number
         widths = cast(List[int], [widths for _ in range(len(data))])
     for i, col in enumerate(data):
-        align = ALIGN_MAP.get(aligns[i] if aligns and i < len(aligns) else "l")
+        align = ALIGN_MAP.get(_aligns[i] if _aligns and i < len(_aligns) else "l")
         col_width = len(col) if widths == "auto" else cast(List[int], widths)[i]
         tpl = "{:%s%d}" % (align, col_width)
         col = tpl.format(str(col))
