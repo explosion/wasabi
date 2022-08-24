@@ -1,4 +1,4 @@
-from typing import List, Iterable, Sequence, Optional
+from typing import Iterable, List, Optional, Sequence
 
 from typing_extensions import Literal
 

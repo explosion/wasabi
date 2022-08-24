@@ -1,15 +1,6 @@
 import os
-from typing import (
-    Any,
-    Collection,
-    Dict,
-    Iterable,
-    List,
-    Optional,
-    Union,
-    Sequence,
-    cast,
-)
+from typing import Any, Collection, Dict, Iterable, List, Optional, Sequence
+from typing import Union, cast
 
 from typing_extensions import Literal
 
