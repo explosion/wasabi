@@ -115,11 +115,11 @@ def row(
         for all columns.
     env_prefix (str): Prefix for environment variables, e.g.
         WASABI_LOG_FRIENDLY.
-    fg_colors (list): Optional foreground colors for the columns, in order. None can be
+    fg_colors (Optional[Sequence]): Optional foreground colors for the columns, in order. None can be
         specified for individual columns to retain the default foreground color.
-    bg_colors (list): Optional background colors for the columns, in order. None can be
+    bg_colors (Optional[Sequence]): Optional background colors for the columns, in order. None can be
         specified for individual columns to retain the default background color.
-    RETURNS (unicode): The formatted row.
+    RETURNS (str): The formatted row.
     """
     env_log_friendly = os.getenv("{}_LOG_FRIENDLY".format(env_prefix), False)
     show_colors = (

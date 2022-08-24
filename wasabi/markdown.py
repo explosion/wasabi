@@ -37,7 +37,7 @@ class MarkdownRenderer:
         data (Iterable[Iterable[str]]): The body, one iterable per row,
             containig an interable of column contents.
         header (Sequence[str]): The column names.
-        aligns (Sequence[Literal['r', 'c', 'l']]): Alignment-mode for each column. Values should
+        aligns (Optional[Sequence[Literal["r", "c", "l"]]]): Optional alignment-mode for each column. Values should
             either be 'l' (left), 'r' (right), or 'c' (center). Optional.
         RETURNS (str): The rendered table.
         """
