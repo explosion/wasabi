@@ -1,4 +1,3 @@
-# coding: utf8
 import pytest
 
 from wasabi.util import color, diff_strings, format_repr, locale_escape, wrap

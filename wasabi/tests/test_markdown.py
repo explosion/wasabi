@@ -1,4 +1,3 @@
-# coding: utf8
 import pytest
 
 from wasabi.markdown import MarkdownRenderer
