@@ -1,5 +1,15 @@
 import os
-from typing import Any, Collection, Dict, Iterable, List, Optional, Union, cast
+from typing import (
+    Any,
+    Collection,
+    Dict,
+    Iterable,
+    List,
+    Optional,
+    Union,
+    Sequence,
+    cast,
+)
 
 from typing_extensions import Literal
 
@@ -99,24 +109,24 @@ def row(
     spacing: int = 3,
     aligns: Optional[List[Literal["r", "c", "l"]]] = None,
     env_prefix: str = "WASABI",
-    fg_colors: Optional[List] = None,
-    bg_colors: Optional[List] = None,
+    fg_colors: Optional[Sequence] = None,
+    bg_colors: Optional[Sequence] = None,
 ) -> str:
     """Format data as a table row.
 
-    data (Iterable): The individual columns to format.
-    widths (list, int or 'auto'): Column widths, either one integer for all
+    data (Collection): The individual columns to format.
+    widths (list of int, int or 'auto'): Column widths, either one integer for all
         columns or an iterable of values. If "auto", widths will be calculated
         automatically based on the largest value.
     spacing (int): Spacing between columns, in spaces.
-    aligns (list / str): Column alignments in order. 'l' (left,
+    aligns (list / str): Optional column alignments in order. 'l' (left,
         default), 'r' (right) or 'c' (center). If a string, value is used
         for all columns.
     env_prefix (str): Prefix for environment variables, e.g.
         WASABI_LOG_FRIENDLY.
-    fg_colors (list): Foreground colors for the columns, in order. None can be
+    fg_colors (list): Optional foreground colors for the columns, in order. None can be
         specified for individual columns to retain the default foreground color.
-    bg_colors (list): Background colors for the columns, in order. None can be
+    bg_colors (list): Optional background colors for the columns, in order. None can be
         specified for individual columns to retain the default background color.
     RETURNS (unicode): The formatted row.
     """
