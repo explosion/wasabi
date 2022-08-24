@@ -59,8 +59,8 @@ def color(
     """Color text by applying ANSI escape sequence.
 
     text (str): The text to be formatted.
-    fg (str / int): Foreground color. String name or 0 - 256 (see COLORS).
-    bg (str / int): Background color. String name or 0 - 256 (see COLORS).
+    fg (str / int): Optional foreground color. String name or 0 - 256 (see COLORS).
+    bg (str / int): Optional background color. String name or 0 - 256 (see COLORS).
     bold (bool): Format text in bold.
     underline (bool): Underline text.
     RETURNS (str): The formatted text.
@@ -81,7 +81,7 @@ def color(
     return "\x1b[{}m{}\x1b[0m".format(";".join(styles), text)
 
 
-def wrap(text: str, wrap_max: int = 80, indent: int = 4):
+def wrap(text: str, wrap_max: int = 80, indent: int = 4) -> str:
     """Wrap text at given width using textwrap module.
 
     text (str): The text to wrap.
@@ -156,11 +156,13 @@ def diff_strings(
     return "\n".join(output)
 
 
-def get_raw_input(description: str, default: bool = False, indent: int = 4) -> str:
+def get_raw_input(
+    description: str, default: Optional[Union[str, bool]] = False, indent: int = 4
+) -> str:
     """Get user input from the command line via raw_input / input.
 
     description (str): Text to display before prompt.
-    default (str or False/None): Default value to display with prompt.
+    default (str or False/None): Optional default value to display with prompt.
     indent (int): Indentation in spaces.
     RETURNS (str): User input.
     """
