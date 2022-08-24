@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Iterable, Sequence, Optional
 
 from typing_extensions import Literal
 
@@ -28,16 +28,16 @@ class MarkdownRenderer:
 
     def table(
         self,
-        data: List[List[str]],
-        header: List[str],
-        aligns: List[Literal["r", "c", "l"]] = None,
+        data: Iterable[Iterable[str]],
+        header: Sequence[str],
+        aligns: Optional[Sequence[Literal["r", "c", "l"]]] = None,
     ) -> str:
         """Create a Markdown table.
 
-        data (List[List[str]]): The body, one iterable per row,
+        data (Iterable[Iterable[str]]): The body, one iterable per row,
             containig an interable of column contents.
-        header (List[str]): The column names.
-        aligns (List[str]): Alignment-mode for each column. Values should
+        header (Sequence[str]): The column names.
+        aligns (Optional[Sequence[Literal['r', 'c', 'l']]]): Alignment-mode for each column. Values should
             either be 'l' (left), 'r' (right), or 'c' (center)
         RETURNS (str): The rendered table.
         """
