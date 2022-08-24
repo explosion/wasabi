@@ -65,10 +65,10 @@ class MarkdownRenderer:
         prefix = "{} ".format(emoji) if emoji and not self.no_emoji else ""
         return "{} {}{}".format("#" * level, prefix, text)
 
-    def list(self, items: List[str], numbered: bool = False) -> str:
+    def list(self, items: Iterable[str], numbered: bool = False) -> str:
         """Create a non-nested list.
 
-        items (List[str]): The list items.
+        items (Iterable[str]): The list items.
         numbered (bool): Whether to use a numbered list.
         RETURNS (str): The rendered list.
         """
@@ -99,15 +99,27 @@ class MarkdownRenderer:
         return "```{}\n{}\n```".format(lang, text)
 
     def code(self, text: str) -> str:
-        """Create Markdown inline code."""
+        """Create Markdown inline code.
+
+        text (str): The inline code text.
+        RETURNS (str): The rendered code text.
+        """
         return self._wrap(text, "`")
 
     def bold(self, text: str) -> str:
-        """Create bold text."""
+        """Create bold text.
+
+        text (str): The text to format in boldface.
+        RETURNS (str): The formatted text.
+        """
         return self._wrap(text, "**")
 
-    def italic(self, text):
-        """Create italic text."""
+    def italic(self, text: str):
+        """Create italic text.
+
+        text (str): The text to italicize.
+        RETURNS (str): The formatted text.
+        """
         return self._wrap(text, "_")
 
     def _wrap(self, text, marker):
