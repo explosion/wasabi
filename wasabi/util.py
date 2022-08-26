@@ -2,7 +2,6 @@ import difflib
 import os
 import sys
 import textwrap
-from itertools import zip_longest
 from typing import Any, Optional, Tuple, Union
 
 STDOUT_ENCODING = sys.stdout.encoding if hasattr(sys.stdout, "encoding") else None
