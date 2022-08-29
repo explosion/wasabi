@@ -20,8 +20,8 @@ class Printer(object):
         self,
         pretty: bool = True,
         no_print: bool = False,
-        colors: Dict = None,
-        icons: Dict = None,
+        colors: Optional[Dict] = None,
+        icons: Optional[Dict] = None,
         line_max: int = 80,
         animation: str = "⠙⠹⠸⠼⠴⠦⠧⠇⠏",
         animation_ascii: str = "|/-\\",
@@ -34,8 +34,8 @@ class Printer(object):
 
         pretty (bool): Pretty-print output (colors, icons).
         no_print (bool): Don't actually print, just return.
-        colors (Dict): Add or overwrite color values, name mapped to value.
-        icons (Dict): Add or overwrite icons. Name mapped to unicode icon.
+        colors (Optional[Dict]): Optional color values to add or overwrite, name mapped to value.
+        icons (Optional[Dict]): Optional icons to add or overwrite. Name mapped to unicode icon.
         line_max (int): Maximum line length (for divider).
         animation (str): Steps of loading animation for loading() method.
         animation_ascii (str): Alternative animation for ASCII terminals.
@@ -215,7 +215,11 @@ class Printer(object):
             return title
 
     def divider(
-        self, text: str = "", char: str = "=", show: bool = True, icon: str = None
+        self,
+        text: str = "",
+        char: str = "=",
+        show: bool = True,
+        icon: Optional[str] = None,
     ):
         """Print a divider with a headline:
         ============================ Headline here ===========================
@@ -223,7 +227,7 @@ class Printer(object):
         text (str): Headline text. If empty, only the line is printed.
         char (str): Line character to repeat, e.g. =.
         show (bool): Whether to print or not.
-        icon (str): Optional icon to display with title.
+        icon (Optional[str]): Optional icon to display with title.
         """
         if not show:
             return
@@ -305,7 +309,7 @@ class Printer(object):
         self,
         title: str,
         text: str,
-        style: str = None,
+        style: Optional[str] = None,
         show: bool = False,
         spaced: bool = False,
         exits: Optional[int] = None,
