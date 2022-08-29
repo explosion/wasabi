@@ -14,25 +14,25 @@ ALIGN_MAP = {"l": "<", "r": ">", "c": "^"}
 
 def table(
     data: Union[Collection, Dict],
-    header: Iterable = None,
-    footer: Iterable = None,
+    header: Optional[Iterable] = None,
+    footer: Optional[Iterable] = None,
     divider: bool = False,
     widths: Union[Iterable[int], Literal["auto"]] = "auto",
     max_col: int = 30,
     spacing: int = 3,
-    aligns: Union[Iterable[Literal["r", "c", "l"]], str] = None,
+    aligns: Optional[Union[Iterable[Literal["r", "c", "l"]], str]] = None,
     multiline: bool = False,
     env_prefix: str = "WASABI",
-    color_values: Dict = None,
-    fg_colors: Iterable = None,
-    bg_colors: Iterable = None,
+    color_values: Optional[Dict] = None,
+    fg_colors: Optional[Iterable] = None,
+    bg_colors: Optional[Iterable] = None,
 ) -> str:
     """Format tabular data.
 
     data (Union[Collection, Dict]): The data to render. Either a list of lists (one per
         row) or a dict for two-column tables.
-    header (Iterable): The header columns.
-    footer (Iterable): The footer columns.
+    header (Optional[Iterable]): Optional header columns.
+    footer (Optional[Iterable]): Optional footer columns.
     divider (bool): Show a divider line between header/footer and body.
     widths (Union[Iterable[int], Literal['auto']]): Column widths in order. If "auto", widths
         will be calculated automatically based on the largest value.
@@ -45,10 +45,10 @@ def table(
         multiple lines, with one value per line.
     env_prefix (str): Prefix for environment variables, e.g.
         WASABI_LOG_FRIENDLY.
-    color_values (Dict): Add or overwrite color values, name mapped to value.
-    fg_colors (Iterable): Foreground colors, one per column. None can be specified
+    color_values (Optional[Dict]): Optional color values to add or overwrite, name mapped to value.
+    fg_colors (Optional[Iterable]): Optional foreground colors, one per column. None can be specified
         for individual columns to retain the default foreground color.
-    bg_colors (Iterable): Background colors, one per column. None can be specified
+    bg_colors (Optional[Iterable]): Optional background colors, one per column. None can be specified
         for individual columns to retain the default background color.
     RETURNS (str): The formatted table.
     """
