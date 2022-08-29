@@ -7,7 +7,7 @@ import traceback
 from collections import Counter
 from contextlib import contextmanager
 from multiprocessing import Process
-from typing import Collection, Dict, Iterable, List, Optional, Union, cast
+from typing import Collection, Dict, Optional, Union, cast
 
 from .tables import row, table
 from .util import COLORS, ICONS, MESSAGES, can_render
