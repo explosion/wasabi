@@ -13,6 +13,7 @@ ALIGN_MAP = {"l": "<", "r": ">", "c": "^"}
 
 
 def table(
+    # fmt: off
     data: Union[Collection, Dict],
     header: Optional[Iterable] = None,
     footer: Optional[Iterable] = None,
@@ -20,12 +21,13 @@ def table(
     widths: Union[Iterable[int], Literal["auto"]] = "auto",
     max_col: int = 30,
     spacing: int = 3,
-    aligns: Optional[Union[Iterable[Literal["r", "c", "l"]], str]] = None,
+    aligns: Optional[Union[Iterable[Literal["r", "c", "l"]], Literal["r", "c", "l"]]] = None,
     multiline: bool = False,
     env_prefix: str = "WASABI",
     color_values: Optional[Dict] = None,
     fg_colors: Optional[Iterable] = None,
     bg_colors: Optional[Iterable] = None,
+    # fmt: on
 ) -> str:
     """Format tabular data.
 
