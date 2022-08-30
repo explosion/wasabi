@@ -38,7 +38,7 @@ def table(
         will be calculated automatically based on the largest value.
     max_col (int): Maximum column width.
     spacing (int): Spacing between columns, in spaces.
-    aligns (Optional[Union[Iterable[Literal['r', 'c', 'l']], str]]): Optional column alignments
+    aligns (Optional[Union[Iterable[str], str]]): Optional column alignments
         in order. 'l' (left, default), 'r' (right) or 'c' (center). If a string,
         value is used for all columns.
     multiline (bool): If a cell value is a list of a tuple, render it on
