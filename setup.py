@@ -25,6 +25,7 @@ def setup_package():
         name=package_name,
         description=about["__summary__"],
         long_description=readme,
+        python_requires=">=3.6",
         long_description_content_type="text/markdown",
         author=about["__author__"],
         author_email=about["__email__"],

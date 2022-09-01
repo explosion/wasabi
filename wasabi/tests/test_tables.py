@@ -1,9 +1,8 @@
-# coding: utf8
-from __future__ import unicode_literals, print_function
-
 import os
+
 import pytest
-from wasabi.tables import table, row
+
+from wasabi.tables import row, table
 from wasabi.util import supports_ansi
 
 SUPPORTS_ANSI = supports_ansi()

@@ -1,56 +1,54 @@
-# coding: utf8
-from __future__ import unicode_literals, print_function
-
 import datetime
+import itertools
+import os
+import sys
+import time
+import traceback
 from collections import Counter
 from contextlib import contextmanager
 from multiprocessing import Process
-import itertools
-import sys
-import time
-import os
-import traceback
+from typing import Collection, Dict, Optional, Union, cast
 
-from .tables import table, row
-from .util import wrap, supports_ansi, can_render, locale_escape
-from .util import MESSAGES, COLORS, ICONS
+from .tables import row, table
+from .util import COLORS, ICONS, MESSAGES, can_render
 from .util import color as _color
+from .util import locale_escape, supports_ansi, wrap
 
 
 class Printer(object):
     def __init__(
         self,
-        pretty=True,
-        no_print=False,
-        colors=None,
-        icons=None,
-        line_max=80,
-        animation="⠙⠹⠸⠼⠴⠦⠧⠇⠏",
-        animation_ascii="|/-\\",
-        hide_animation=False,
-        ignore_warnings=False,
-        env_prefix="WASABI",
-        timestamp=False,
+        pretty: bool = True,
+        no_print: bool = False,
+        colors: Optional[Dict] = None,
+        icons: Optional[Dict] = None,
+        line_max: int = 80,
+        animation: str = "⠙⠹⠸⠼⠴⠦⠧⠇⠏",
+        animation_ascii: str = "|/-\\",
+        hide_animation: bool = False,
+        ignore_warnings: bool = False,
+        env_prefix: str = "WASABI",
+        timestamp: bool = False,
     ):
         """Initialize the command-line printer.
 
         pretty (bool): Pretty-print output (colors, icons).
         no_print (bool): Don't actually print, just return.
-        colors (dict): Add or overwrite color values, name mapped to value.
-        icons (dict): Add or overwrite icons. Name mapped to unicode icon.
+        colors (Optional[Dict]): Optional color values to add or overwrite, name mapped to value.
+        icons (Optional[Dict]): Optional icons to add or overwrite. Name mapped to unicode icon.
         line_max (int): Maximum line length (for divider).
-        animation (unicode): Steps of loading animation for loading() method.
-        animation_ascii (unicode): Alternative animation for ASCII terminals.
+        animation (str): Steps of loading animation for loading() method.
+        animation_ascii (str): Alternative animation for ASCII terminals.
         hide_animation (bool): Don't display animation, e.g. for logs.
         ignore_warnings (bool): Do not output messages of type MESSAGE.WARN.
-        env_prefix (unicode): Prefix for environment variables, e.g.
+        env_prefix (str): Prefix for environment variables, e.g.
             WASABI_LOG_FRIENDLY.
         timestamp (bool): Print a timestamp (default False).
         RETURNS (Printer): The initialized printer.
         """
         env_log_friendly = os.getenv("{}_LOG_FRIENDLY".format(env_prefix), False)
         env_no_pretty = os.getenv("{}_NO_PRETTY".format(env_prefix), False)
-        self._counts = Counter()
+        self._counts: Counter = Counter()
         self.pretty = pretty and not env_no_pretty
         self.no_print = no_print
         self.show_color = supports_ansi() and not env_log_friendly
@@ -67,67 +65,127 @@ class Printer(object):
         self.anim = animation if can_render(animation) else animation_ascii
 
     @property
-    def counts(self):
+    def counts(self) -> Counter:
         """Get the counts of how often the special printers were fired,
         e.g. MESSAGES.GOOD. Can be used to print an overview like "X warnings".
         """
         return self._counts
 
-    def good(self, title="", text="", show=True, spaced=False, exits=None):
-        """Print a success message."""
+    def good(
+        self,
+        title: str = "",
+        text: str = "",
+        show: bool = True,
+        spaced: bool = False,
+        exits: Optional[int] = None,
+    ):
+        """Print a success message.
+
+        title (str): The main text to print.
+        text (str): Optional additional text to print.
+        show (bool): Whether to print or not. Can be used to only output
+            messages under certain condition, e.g. if --verbose flag is set.
+        spaced (bool): Whether to add newlines around the output.
+        exits (Optional[int]): Optional toggle to perform a system exit.
+        """
         return self._get_msg(
             title, text, style=MESSAGES.GOOD, show=show, spaced=spaced, exits=exits
         )
 
-    def fail(self, title="", text="", show=True, spaced=False, exits=None):
-        """Print an error message."""
+    def fail(
+        self,
+        title: str = "",
+        text: str = "",
+        show: bool = True,
+        spaced: bool = False,
+        exits: Optional[int] = None,
+    ):
+        """Print an error message.
+
+        title (str): The main text to print.
+        text (str): Optional additional text to print.
+        show (bool): Whether to print or not. Can be used to only output
+            messages under certain condition, e.g. if --verbose flag is set.
+        spaced (bool): Whether to add newlines around the output.
+        exits (Optional[int]): Optional toggle to perform a system exit.
+        """
         return self._get_msg(
             title, text, style=MESSAGES.FAIL, show=show, spaced=spaced, exits=exits
         )
 
-    def warn(self, title="", text="", show=True, spaced=False, exits=None):
-        """Print a warning message."""
+    def warn(
+        self,
+        title: str = "",
+        text: str = "",
+        show: bool = True,
+        spaced: bool = False,
+        exits: Optional[int] = None,
+    ):
+        """Print a warning message.
+
+        title (str): The main text to print.
+        text (str): Optional additional text to print.
+        show (bool): Whether to print or not. Can be used to only output
+            messages under certain condition, e.g. if --verbose flag is set.
+        spaced (bool): Whether to add newlines around the output.
+        exits (Optional[int]): Optional toggle to perform a system exit.
+        """
         return self._get_msg(
             title, text, style=MESSAGES.WARN, show=show, spaced=spaced, exits=exits
         )
 
-    def info(self, title="", text="", show=True, spaced=False, exits=None):
-        """Print an informational message."""
+    def info(
+        self,
+        title: str = "",
+        text: str = "",
+        show: bool = True,
+        spaced: bool = False,
+        exits: Optional[int] = None,
+    ):
+        """Print an informational message.
+
+        title (str): The main text to print.
+        text (str): Optional additional text to print.
+        show (bool): Whether to print or not. Can be used to only output
+            messages under certain condition, e.g. if --verbose flag is set.
+        spaced (bool): Whether to add newlines around the output.
+        exits (Optional[int]): Optional toggle to perform a system exit.
+        """
         return self._get_msg(
             title, text, style=MESSAGES.INFO, show=show, spaced=spaced, exits=exits
         )
 
     def text(
         self,
-        title="",
-        text="",
-        color=None,
-        bg_color=None,
-        icon=None,
-        spaced=False,
-        show=True,
-        no_print=False,
-        exits=None,
+        title: str = "",
+        text: str = "",
+        color: Optional[Union[str, int]] = None,
+        bg_color: Optional[Union[str, int]] = None,
+        icon: Optional[str] = None,
+        spaced: bool = False,
+        show: bool = True,
+        no_print: bool = False,
+        exits: Optional[int] = None,
     ):
         """Print a message.
 
-        title (unicode): The main text to print.
-        text (unicode): Optional additional text to print.
-        color (unicode / int): Foreground color.
-        bg_color (unicode / int): Background color.
-        icon (unicode): Name of icon to add.
-        spaced (unicode): Whether to add newlines around the output.
+        title (str): The main text to print.
+        text (str): Optional additional text to print.
+        color (Optional[Union[str, int]]): Optional foreground color.
+        bg_color (Optional[Union[str, int]]): Optional background color.
+        icon (Optional[str]): Optional name of icon to add.
+        spaced (bool): Whether to add newlines around the output.
         show (bool): Whether to print or not. Can be used to only output
             messages under certain condition, e.g. if --verbose flag is set.
         no_print (bool): Don't actually print, just return.
-        exits (int): Perform a system exit.
+        exits (Optional[int]): Perform a system exit. Optional.
         """
         if not show:
             return
         if self.pretty:
-            color = self.colors.get(color, color)
-            bg_color = self.colors.get(bg_color, bg_color)
-            icon = self.icons.get(icon)
+            color = self.colors.get(cast(str, color), color)
+            bg_color = self.colors.get(cast(str, bg_color), bg_color)
+            icon = self.icons.get(cast(str, icon))
             if icon:
                 title = locale_escape("{} {}".format(icon, title)).strip()
             if self.show_color:
@@ -156,14 +214,20 @@ class Printer(object):
         if self.no_print or no_print:
             return title
 
-    def divider(self, text="", char="=", show=True, icon=None):
+    def divider(
+        self,
+        text: str = "",
+        char: str = "=",
+        show: bool = True,
+        icon: Optional[str] = None,
+    ):
         """Print a divider with a headline:
         ============================ Headline here ===========================
 
-        text (unicode): Headline text. If empty, only the line is printed.
-        char (unicode): Line character to repeat, e.g. =.
+        text (str): Headline text. If empty, only the line is printed.
+        char (str): Line character to repeat, e.g. =.
         show (bool): Whether to print or not.
-        icon (unicode): Optional icon to display with title.
+        icon (Optional[str]): Optional icon to display with title.
         """
         if not show:
             return
@@ -173,7 +237,7 @@ class Printer(object):
                 "Received: {}".format(char)
             )
         if self.pretty:
-            icon = self.icons.get(icon)
+            icon = self.icons.get(cast(str, icon))
             if icon:
                 text = locale_escape("{} {}".format(icon, text)).strip()
             deco = char * (int(round((self.line_max - len(text))) / 2) - 2)
@@ -187,10 +251,10 @@ class Printer(object):
             return text
         print(text)
 
-    def table(self, data, **kwargs):
+    def table(self, data: Union[Collection, Dict], **kwargs):
         """Print data as a table.
 
-        data (iterable / dict): The data to render. Either a list of lists
+        data (Union[Collection, Dict]): The data to render. Either a list of lists
             (one per row) or a dict for two-column tables.
         kwargs: Table settings. See tables.table for details.
         """
@@ -202,10 +266,10 @@ class Printer(object):
             return text
         print(text)
 
-    def row(self, data, **kwargs):
+    def row(self, data: Collection, **kwargs):
         """Print a table row.
 
-        data (iterable): The individual columns to format.
+        data (Collection): The individual columns to format.
         kwargs: Row settings. See tables.row for details.
         """
         text = row(data, **kwargs)
@@ -214,7 +278,7 @@ class Printer(object):
         print(text)
 
     @contextmanager
-    def loading(self, text="Loading..."):
+    def loading(self, text: str = "Loading..."):
         if self.no_print:
             yield
         elif self.hide_animation:
@@ -235,13 +299,21 @@ class Printer(object):
             sys.stdout.write("\r\x1b[2K")  # erase line
             sys.stdout.flush()
 
-    def _spinner(self, text="Loading..."):
+    def _spinner(self, text: str = "Loading..."):
         for char in itertools.cycle(self.anim):
             sys.stdout.write("\r{} {}".format(char, text))
             sys.stdout.flush()
             time.sleep(0.1)
 
-    def _get_msg(self, title, text, style=None, show=None, spaced=False, exits=None):
+    def _get_msg(
+        self,
+        title: str,
+        text: str,
+        style: Optional[str] = None,
+        show: bool = False,
+        spaced: bool = False,
+        exits: Optional[int] = None,
+    ):
         if self.ignore_warnings and style == MESSAGES.WARN:
             show = False
         self._counts[style] += 1

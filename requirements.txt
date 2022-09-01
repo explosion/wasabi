@@ -1,1 +1,3 @@
 pytest
+typing_extensions
+mypy

@@ -9,24 +9,6 @@ jobs:
 - job: 'Test'
   strategy:
     matrix:
-      Python27Linux:
-        imageName: 'ubuntu-20.04'
-        python.version: '2.7'
-      Python27LinuxASCII:
-        imageName: 'ubuntu-20.04'
-        python.version: '2.7'
-        LANG: 'en_US.ascii'
-        LC_ALL: 'en_US.ascii'
-      Python27LinuxASCIIPython:
-        imageName: 'ubuntu-20.04'
-        python.version: '2.7'
-        PYTHONIOENCODING: 'ascii'
-      Python27Windows:
-        imageName: 'windows-2019'
-        python.version: '2.7'
-      Python27Mac:
-        imageName: 'macOS-10.15'
-        python.version: '2.7'
       Python36Linux:
         imageName: 'ubuntu-20.04'
         python.version: '3.6'
@@ -79,16 +61,21 @@ jobs:
       versionSpec: '$(python.version)'
       architecture: 'x64'
 
-  - script: python -m pip install --upgrade pip
+  - script: |
+      python -m pip install --upgrade pip
+      python -m pip install -r requirements.txt
     displayName: 'Install dependencies'
 
   - script: |
       python -c "import locale; print('Preferred encoding:', locale.getpreferredencoding())"
       python -c "import sys; print('stdout encoding:', sys.stdout.encoding)"
       env
-      pip install pytest
       python -m pytest -s wasabi
     displayName: 'Run tests'
+
+  - script: |
+      python -m mypy wasabi
+    displayName: 'Run mypy'
 
   - script: python setup.py sdist
     displayName: 'Test sdist'
