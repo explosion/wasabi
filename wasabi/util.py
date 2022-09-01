@@ -90,6 +90,7 @@ def wrap(text: str, wrap_max: int = 80, indent: int = 4) -> str:
     """
     indent_str = indent * " "
     wrap_width = wrap_max - len(indent_str)
+    text = str(text)
     return textwrap.fill(
         text,
         width=wrap_width,
@@ -178,6 +179,7 @@ def locale_escape(string: str, errors: str = "replace") -> str:
     errors (str): The str.encode errors setting. Defaults to `"replace"`.
     RETURNS (str): The escaped string.
     """
+    string = str(string)
     string = string.encode(ENCODING, errors).decode("utf8")
     return string
 
