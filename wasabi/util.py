@@ -80,10 +80,10 @@ def color(
     return "\x1b[{}m{}\x1b[0m".format(";".join(styles), text)
 
 
-def wrap(text: str, wrap_max: int = 80, indent: int = 4) -> str:
+def wrap(text: Any, wrap_max: int = 80, indent: int = 4) -> str:
     """Wrap text at given width using textwrap module.
 
-    text (str): The text to wrap.
+    text (Any): The text to wrap.
     wrap_max (int): Maximum line width, including indentation. Defaults to 80.
     indent (int): Number of spaces used for indentation. Defaults to 4.
     RETURNS (str): The wrapped text with line breaks.
@@ -172,10 +172,10 @@ def get_raw_input(
     return user_input
 
 
-def locale_escape(string: str, errors: str = "replace") -> str:
+def locale_escape(string: Any, errors: str = "replace") -> str:
     """Mangle non-supported characters, for savages with ASCII terminals.
 
-    string (str): The string to escape.
+    string (Any): The string to escape.
     errors (str): The str.encode errors setting. Defaults to `"replace"`.
     RETURNS (str): The escaped string.
     """
