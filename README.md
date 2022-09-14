@@ -9,7 +9,7 @@ custom.
 
 This package is still a work in progress and aims to bundle those utilities in a
 standardised way so they can be shared across our other projects. It's super
-lightweight, has zero dependencies and works Python 3.6+.
+lightweight, has zero dependencies and works with Python 3.6+.
 
 [![Azure Pipelines](https://img.shields.io/azure-devops/build/explosion-ai/public/1/master.svg?logo=azure-pipelines&style=flat-square)](https://dev.azure.com/explosion-ai/public/_build?definitionId=1)
 [![PyPi](https://img.shields.io/pypi/v/wasabi.svg?style=flat-square&logo=pypi&logoColor=white)](https://pypi.python.org/pypi/wasabi)
