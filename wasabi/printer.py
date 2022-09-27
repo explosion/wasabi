@@ -96,7 +96,9 @@ class Printer(object):
         self,
         title: Any = "",
         text: Any = "",
-        **kwargs,
+        show: bool = True,
+        spaced: bool = False,
+        exits: Optional[int] = None,
     ):
         """Print an error message.
 
@@ -107,9 +109,6 @@ class Printer(object):
         spaced (bool): Whether to add newlines around the output.
         exits (Optional[int]): Optional toggle to perform a system exit.
         """
-        show: bool = kwargs.get("show", True)
-        spaced: bool = kwargs.get("spaced", False)
-        exits: Optional[int] = kwargs.get("exits", None)
         return self._get_msg(
             title, text, style=MESSAGES.FAIL, show=show, spaced=spaced, exits=exits
         )
