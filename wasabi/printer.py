@@ -7,7 +7,7 @@ import traceback
 from collections import Counter
 from contextlib import contextmanager
 from multiprocessing import Process
-from typing import Collection, Dict, Optional, Union, cast
+from typing import Any, Collection, Dict, Optional, Union, cast
 
 from .tables import row, table
 from .util import COLORS, ICONS, MESSAGES, can_render
@@ -73,16 +73,16 @@ class Printer(object):
 
     def good(
         self,
-        title: str = "",
-        text: str = "",
+        title: Any = "",
+        text: Any = "",
         show: bool = True,
         spaced: bool = False,
         exits: Optional[int] = None,
     ):
         """Print a success message.
 
-        title (str): The main text to print.
-        text (str): Optional additional text to print.
+        title (Any): The main text to print.
+        text (Any): Optional additional text to print.
         show (bool): Whether to print or not. Can be used to only output
             messages under certain condition, e.g. if --verbose flag is set.
         spaced (bool): Whether to add newlines around the output.
@@ -94,16 +94,16 @@ class Printer(object):
 
     def fail(
         self,
-        title: str = "",
-        text: str = "",
+        title: Any = "",
+        text: Any = "",
         show: bool = True,
         spaced: bool = False,
         exits: Optional[int] = None,
     ):
         """Print an error message.
 
-        title (str): The main text to print.
-        text (str): Optional additional text to print.
+        title (Any): The main text to print.
+        text (Any): Optional additional text to print.
         show (bool): Whether to print or not. Can be used to only output
             messages under certain condition, e.g. if --verbose flag is set.
         spaced (bool): Whether to add newlines around the output.
@@ -115,16 +115,16 @@ class Printer(object):
 
     def warn(
         self,
-        title: str = "",
-        text: str = "",
+        title: Any = "",
+        text: Any = "",
         show: bool = True,
         spaced: bool = False,
         exits: Optional[int] = None,
     ):
         """Print a warning message.
 
-        title (str): The main text to print.
-        text (str): Optional additional text to print.
+        title (Any): The main text to print.
+        text (Any): Optional additional text to print.
         show (bool): Whether to print or not. Can be used to only output
             messages under certain condition, e.g. if --verbose flag is set.
         spaced (bool): Whether to add newlines around the output.
@@ -136,16 +136,16 @@ class Printer(object):
 
     def info(
         self,
-        title: str = "",
-        text: str = "",
+        title: Any = "",
+        text: Any = "",
         show: bool = True,
         spaced: bool = False,
         exits: Optional[int] = None,
     ):
         """Print an informational message.
 
-        title (str): The main text to print.
-        text (str): Optional additional text to print.
+        title (Any): The main text to print.
+        text (Any): Optional additional text to print.
         show (bool): Whether to print or not. Can be used to only output
             messages under certain condition, e.g. if --verbose flag is set.
         spaced (bool): Whether to add newlines around the output.
@@ -157,8 +157,8 @@ class Printer(object):
 
     def text(
         self,
-        title: str = "",
-        text: str = "",
+        title: Any = "",
+        text: Any = "",
         color: Optional[Union[str, int]] = None,
         bg_color: Optional[Union[str, int]] = None,
         icon: Optional[str] = None,
@@ -169,8 +169,8 @@ class Printer(object):
     ):
         """Print a message.
 
-        title (str): The main text to print.
-        text (str): Optional additional text to print.
+        title (Any): The main text to print.
+        text (Any): Optional additional text to print.
         color (Optional[Union[str, int]]): Optional foreground color.
         bg_color (Optional[Union[str, int]]): Optional background color.
         icon (Optional[str]): Optional name of icon to add.
@@ -307,8 +307,8 @@ class Printer(object):
 
     def _get_msg(
         self,
-        title: str,
-        text: str,
+        title: Any,
+        text: Any,
         style: Optional[str] = None,
         show: bool = False,
         spaced: bool = False,
