@@ -1,4 +1,3 @@
-from .about import __version__  # noqa
 from .markdown import MarkdownRenderer  # noqa
 from .printer import Printer  # noqa
 from .tables import row, table  # noqa
