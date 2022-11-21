@@ -2,3 +2,4 @@ pytest
 typing_extensions
 mypy
 types-colorama
+jupyter
