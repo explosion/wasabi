@@ -206,12 +206,18 @@ def supports_ansi() -> bool:
     """
     if os.getenv(ENV_ANSI_DISABLED):
         return False
+    # We require colorama on Windows Python 3.7+, but we might be running on Unix, or we
+    # might be running on Windows Python 3.6. In both cases, colorama might be missing,
+    # *or* there might by accident happen to be an install of an old version that
+    # doesn't have just_fix_windows_console. So we need to confirm not just that we can
+    # import colorama, but that we can import just_fix_windows_console.
     try:
-        import colorama
+        from colorama import just_fix_windows_console
     except ImportError:
-        pass
+        if sys.platform == "win32" and "ANSICON" not in os.environ:
+            return False
     else:
         # type ignore required until this lands:
         #   https://github.com/python/typeshed/pull/9234
-        colorama.just_fix_windows_console()  # type: ignore
+        just_fix_windows_console()  # type: ignore
     return True
