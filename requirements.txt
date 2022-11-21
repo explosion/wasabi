@@ -2,4 +2,4 @@ pytest
 typing_extensions
 mypy
 types-colorama
-jupyter; python_version >= "3.7"
+nbconvert
