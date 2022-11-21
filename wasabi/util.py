@@ -211,5 +211,7 @@ def supports_ansi() -> bool:
     except ImportError:
         pass
     else:
-        colorama.just_fix_windows_console()
+        # type ignore required until this lands:
+        #   https://github.com/python/typeshed/pull/9234
+        colorama.just_fix_windows_console()  # type: ignore
     return True
