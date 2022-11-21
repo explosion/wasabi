@@ -212,12 +212,12 @@ def supports_ansi() -> bool:
     # doesn't have just_fix_windows_console. So we need to confirm not just that we can
     # import colorama, but that we can import just_fix_windows_console.
     try:
-        from colorama import just_fix_windows_console
+        from colorama import just_fix_windows_console  # type: ignore
     except ImportError:
         if sys.platform == "win32" and "ANSICON" not in os.environ:
             return False
     else:
         # type ignore required until this lands:
         #   https://github.com/python/typeshed/pull/9234
-        just_fix_windows_console()  # type: ignore
+        just_fix_windows_console()
     return True
