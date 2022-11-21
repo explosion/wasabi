@@ -20,7 +20,7 @@ def test_jupyter():
         [
             "jupyter",
             "nbconvert",
-            TEST_DATA / "wasabi-test-notebook.ipynb",
+            str(TEST_DATA / "wasabi-test-notebook.ipynb"),
             "--execute",
             "--stdout",
             "--to",
