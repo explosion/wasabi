@@ -200,17 +200,16 @@ def can_render(string: str) -> bool:
 
 def supports_ansi() -> bool:
     """Returns True if the running system's terminal supports ANSI escape
-    sequences for color, formatting etc. and False otherwise. Inspired by
-    Django's solution – hacky, but an okay approximation.
+    sequences for color, formatting etc. and False otherwise.
 
     RETURNS (bool): Whether the terminal supports ANSI colors.
     """
     if os.getenv(ENV_ANSI_DISABLED):
         return False
-    # See: https://stackoverflow.com/q/7445658/6400719
-    supported_platform = sys.platform != "Pocket PC" and (
-        sys.platform != "win32" or "ANSICON" in os.environ
-    )
-    if not supported_platform:
-        return False
+    try:
+        import colorama
+    except ImportError:
+        pass
+    else:
+        colorama.just_fix_windows_console()
     return True
