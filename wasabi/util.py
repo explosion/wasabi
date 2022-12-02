@@ -200,17 +200,22 @@ def can_render(string: str) -> bool:
 
 def supports_ansi() -> bool:
     """Returns True if the running system's terminal supports ANSI escape
-    sequences for color, formatting etc. and False otherwise. Inspired by
-    Django's solution – hacky, but an okay approximation.
+    sequences for color, formatting etc. and False otherwise.
 
     RETURNS (bool): Whether the terminal supports ANSI colors.
     """
     if os.getenv(ENV_ANSI_DISABLED):
         return False
-    # See: https://stackoverflow.com/q/7445658/6400719
-    supported_platform = sys.platform != "Pocket PC" and (
-        sys.platform != "win32" or "ANSICON" in os.environ
-    )
-    if not supported_platform:
-        return False
+    # We require colorama on Windows Python 3.7+, but we might be running on Unix, or we
+    # might be running on Windows Python 3.6. In both cases, colorama might be missing,
+    # *or* there might by accident happen to be an install of an old version that
+    # doesn't have just_fix_windows_console. So we need to confirm not just that we can
+    # import colorama, but that we can import just_fix_windows_console.
+    try:
+        from colorama import just_fix_windows_console
+    except ImportError:
+        if sys.platform == "win32" and "ANSICON" not in os.environ:
+            return False
+    else:
+        just_fix_windows_console()
     return True
