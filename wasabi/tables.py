@@ -3,8 +3,7 @@ from itertools import zip_longest
 from typing import Collection, Dict, Iterable, List, Optional, Sequence, Union
 from typing import cast
 
-from typing_extensions import Literal
-
+from .compat import Literal
 from .util import COLORS
 from .util import color as _color
 from .util import supports_ansi
