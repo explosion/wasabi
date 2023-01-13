@@ -1,6 +1,6 @@
 from typing import Iterable, List, Optional, Sequence
 
-from typing_extensions import Literal
+from .compat import Literal
 
 
 class MarkdownRenderer:

@@ -1,5 +1,6 @@
+typing_extensions>=3.7.4.1,<4.5.0; python_version < "3.8"
+# Development dependencies
 pytest
-typing_extensions
 mypy
 types-colorama
 nbconvert
