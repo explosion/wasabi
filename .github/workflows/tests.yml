@@ -40,3 +40,9 @@ jobs:
           python -c "import sys; print('stdout encoding:', sys.stdout.encoding)"
           env
           python -m pytest -s wasabi
+
+      - name: Run mypy
+        run: python -m mypy wasabi
+
+      - name: Test sdist
+        run: python setup.py sdist
