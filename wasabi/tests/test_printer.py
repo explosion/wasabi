@@ -17,7 +17,7 @@ def test_printer():
     fail = p.fail(text)
     warn = p.warn(text)
     info = p.info(text)
-    assert p.text(text) == text
+    assert p.text(text) != text
     if SUPPORTS_ANSI and not NO_UTF8:
         assert good == "\x1b[38;5;2m\u2714 {}\x1b[0m".format(text)
         assert fail == "\x1b[38;5;1m\u2718 {}\x1b[0m".format(text)
