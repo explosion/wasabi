@@ -11,7 +11,7 @@ This package is still a work in progress and aims to bundle those utilities in a
 standardised way so they can be shared across our other projects. It's super
 lightweight, has zero dependencies and works with Python 3.6+.
 
-[![Azure Pipelines](https://img.shields.io/azure-devops/build/explosion-ai/public/1/master.svg?logo=azure-pipelines&style=flat-square)](https://dev.azure.com/explosion-ai/public/_build?definitionId=1)
+[![tests](https://github.com/explosion/wasabi/actions/workflows/tests.yml/badge.svg)](https://github.com/explosion/wasabi/actions/workflows/tests.yml)
 [![PyPi](https://img.shields.io/pypi/v/wasabi.svg?style=flat-square&logo=pypi&logoColor=white)](https://pypi.python.org/pypi/wasabi)
 [![conda](https://img.shields.io/conda/vn/conda-forge/wasabi.svg?style=flat-square&logo=conda-forge/logoColor=white)](https://anaconda.org/conda-forge/wasabi)
 [![GitHub](https://img.shields.io/github/release/ines/wasabi/all.svg?style=flat-square&logo=github)](https://github.com/ines/wasabi)
@@ -152,9 +152,9 @@ with msg.loading("Loading..."):
 msg.good("Successfully loaded something!")
 ```
 
-| Argument | Type | Description                        | Default           |
-| -------- | ---- | ---------------------------------- | ----------------- |
-| `text`   | str  | The text to display while loading. | `"Loading..."`    |
+| Argument | Type | Description                        | Default        |
+| -------- | ---- | ---------------------------------- | -------------- |
+| `text`   | str  | The text to display while loading. | `"Loading..."` |
 
 #### <kbd>method</kbd> `Printer.table`, `Printer.row`
 
@@ -202,22 +202,22 @@ Column 1   Column 2    Column 3
       b1      b2       b3
 ```
 
-| Argument    | Type                | Description                                                                                                                         | Default  |
-| ----------- | ------------------- | ----------------------------------------------------------------------------------------------------------------------------------- | -------- |
-| `data`      | iterable / dict     | The data to render. Either a list of lists (one per row) or a dict for two-column tables.                                           |          |
-| `header`    | iterable            | Optional header columns.                                                                                                            | `None`   |
-| `footer`    | iterable            | Optional footer columns.                                                                                                            | `None`   |
-| `divider`   | bool                | Show a divider line between header/footer and body.                                                                                 | `False`  |
-| `widths`    | iterable / `"auto"` | Column widths in order. If `"auto"`, widths will be calculated automatically based on the largest value.                            | `"auto"` |
-| `max_col`   | int                 | Maximum column width.                                                                                                               | `30`     |
-| `spacing`   | int                 | Number of spaces between columns.                                                                                                   | `3`      |
-| `aligns`    | iterable / unicode  | Columns alignments in order. `"l"` (left, default), `"r"` (right) or `"c"` (center). If If a string, value is used for all columns. | `None`   |
-| `multiline` | bool                | If a cell value is a list of a tuple, render it on multiple lines, with one value per line.                                         | `False`  |
-| `env_prefix` | unicode                | Prefix for environment variables, e.g. WASABI_LOG_FRIENDLY.                                         | `"WASABI"` |
-| `color_values` | dict                | Add or overwrite color values, name mapped to value.                                         | `None`   |
-| `fg_colors` | iterable                | Foreground colors, one per column. None can be specified for individual columns to retain the default background color. | `None`   |
-| `bg_colors` | iterable                | Background colors, one per column. None can be specified for individual columns to retain the default background color. | `None`   |
-| **RETURNS** | str                 | The formatted table.                                                                                                                |          |
+| Argument       | Type                | Description                                                                                                                         | Default    |
+| -------------- | ------------------- | ----------------------------------------------------------------------------------------------------------------------------------- | ---------- |
+| `data`         | iterable / dict     | The data to render. Either a list of lists (one per row) or a dict for two-column tables.                                           |            |
+| `header`       | iterable            | Optional header columns.                                                                                                            | `None`     |
+| `footer`       | iterable            | Optional footer columns.                                                                                                            | `None`     |
+| `divider`      | bool                | Show a divider line between header/footer and body.                                                                                 | `False`    |
+| `widths`       | iterable / `"auto"` | Column widths in order. If `"auto"`, widths will be calculated automatically based on the largest value.                            | `"auto"`   |
+| `max_col`      | int                 | Maximum column width.                                                                                                               | `30`       |
+| `spacing`      | int                 | Number of spaces between columns.                                                                                                   | `3`        |
+| `aligns`       | iterable / unicode  | Columns alignments in order. `"l"` (left, default), `"r"` (right) or `"c"` (center). If If a string, value is used for all columns. | `None`     |
+| `multiline`    | bool                | If a cell value is a list of a tuple, render it on multiple lines, with one value per line.                                         | `False`    |
+| `env_prefix`   | unicode             | Prefix for environment variables, e.g. WASABI_LOG_FRIENDLY.                                                                         | `"WASABI"` |
+| `color_values` | dict                | Add or overwrite color values, name mapped to value.                                                                                | `None`     |
+| `fg_colors`    | iterable            | Foreground colors, one per column. None can be specified for individual columns to retain the default background color.             | `None`     |
+| `bg_colors`    | iterable            | Background colors, one per column. None can be specified for individual columns to retain the default background color.             | `None`     |
+| **RETURNS**    | str                 | The formatted table.                                                                                                                |            |
 
 #### <kbd>function</kbd> `row`
 
@@ -232,16 +232,16 @@ formatted = row(data)
 a1   a2   a3
 ```
 
-| Argument    | Type                      | Description                                                                                                                                                | Default  |
-| ----------- | ------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- |
-| `data`      | iterable                  | The individual columns to format.                                                                                                                          |          |
-| `widths`    | list / int / `"auto"` | Column widths, either one integer for all columns or an iterable of values. If "auto", widths will be calculated automatically based on the largest value. | `"auto"` |
-| `spacing`   | int                       | Number of spaces between columns.                                                                                                                          | `3`      |
-| `aligns`    | list                  | Columns alignments in order. `"l"` (left), `"r"` (right) or `"c"` (center).                                                                                | `None`   |
-| `env_prefix` | unicode                | Prefix for environment variables, e.g. WASABI_LOG_FRIENDLY.                                         | `"WASABI"` |
-| `fg_colors`    | list                  | Foreground colors for the columns, in order. None can be specified for individual columns to retain the default foreground color. | `None`   |
-| `bg_colors`    | list                  | Background colors for the columns, in order. None can be specified for individual columns to retain the default background color. | `None`   |
-| **RETURNS** | str                       | The formatted row.                                                                                                                                         |          |
+| Argument     | Type                  | Description                                                                                                                                                | Default    |
+| ------------ | --------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------- |
+| `data`       | iterable              | The individual columns to format.                                                                                                                          |            |
+| `widths`     | list / int / `"auto"` | Column widths, either one integer for all columns or an iterable of values. If "auto", widths will be calculated automatically based on the largest value. | `"auto"`   |
+| `spacing`    | int                   | Number of spaces between columns.                                                                                                                          | `3`        |
+| `aligns`     | list                  | Columns alignments in order. `"l"` (left), `"r"` (right) or `"c"` (center).                                                                                | `None`     |
+| `env_prefix` | unicode               | Prefix for environment variables, e.g. WASABI_LOG_FRIENDLY.                                                                                                | `"WASABI"` |
+| `fg_colors`  | list                  | Foreground colors for the columns, in order. None can be specified for individual columns to retain the default foreground color.                          | `None`     |
+| `bg_colors`  | list                  | Background colors for the columns, in order. None can be specified for individual columns to retain the default background color.                          | `None`     |
+| **RETURNS**  | str                   | The formatted row.                                                                                                                                         |            |
 
 ### <kbd>class</kbd> `TracebackPrinter`
 
@@ -303,7 +303,8 @@ raise ValueError(error)
 
 ### <kbd>class</kbd> `MarkdownRenderer`
 
-Helper to create Markdown-formatted content. Will store the blocks added to the Markdown document in order.
+Helper to create Markdown-formatted content. Will store the blocks added to the
+Markdown document in order.
 
 ```python
 from wasabi import MarkdownRenderer
