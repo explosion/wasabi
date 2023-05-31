@@ -96,19 +96,19 @@ class Printer(object):
     @overload
     def fail(
         self,
-        title: str = "",
-        text: str = "",
+        title: Any = "",
+        text: Any = "",
         show: bool = True,
         spaced: bool = False,
         exits: Optional[Literal[0, False]] = None,
-    ) -> Optional[str]:
+    ):
         ...
 
     @overload
     def fail(
         self,
-        title: str = "",
-        text: str = "",
+        title: Any = "",
+        text: Any = "",
         show: bool = True,
         spaced: bool = False,
         exits: Literal[1, True] = True,
@@ -122,7 +122,7 @@ class Printer(object):
         show: bool = True,
         spaced: bool = False,
         exits: Optional[Union[int, bool]] = None,
-    ):
+    ) -> Union[str, None, NoReturn]:
         """Print an error message.
 
         title (Any): The main text to print.
