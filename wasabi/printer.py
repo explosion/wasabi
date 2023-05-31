@@ -8,6 +8,7 @@ from collections import Counter
 from contextlib import contextmanager
 from multiprocessing import Process
 from typing import Any, Collection, Dict, Optional, Union, cast
+from typing_extensions import Literal, NoReturn, overload
 
 from .tables import row, table
 from .util import COLORS, ICONS, MESSAGES, can_render
@@ -92,13 +93,35 @@ class Printer(object):
             title, text, style=MESSAGES.GOOD, show=show, spaced=spaced, exits=exits
         )
 
+    @overload
+    def fail(
+        self,
+        title: str = "",
+        text: str = "",
+        show: bool = True,
+        spaced: bool = False,
+        exits: Optional[Literal[0, False]] = None,
+    ) -> Optional[str]:
+        ...
+
+    @overload
+    def fail(
+        self,
+        title: str = "",
+        text: str = "",
+        show: bool = True,
+        spaced: bool = False,
+        exits: Literal[1, True] = True,
+    ) -> NoReturn:
+        ...
+
     def fail(
         self,
         title: Any = "",
         text: Any = "",
         show: bool = True,
         spaced: bool = False,
-        exits: Optional[int] = None,
+        exits: Optional[Union[int, bool]] = None,
     ):
         """Print an error message.
 
@@ -157,10 +180,10 @@ class Printer(object):
 
     def text(
         self,
-        title: Any = "",
-        text: Any = "",
-        color: Optional[Union[str, int]] = None,
-        bg_color: Optional[Union[str, int]] = None,
+        title: str = "",
+        text: str = "",
+        color: Union[str, int, None] = None,
+        bg_color: Union[str, int, None] = None,
         icon: Optional[str] = None,
         spaced: bool = False,
         show: bool = True,
