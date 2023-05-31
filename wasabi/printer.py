@@ -7,9 +7,9 @@ import traceback
 from collections import Counter
 from contextlib import contextmanager
 from multiprocessing import Process
-from typing import Any, Collection, Dict, Optional, Union, cast
-from typing_extensions import Literal, NoReturn, overload
+from typing import Any, Collection, Dict, NoReturn, Optional, Union, cast, overload
 
+from .compat import Literal
 from .tables import row, table
 from .util import COLORS, ICONS, MESSAGES, can_render
 from .util import color as _color
