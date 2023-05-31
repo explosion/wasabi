@@ -180,10 +180,10 @@ class Printer(object):
 
     def text(
         self,
-        title: str = "",
-        text: str = "",
-        color: Union[str, int, None] = None,
-        bg_color: Union[str, int, None] = None,
+        title: Any = "",
+        text: Any = "",
+        color: Optional[Union[str, int]] = None,
+        bg_color: Optional[Union[str, int]] = None,
         icon: Optional[str] = None,
         spaced: bool = False,
         show: bool = True,
