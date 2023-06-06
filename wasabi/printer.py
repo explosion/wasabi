@@ -96,22 +96,22 @@ class Printer(object):
     @overload
     def fail(
         self,
-        title: Any = ...,
-        text: Any = ...,
-        show: bool = ...,
-        spaced: bool = ...,
-        exits: Optional[Literal[0, False]] = ...,
+        title: Any = "",
+        text: Any = "",
+        show: bool = True,
+        spaced: bool = False,
+        exits: Optional[Literal[0, False]] = None,
     ):
         ...
 
     @overload
     def fail(
         self,
-        title: Any = ...,
-        text: Any = ...,
-        show: bool = ...,
-        spaced: bool = ...,
-        exits: Literal[1, True] = ...,
+        title: Any = "",
+        text: Any = "",
+        show: bool = True,
+        spaced: bool = False,
+        exits: Literal[1, True] = True,
     ) -> NoReturn:
         ...
 
