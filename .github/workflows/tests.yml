@@ -86,4 +86,4 @@ jobs:
         run: |
           SDIST=$(python -c "import os;print(os.listdir('./dist')[-1])" 2>&1)
           python -m pip install spacy dist/$SDIST
-          python -m mypy spacy
+          python -m mypy -m spacy
