@@ -80,3 +80,10 @@ jobs:
         shell: bash
         run: |
           python -m pytest --pyargs $MODULE_NAME -Werror
+
+      - name: Run mypy for spacy
+        shell: bash
+        run: |
+          SDIST=$(python -c "import os;print(os.listdir('./dist')[-1])" 2>&1)
+          python -m pip install spacy dist/$SDIST
+          python -m mypy spacy
